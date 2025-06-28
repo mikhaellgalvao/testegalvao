@@ -959,7 +959,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'ryanven':     { password: 'rya' + currentYear, role: 'seller', type: 'permanent' },
     };
     const CONFIDENTIAL_CODE = '@0639';
-    // ATENÇÃO: CONVERTIDO PARA 'let' e REESTRUTURADO PARA SUPORTAR MÚLTIPLOS FORNECEDORES/CUSTOS
+    // ATENÇÃO: PRODUCTS reestruturado para o novo modelo de 'sources'
     let PRODUCTS = [ 
         { id: 1, name: 'DJI Neo Standard', spec: '🛸 DJI Neo Standard ou Combo fly more\n🎥 Grava em 4K/30fps\n⏱️ Até 18 minutos de voo\n📡 Alcance de até 6 km\n⚖️ Peso de apenas 135 g\n🎮 Controle via app, com controle ou controle motion ( três versões)', salePrice: 1900, 
             sources: [{ supplierName: 'Arroba Celulares', costPrice: 1340 }] },
@@ -1170,7 +1170,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const manageUsersNavButton = document.getElementById('manage-users-nav-button');
     const createProductNavButton = document.getElementById('create-product-nav-button');
     const editProductNavButton = document.getElementById('edit-product-nav-button');
-    const settingsSubNav = document.getElementById('settings-sub-nav'); // O div que contém os sub-botões
+    const settingsSubNav = document.getElementById('settings-sub-nav'); 
 
 
     const productList = document.getElementById('product-list');
@@ -1455,7 +1455,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const productsToShow = PRODUCTS.filter(p => 
             p.name.toLowerCase().includes(lowerCaseSearchTerm) || 
-            p.spec.toLowerCase().includes(lowerCaseSearchTerm)
+            p.spec.toLowerCase().includes(lowerCaseSearchTerm) ||
+            // NOVO: Busca por fornecedor nos produtos
+            (p.sources && p.sources.some(source => source.supplierName.toLowerCase().includes(lowerCaseSearchTerm)))
         );
 
         if (productsToShow.length === 0) {
@@ -1473,7 +1475,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             let adminCostInfoHTML = '';
             if (isAdmin) { 
-                adminCostInfoHTML = `<ul class="product-suppliers-list">`;
+                adminCostInfoHTML = `<p><strong>Custos por Fornecedor:</strong></p><ul class="product-suppliers-list">`;
                 if (product.sources && product.sources.length > 0) {
                     product.sources.forEach(source => {
                         adminCostInfoHTML += `
@@ -1486,7 +1488,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         `;
                     });
                 } else {
-                    adminCostInfoHTML += `<li><span class="cost-value">N/A (Sem Fornecedor)</span></li>`;
+                    adminCostInfoHTML += `<li><span class="cost-value">N/A (Sem Fornecedor Registrado)</span></li>`;
                 }
                 adminCostInfoHTML += `</ul>`;
             }
@@ -1495,7 +1497,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h3>${product.name}</h3>
                 <p class="product-spec"><strong>Especificações:</strong><br>${product.spec}</p>
                 <p class="price">${salePriceLabel}: ${product.salePrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
-                ${isAdmin ? `<h4>Custos por Fornecedor:</h4>${adminCostInfoHTML}` : ''}
+                ${isAdmin ? adminCostInfoHTML : ''}
                 <div class="action-buttons-container">
                     <button class="gemini-button desc-button">✨ Gerar Descrição</button>
                     <button class="gemini-button args-button">✨ Criar Argumentos</button>
@@ -1810,8 +1812,7 @@ document.addEventListener('DOMContentLoaded', () => {
         createProductFeedback.textContent = `Produto "${newProduct.name}" (ID: ${newProduct.id}) criado com sucesso!`;
         createProductFeedback.style.color = 'green';
         createProductForm.reset();
-        // Opcional: Atualizar a lista de produtos visível (se for relevante para o admin)
-        renderProducts(); 
+        renderProducts(); // Renderiza a lista de produtos novamente após a criação
     }
 
     function handleSearchProductToEdit() {
@@ -1833,7 +1834,7 @@ document.addEventListener('DOMContentLoaded', () => {
             editProductNameInput.value = product.name;
             editProductSpecTextarea.value = product.spec;
             editProductSalePriceInput.value = product.salePrice;
-            // Para edição simplificada, pegamos o primeiro fornecedor ou deixamos vazio
+            // Para edição simplificada, pegamos o PRIMEIRO fornecedor ou deixamos vazio
             editProductCostPriceInput.value = product.sources[0] ? product.sources[0].costPrice : '';
             editProductSupplierInput.value = product.sources[0] ? product.sources[0].supplierName : '';
         } else {
@@ -1865,23 +1866,24 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Atualiza o produto, mantendo a estrutura de sources
-        PRODUCTS[productIndex] = {
-            id: productId,
-            name,
-            spec,
-            salePrice,
-            // Para simplificar a edição, substituímos ou adicionamos o primeiro fornecedor
-            sources: [{ 
+        // Se já existe um fornecedor, atualiza. Se não, cria um novo no array sources.
+        if (PRODUCTS[productIndex].sources && PRODUCTS[productIndex].sources.length > 0) {
+            PRODUCTS[productIndex].sources[0].supplierName = supplier || 'Não especificado';
+            PRODUCTS[productIndex].sources[0].costPrice = isNaN(costPrice) ? 0 : costPrice;
+        } else {
+            PRODUCTS[productIndex].sources = [{ 
                 supplierName: supplier || 'Não especificado', 
                 costPrice: isNaN(costPrice) ? 0 : costPrice 
-            }]
-        };
+            }];
+        }
+
+        PRODUCTS[productIndex].name = name;
+        PRODUCTS[productIndex].spec = spec;
+        PRODUCTS[productIndex].salePrice = salePrice;
 
         editProductFeedback.textContent = `Produto "${name}" (ID: ${productId}) atualizado com sucesso!`;
         editProductFeedback.style.color = 'green';
-        // Opcional: renderizar novamente a lista de produtos após alteração
-        renderProducts();
+        renderProducts(); // Renderiza a lista de produtos novamente após alteração
     }
 
 
@@ -1938,19 +1940,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Função para navegar para o fornecedor na seção de Fornecedores
     function navigateToSupplierSection(supplierName) {
         switchTab('suppliers-section');
-        // Opcional: tentar rolar para o fornecedor específico, se a lista for longa
-        // Isso exigiria que cada card de fornecedor tivesse um ID correspondente ao nome.
         setTimeout(() => {
+            // Tenta encontrar o card do fornecedor com base no nome
             const targetSupplierCard = document.querySelector(`#supplier-list .supplier-card h3 strong[data-supplier-name="${supplierName}"]`);
             if (targetSupplierCard) {
                 targetSupplierCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                // Adicionar um destaque temporário para o fornecedor
-                targetSupplierCard.closest('.supplier-card').style.backgroundColor = '#fffacd'; // Amarelo claro
+                targetSupplierCard.closest('.supplier-card').style.backgroundColor = '#fffacd'; 
                 setTimeout(() => {
-                    targetSupplierCard.closest('.supplier-card').style.backgroundColor = ''; // Remove destaque
+                    targetSupplierCard.closest('.supplier-card').style.backgroundColor = ''; 
                 }, 3000);
+            } else {
+                // Se o fornecedor não for encontrado na lista, pode exibir uma mensagem ou apenas ir para a seção.
+                console.log(`Fornecedor "${supplierName}" não encontrado na lista detalhada.`);
             }
-        }, 300); // Pequeno atraso para a aba mudar primeiro
+        }, 300); 
     }
 
     function showSuppliers() {
@@ -1960,7 +1963,6 @@ document.addEventListener('DOMContentLoaded', () => {
             SUPPLIERS.forEach(supplier => {
                 const supplierCard = document.createElement('div');
                 supplierCard.className = 'card supplier-card';
-                // Adicionado data-supplier-name ao strong para fácil localização
                 supplierCard.innerHTML = `
                     <h3><strong data-supplier-name="${supplier.name}">${supplier.name}</strong></h3>
                     <p><strong>Detalhes:</strong> ${supplier.details}</p>
@@ -1991,9 +1993,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Lógica para link de fornecedor em produto (apenas para admins)
         if (target.classList.contains('supplier-name-link')) {
-            e.preventDefault(); // Impede o comportamento padrão do link
+            e.preventDefault(); 
             const supplierName = target.dataset.supplierName;
-            if (currentUser && currentUser.role === 'admin') {
+            if (currentUser && currentUser.role === 'admin') { // Só admin pode clicar
                 navigateToSupplierSection(supplierName);
             }
             return; 
@@ -2067,7 +2069,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Event listeners para os botões de navegação
-    // MODIFICADO: Lógica para o botão de Configurações e seus sub-itens
     document.querySelectorAll('nav button').forEach(button => {
         button.addEventListener('click', () => {
             const sectionId = button.dataset.section;
@@ -2075,28 +2076,24 @@ document.addEventListener('DOMContentLoaded', () => {
             // Lógica para o botão pai de Configurações
             if (button.id === 'settings-nav-button') {
                 if (currentUser && currentUser.username === 'mikhaell') {
-                    // Alterna a visibilidade do sub-menu
                     const isSubNavVisible = settingsSubNav.style.display === 'block';
                     settingsSubNav.style.display = isSubNavVisible ? 'none' : 'block';
-                    settingsNavButton.classList.toggle('active', !isSubNavVisible); // Ativa/desativa o botão pai
+                    settingsNavButton.classList.toggle('active', !isSubNavVisible); 
                     
-                    // Se o sub-menu for aberto, não muda a seção principal imediatamente
-                    // Se for fechado, volta para a seção padrão de configurações (que pode ser a tela inicial)
                     if (!isSubNavVisible) {
-                        // Ativa a seção pai apenas se ela for clicada para abrir o sub-menu
                         switchTab('settings-section'); 
                     }
                 } else {
                     alert('Apenas o administrador principal pode acessar as configurações.');
                 }
-                return; // Impede que o clique no botão pai Settings navegue para a seção genérica
+                return; 
             }
             
             // Para todos os outros botões (incluindo os sub-botões de Configurações)
             switchTab(sectionId);
         });
     });
-
+    
     closeModalButton.addEventListener('click', closeModal);
     window.addEventListener('click', (event) => { if (event.target == mainModal) { closeModal(); } });
     productSearchInput.addEventListener('input', (e) => renderProducts(e.target.value));
