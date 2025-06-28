@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal de Consultas Internas - Galvão Drones</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230E5847'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-12h2v4h4v2h-4v4h-2v-4H7v-2h4V8z'%3E%3C/path%3E%3Cpath d='M13.25 7.15c-.24-.24-.58-.36-.92-.36s-.68.12-.92.36L8.4 9.16c-.24.24-.36.58-.36.92s.12.68.36.92l.71.71c.24.24.58.36.92.36s.68-.12.92-.36l2.93-2.93c.24-.24.36-.58.36-.92s-.12-.68-.36-.92l-.71-.71zM10.75 16.85c.24.24.58.36.92.36s-.68-.12.92-.36l2.93-2.93c-.24-.24.36-.58.36-.92s-.12-.68-.36-.92l-.71-.71c-.24-.24-.58-.36-.92-.36s-.68.12-.92.36l-2.93 2.93c-.24.24-.36.58-.36.92s.12.68.36.92l.71.71zM18.8 8.4l-.71-.71c-.24-.24-.58-.36-.92-.36s-.68.12-.92.36L13.3 9.77c-.24.24-.36.58-.36.92s.12.68.36.92l.71.71c.24.24.58.36.92.36s.68-.12.92-.36l3.85-3.85c.24-.24.36-.58.36-.92s-.12-.68-.36-.92zM5.2 15.6l.71.71c.24.24.58.36.92.36s.68-.12.92.36l3.85-3.85c-.24-.24-.36-.58-.36-.92s-.12-.68-.36-.92l-.71-.71c-.24-.24-.58-.36-.92-.36s-.68.12-.92.36L5.2 14.68c-.24.24-.36.58-.36.92s.12.68.36.92z'%3E%3C/path%3E%3C/svg%3E" type="image/svg+xml">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230E5847'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-12h2v4h4v2h-4v4h-2v-4H7v-2h4V8z'%3E%3C/path%3E%3Cpath d='M13.25 7.15c-.24-.24-.58-.36-.92-.36s-.68.12-.92.36L8.4 9.16c-.24.24-.36.58-.36.92s.12.68.36.92l.71.71c.24.24.58.36.92.36s.68-.12.92-.36l2.93-2.93c.24-.24.36-.58.36-.92s-.12-.68-.36-.92l-.71-.71zM10.75 16.85c.24.24.58.36.92.36s-.68-.12.92-.36l2.93-2.93c-.24-.24-.36-.58-.36-.92s-.12-.68-.36-.92l-.71-.71c-.24-.24-.58-.36-.92-.36s-.68.12-.92.36l-2.93 2.93c-.24.24-.36.58-.36.92s.12.68.36.92l.71.71zM18.8 8.4l-.71-.71c-.24-.24-.58-.36-.92-.36s-.68.12-.92.36L13.3 9.77c-.24.24-.36.58-.36.92s.12.68.36.92l.71.71c.24.24.58.36.92.36s.68-.12.92-.36l3.85-3.85c.24-.24.36-.58.36-.92s-.12-.68-.36-.92zM5.2 15.6l.71.71c.24.24.58.36.92.36s.68-.12.92.36l3.85-3.85c-.24-.24-.36-.58-.36-.92s-.12-.68-.36-.92l-.71-.71c-.24-.24-.58-.36-.92-.36s-.68.12-.92.36L5.2 14.68c-.24.24-.36.58-.36.92s.12.68.36.92z'%3E%3C/path%3E%3C/svg%3E" type="image/svg+xml">
     <style>
         /* --- ESTILOS GERAIS (CSS) COM A PALETA GALVÃO DRONES --- */
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
@@ -369,30 +369,30 @@
         
         /* --- ESTILOS DOS CARDS --- */
         .card {
-    position: relative; /* Necessário para o pseudo-elemento */
-    border: 1px solid #ddd;
-    padding: 20px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    transition: box-shadow 0.3s;
-    z-index: 1; /* Garante que o conteúdo fique acima do background */
-}
+            position: relative; /* Necessário para o pseudo-elemento */
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            transition: box-shadow 0.3s;
+            z-index: 1; /* Garante que o conteúdo fique acima do background */
+        }
 
-.card::before {
-    content: ""; /* Fundamental para o pseudo-elemento aparecer */
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url("logo.png");
-    background-size: 50%;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.15; /* Ajuste este valor para a opacidade desejada */
-    z-index: -1; /* Envia o background para trás do conteúdo */
-    border-radius: 5px; /* Mantém o mesmo border-radius do card */
-}
+        .card::before {
+            content: ""; /* Fundamental para o pseudo-elemento aparecer */
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("logo.png");
+            background-size: 50%;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.15; /* Ajuste este valor para a opacidade desejada */
+            z-index: -1; /* Envia o background para trás do conteúdo */
+            border-radius: 5px; /* Mantém o mesmo border-radius do card */
+        }
         .card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
         .card h3 { margin-top: 0; color: var(--secondary-color); border: none; font-size: 1.3em; } /* Ajuste de fonte */
         .product-card { border-left: 5px solid var(--primary-color); }
@@ -697,20 +697,20 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- BANCO DE DADOS SIMULADO ---
-    const currentYear = new Date().getFullYear(); 
-
+    // RESTAURADO: Senhas originais do seu código.
     const USERS = {
         'mikhaell': { password: 'mk0639', role: 'admin', type: 'permanent' }, 
-        'Maikhon':  { password: 'maik' + currentYear, role: 'admin', type: 'permanent' },
-        'Ryan':     { password: 'ryan' + currentYear, role: 'admin', type: 'permanent' },
-        'Fineias':  { password: 'fin' + currentYear, role: 'seller', type: 'permanent' },
-        'Rafael':   { password: 'raf' + currentYear, role: 'seller', type: 'permanent' },
-        'Eduardo': { password: 'edu' + currentYear, role: 'seller', type: 'permanent' },
+        'Maikhon':  { password: 'maik', role: 'admin', type: 'permanent' },
+        'Ryan':     { password: 'ryan', role: 'admin', type: 'permanent' },
+        'Fineias':  { password: 'fin', role: 'seller', type: 'permanent' },
+        'Rafael':   { password: 'raf', role: 'seller', type: 'permanent' },
+        'Eduardo':  { password: 'edu', role: 'seller', type: 'permanent' },
         
         // Usuários de venda atualizados com senhas seguindo o padrão das 3 primeiras letras + ano atual
-        'mikhaellven': { password: 'mik' + currentYear, role: 'seller', type: 'permanent' },
-        'maikhonven':  { password: 'mai' + currentYear, role: 'seller', type: 'permanent' },
-        'ryanven':     { password: 'rya' + currentYear, role: 'seller', type: 'permanent' },
+        // RESTAURADO: Estas senhas também foram revertidas para os valores que você tinha antes.
+        'mikhaellven': { password: 'mik', role: 'seller', type: 'permanent' },
+        'maikhonven':  { password: 'mai', role: 'seller', type: 'permanent' },
+        'ryanven':     { password: 'rya', role: 'seller', type: 'permanent' },
     };
     const CONFIDENTIAL_CODE = '@0639';
     const PRODUCTS = [
@@ -896,14 +896,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // AVISO DE SEGURANÇA: Chaves de API expostas no frontend não são seguras para produção.
         // Por favor, considere usar um servidor backend para proteger sua chave em um ambiente real.
-        const apiKey = "YOUR_GEMINI_API_KEY"; // <<<<< Substitua pela sua chave Gemini
+        const apiKey = "AIzaSyBQr00SKusVdv1sR7cjaJbFsfY5YaHQbH0"; // <<<<< Substitua pela sua chave Gemini REAL
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`; 
         
         let fullPrompt = prompt;
         if (isProductHelp) {
             fullPrompt = `R2D2: Responda de forma direta e clara (máximo 3 frases) à seguinte dúvida do cliente sobre o produto "${productSpecs}". Dúvida do cliente: "${prompt}"`;
         } else if (isGeneralAI) { // Nova condição para perguntas da IA geral
-            fullPrompt = `Você é um assistente da Galvão Drones, especializada em drones e equipamentos DJI. Responda de forma útil, amigável e concisa (máximo 4 frases) às perguntas, utilizando o conhecimento de um especialista em drones. Se a pergunta for sobre produtos específicos da Galvão Drones, como modelos de drones ou equipamentos, use seu conhecimento para dar uma resposta detalhada sobre o universo de drones. Se a pergunta for sobre a empresa "Galvão Drones" (como localização, contato, serviços), forneça as seguintes informações: "A Galvão Drones está localizada na Rua 16, nº 304 – Setor Aeroviário, Goiânia – GO, CEP: 74435-240. Você pode nos contatar pelo telefone (62) 3636-0668 ou pelo WhatsApp 556236360668. Nosso website é www.galvaodrones.com.br e também estamos no Instagram (@galvao_drones) e YouTube (Galvão Drones)." Pergunta do usuário: "${prompt}"`;
+            // Use o ano atual de 2025 para perguntas relevantes ao tempo
+            const currentYearPrompt = new Date().getFullYear();
+            fullPrompt = `Você é um assistente da Galvão Drones, especializada em drones e equipamentos DJI. Responda de forma útil, amigável e concisa (máximo 4 frases) às perguntas, utilizando o conhecimento de um especialista em drones. Se a pergunta for sobre produtos específicos da Galvão Drones, como modelos de drones ou equipamentos, use seu conhecimento para dar uma resposta detalhada sobre o universo de drones. Se a pergunta for sobre a empresa "Galvão Drones" (como localização, contato, serviços), forneça as seguintes informações: "A Galvão Drones está localizada na Rua 16, nº 304 – Setor Aeroviário, Goiânia – GO, CEP: 74435-240. Você pode nos contatar pelo telefone (62) 3636-0668 ou pelo WhatsApp 556236360668. Nosso website é www.galvaodrones.com.br e também estamos no Instagram (@galvao_drones) e YouTube (Galvão Drones)." Responda considerando o ano atual de ${currentYearPrompt}. Pergunta do usuário: "${prompt}"`;
         } else {
              fullPrompt = `R2D2: ${prompt}`;
         }
@@ -925,3 +927,748 @@ document.addEventListener('DOMContentLoaded', () => {
                     aiLoader.style.display = 'none';
                 } else {
                     modalBody.innerHTML = text.replace(/\n/g, '<br>');
+                }
+            } else { throw new Error("A resposta da API não contém o conteúdo esperado."); }
+        } catch (error) {
+            console.error("Erro ao chamar a API Gemini:", error);
+            if (isGeneralAI) {
+                aiResponseArea.innerHTML = `<p style="color:red;">Ocorreu um erro ao comunicar com a IA. Tente novamente.<br><small>Detalhe: ${error.message}</small></p>`;
+                aiResponseArea.style.display = 'block';
+                aiLoader.style.display = 'none';
+            } else {
+                modalBody.innerHTML = `<p style="color:red;">Ocorreu um erro ao comunicar com a IA. Tente novamente.<br><small>Detalhe: ${error.message}</small></p>`;
+            }
+        }
+    }
+
+    // --- FUNÇÕES PRINCIPAIS DO APP ---
+    function handleLogin() {
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value;
+        const user = USERS[username];
+
+        if (user && user.password === password) {
+            if (user.type === 'temporary' && Date.now() > user.expiresAt) {
+                loginError.textContent = 'Este usuário temporário expirou.';
+                loginError.style.display = 'block';
+                delete USERS[username];
+                return;
+            }
+            currentUser = { ...user, username, isVisitor: false }; // Usuário logado
+            loginScreen.style.display = 'none';
+            appScreen.style.display = 'block';
+            loginError.style.display = 'none';
+            setupAppForUser();
+        } else {
+            loginError.textContent = 'Usuário ou senha inválidos.';
+            loginError.style.display = 'block';
+        }
+    }
+
+    function handleVisitorMode() {
+        currentUser = { username: 'Visitante', role: 'visitor', type: 'permanent', isVisitor: true }; // Modo visitante
+        loginScreen.style.display = 'none';
+        appScreen.style.display = 'block';
+        loginError.style.display = 'none';
+        setupAppForUser();
+    }
+
+    function handleLogout() {
+        currentUser = null;
+        clearInterval(tempUserInterval);
+        appScreen.style.display = 'none';
+        loginScreen.style.display = 'block';
+        usernameInput.value = '';
+        passwordInput.value = '';
+        // Limpa a classe de visitante do cabeçalho ao sair
+        headerElement.classList.remove('visitor-header');
+        // Remove a classe do modo visitante do body
+        bodyElement.classList.remove('visitor-mode-bg'); 
+        // Fecha a nav mobile se estiver aberta
+        closeMobileNav();
+        // Esconde o botão da IA ao sair
+        aiChatButton.style.display = 'none'; 
+        aiChatModal.style.display = 'none'; // Garante que o modal da IA também feche
+    }
+
+    function setupAppForUser() {
+        if (currentUser.isVisitor) {
+            welcomeMessage.textContent = 'Modo Visitante';
+            headerElement.classList.add('visitor-header'); // Adiciona classe para esconder elementos
+            bodyElement.classList.add('visitor-mode-bg'); // Adiciona classe para mudar o fundo
+        } else {
+            welcomeMessage.textContent = `Bem-vindo(a), ${currentUser.username}!`;
+            headerElement.classList.remove('visitor-header');
+            bodyElement.classList.remove('visitor-mode-bg'); // Remove a classe do fundo
+        }
+
+        const isAdmin = currentUser.role === 'admin';
+        const isSeller = currentUser.role === 'seller'; // Novo: Para identificar usuários de venda
+        const isTempUser = currentUser.type === 'temporary';
+        const isVisitor = currentUser.isVisitor;
+        
+        // Esconde ou mostra e reordena botões da navegação lateral conforme o tipo de usuário
+        
+        // Esconde tudo por padrão e depois mostra o que é relevante
+        navButtons.forEach(button => button.classList.add('hidden'));
+
+        if (isVisitor) {
+            // Mostra e ordena as opções para visitante
+            dronesNavButton.classList.remove('hidden'); 
+            infoEmpresaNavButton.classList.remove('hidden'); 
+
+            dronesNavButton.style.order = 1; 
+            infoEmpresaNavButton.style.order = 2; 
+
+            // Ativa a aba "Drones" por padrão para visitantes
+            switchTab('drones-visitor-section'); // Isso também renderizará a lista de drones
+        } else if (isSeller) { // Usuários de Venda
+            productsNavButton.classList.remove('hidden');
+            calculatorNavButton.classList.remove('hidden');
+            dronesNavButton.classList.remove('hidden');
+            infoEmpresaNavButton.classList.remove('hidden');
+
+            productsNavButton.style.order = 1;
+            calculatorNavButton.style.order = 2;
+            dronesNavButton.style.order = 3;
+            infoEmpresaNavButton.style.order = 4;
+            
+            // Ativa a aba "Produtos" por padrão para vendedores
+            switchTab('products-section');
+        } 
+        else { // Usuários Admin (ou outros que talvez existam no futuro)
+            productsNavButton.classList.remove('hidden');
+            calculatorNavButton.classList.remove('hidden');
+            suppliersNavButton.classList.remove('hidden');
+            settingsNavButton.classList.remove('hidden');
+            dronesNavButton.classList.remove('hidden');
+            infoEmpresaNavButton.classList.remove('hidden');
+
+            // Restaura a ordem padrão para usuários logados completos
+            productsNavButton.style.order = 1;
+            calculatorNavButton.style.order = 2;
+            suppliersNavButton.style.order = 3;
+            settingsNavButton.style.order = 4;
+            dronesNavButton.style.order = 5;
+            infoEmpresaNavButton.style.order = 6;
+            
+            // Ativa a aba "Produtos" por padrão para administradores
+            switchTab('products-section');
+        }
+
+        // Configura o cabeçalho para o modo visitante/logado
+        if (isVisitor) {
+            welcomeMessage.style.display = 'none'; // Oculta a mensagem de boas-vindas no modo visitante
+            logoutButton.style.display = 'none'; // Oculta o botão de logout no modo visitante
+        } else {
+            welcomeMessage.style.display = 'inline';
+            logoutButton.style.display = 'inline';
+        }
+
+        // Exibe/Oculta o botão de Chat da IA
+        if (!currentUser.isVisitor) { // Só mostra para usuários logados, não visitantes
+            aiChatButton.style.display = 'block';
+        } else {
+            aiChatButton.style.display = 'none';
+        }
+
+        // --- CNPJ Display (FIX) ---
+        const cnpjDisplayLine = document.getElementById('cnpj-display-line');
+        if (cnpjDisplayLine) {
+            if (currentUser.isVisitor) {
+                cnpjDisplayLine.style.display = 'none';
+            } else {
+                cnpjDisplayLine.style.display = 'block'; // Garante que é exibido para usuários não visitantes
+            }
+        }
+        // --- FIM CNPJ Display (FIX) ---
+
+        // Configura o botão do menu hamburger/fechar no header
+        if (window.innerWidth <= 768) {
+            navToggleButton.style.display = 'block'; 
+            navToggleButton.textContent = '☰'; 
+            closeMobileNav(); 
+        } else {
+            navToggleButton.style.display = 'none';
+        }
+        
+        if (isTempUser) {
+            showTemporaryUserWarning();
+        }
+    }
+
+    function renderProducts(searchTerm = '') {
+        productList.innerHTML = '';
+        const lowerCaseSearchTerm = searchTerm.toLowerCase();
+        let productsToShow = [];
+
+        // Esta função agora é APENAS para usuários LOGADOS (não visitantes)
+        if (currentUser.isVisitor) {
+            productList.innerHTML = '<p>Funcionalidade de produtos não disponível no modo visitante. Use a seção "Drones".</p>';
+            return;
+        }
+
+        // A filtragem por tipo de usuário para `productsToShow` não é mais necessária aqui
+        // pois a navegação já garante que esta função só será chamada para usuários logados
+        // e, para vendedores e admins, todos os produtos são visíveis.
+        productsToShow = PRODUCTS.filter(p => 
+            p.name.toLowerCase().includes(lowerCaseSearchTerm) || 
+            p.spec.toLowerCase().includes(lowerCaseSearchTerm)
+        );
+
+        if (productsToShow.length === 0) {
+            productList.innerHTML = '<p>Nenhum produto encontrado.</p>';
+        }
+
+        productsToShow.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'card product-card';
+            productCard.dataset.productId = product.id;
+            const isAdmin = currentUser.role === 'admin';
+            const isSeller = currentUser.role === 'seller';
+            
+            // Determina o texto do "Valor de Venda"
+            const salePriceLabel = isSeller ? 'Valor' : 'Valor de Venda';
+            
+            let adminCostInfo = '';
+            if (isAdmin) { // Valor de custo SÓ para administradores
+                adminCostInfo = `
+                    <p class="cost-price">Valor de Custo: ${product.costPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                    <p class="supplier-info">📦 Fornecedor: ${product.supplier || 'Não especificado'}</p>
+                `;
+            }
+
+            productCard.innerHTML = `
+                <h3>${product.name}</h3>
+                <p class="product-spec"><strong>Especificações:</strong><br>${product.spec}</p>
+                <p class="price">${salePriceLabel}: ${product.salePrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                ${adminCostInfo}
+                <div class="action-buttons-container">
+                    <button class="gemini-button desc-button">✨ Gerar Descrição</button>
+                    <button class="gemini-button args-button">✨ Criar Argumentos</button>
+                    <button class="whatsapp-button" data-product-name="${product.name}" data-product-spec="${product.spec}">💬 WhatsApp</button>
+                    <button class="help-button">💡 Ajudar Cliente</button>
+                </div>
+                <div class="calculator-container">
+                    <div class="payment-method-selector">
+                        <input type="radio" id="payment-vista-${product.id}" name="payment-method-${product.id}" value="vista" checked>
+                        <label for="payment-vista-${product.id}">À vista</label>
+                        <input type="radio" id="payment-parcelado-${product.id}" name="payment-method-${product.id}" value="parcelado">
+                        <label for="payment-parcelado-${product.id}">Parcelado</label>
+                    </div>
+                    ${isAdmin ? `
+                    <div class="discount-option hidden" id="discount-option-${product.id}">
+                        <label for="discount-percentage-${product.id}">Desconto (%):</label>
+                        <input type="number" id="discount-percentage-${product.id}" min="0" max="15" value="0">
+                    </div>
+                    ` : ''}
+                    <div class="installments-container hidden">
+                        <label for="parcelas-${product.id}">Parcelas:</label>
+                        <select class="parcelas-select">
+                           <option value="1">1x</option><option value="2">2x</option><option value="3">3x</option><option value="4">4x</option><option value="5">5x</option><option value="6">6x</option><option value="7">7x</option><option value="8">8x</option><option value="9">9x</option><option value="10">10x</option><option value="11">11x</option><option value="12">12x</option>
+                        </select>
+                    </div>
+                    <button class="calculate-product-btn">Calcular</button>
+                    <div class="product-calculator-result"></div>
+                </div>
+            `;
+            productList.appendChild(productCard);
+        });
+    }
+
+    // --- Nova função para renderizar produtos para VISITANTES (agora chamada "Drones") ---
+    function renderDroneVisitorList(searchTerm = '') {
+        droneVisitorList.innerHTML = '';
+        const lowerCaseSearchTerm = searchTerm.toLowerCase();
+        // Filtra apenas os produtos que são "drones" - você pode precisar de uma propriedade 'category' nos seus produtos reais
+        const dronesToShow = PRODUCTS.filter(p => 
+            (p.name.toLowerCase().includes("dji") || p.name.toLowerCase().includes("drone") || p.name.toLowerCase().includes("mavic") || p.name.toLowerCase().includes("avata") || p.name.toLowerCase().includes("matrice") || p.name.toLowerCase().includes("skyfend") || p.name.toLowerCase().includes("sentinel") || p.name.toLowerCase().includes("neo")) &&
+            (p.name.toLowerCase().includes(lowerCaseSearchTerm) || p.spec.toLowerCase().includes(lowerCaseSearchTerm))
+        );
+
+
+        if (dronesToShow.length === 0) {
+            droneVisitorList.innerHTML = '<p>Nenhum drone encontrado com esse termo.</p>';
+        }
+
+        dronesToShow.forEach(product => {
+            const droneCard = document.createElement('div');
+            droneCard.className = 'card product-card'; // Reutiliza estilo de card de produto
+            droneCard.dataset.productId = product.id; // Mantém ID para referência
+            
+            droneCard.innerHTML = `
+                <h3>${product.name}</h3>
+                <p class="product-spec"><strong>Especificações:</strong><br>${product.spec}</p>
+                <p class="price" style="color: var(--secondary-color);">Consultar valor e disponibilidade</p>
+                <div class="action-buttons-container">
+                    <a href="https://wa.me/556236360668?text=${encodeURIComponent('Olá, gostaria de saber mais sobre o ' + product.name + ' e sua disponibilidade.')}" target="_blank" class="action-button whatsapp-button" style="width: auto;">Consultar via WhatsApp</a>
+                    <button class="action-button help-product-visitor-btn" data-product-name="${product.name}" data-product-spec="${product.spec}">Precisa de ajuda com esse produto?</button>
+                </div>
+            `;
+            droneVisitorList.appendChild(droneCard);
+        });
+    }
+
+
+    function calculate(baseValue, numInstallments, paymentMethod, discountPercentage = 0) {
+        const valor = parseFloat(baseValue);
+        if (isNaN(valor) || valor <= 0) {
+            return '<p style="color:red;">Valor base inválido.</p>';
+        }
+        
+        let taxa, valorFinal;
+
+        // Para "À vista", usamos a taxa de 1 parcela
+        taxa = INSTALLMENT_RATES[1] || 0;
+        valorFinal = valor * (1 + taxa);
+
+        // Aplica o desconto se o usuário for admin e o desconto for válido para pagamento à vista
+        if (currentUser.role === 'admin' && paymentMethod === 'vista' && discountPercentage > 0 && discountPercentage <= 15) {
+            valorFinal = valorFinal * (1 - (discountPercentage / 100));
+            // Arredonda para duas casas decimais
+            valorFinal = parseFloat(valorFinal.toFixed(2)); 
+        }
+
+        let resultHTML = `<div class="result-vista">Valor à Vista: ${valorFinal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</div>`;
+        
+        if (paymentMethod === 'parcelado') {
+            const parcelas = parseInt(numInstallments);
+            taxa = INSTALLMENT_RATES[parcelas] || 0;
+            valorFinal = valor * (1 + taxa);
+            const valorParcela = valorFinal / parcelas;
+            const valorTaxa = valorFinal - valor;
+
+            resultHTML += `
+                <div class="result-parcelado">
+                    <strong>Opção Parcelado:</strong><br>
+                    <span>Valor Final: <strong>${valorFinal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></span><br>
+                    <small>${parcelas}x de ${valorParcela.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</small><br>
+                    <small>Valor da taxa: ${valorTaxa.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</small>
+                </div>
+            `;
+        }
+        return resultHTML;
+    }
+
+    function switchTab(newSectionId) {
+        // Bloqueia acesso a seções para visitantes e usuários temporários
+        if (currentUser && currentUser.isVisitor && newSectionId !== 'info-section' && newSectionId !== 'drones-visitor-section') {
+            alert('Apenas as seções "Drones" e "Info Empresa" estão disponíveis no Modo Visitante.');
+            return;
+        }
+        // MODIFICAÇÃO: Bloqueio para usuários de venda (seller) e temporários
+        if (currentUser && currentUser.role === 'seller' && (newSectionId === 'suppliers-section' || newSectionId === 'settings-section')) {
+            alert('Esta seção não está disponível para o seu perfil.');
+            return;
+        }
+        if (currentUser && currentUser.type === 'temporary' && !['products-section', 'calculator-section', 'drones-visitor-section', 'info-section'].includes(newSectionId)) {
+            alert('Esta seção não está disponível para usuários temporários.');
+            return;
+        }
+        
+        if (newSectionId === 'suppliers-section' && (!currentUser || currentUser.role !== 'admin')) { 
+             document.querySelector(`.nav-button[data-section="${activeSectionId}"]`).classList.add('active');
+            return; 
+        }
+        if (newSectionId === 'settings-section' && (!currentUser || currentUser.username !== 'mikhaell')) { 
+            document.querySelector(`.nav-button[data-section="${activeSectionId}"]`).classList.add('active');
+            return;
+        }
+        if (newSectionId === 'settings-section') renderTempUserList();
+        
+        contentSections.forEach(s => s.classList.remove('active')); navButtons.forEach(b => b.classList.remove('active'));
+        document.getElementById(newSectionId).classList.add('active');
+        // O ID do botão agora é usado para garantir que o correto seja ativado
+        const targetButtonId = newSectionId === 'drones-visitor-section' ? 'drones-nav-button' : (newSectionId === 'info-section' ? 'info-empresa-nav-button' : newSectionId.replace('-section', '-nav-button'));
+        document.getElementById(targetButtonId).classList.add('active');
+        activeSectionId = newSectionId;
+
+        // Fecha o menu lateral no mobile ao selecionar uma opção
+        if (window.innerWidth <= 768) {
+            closeMobileNav();
+        }
+
+        // Renderiza a lista de drones novamente se a seção for "Drones"
+        if (newSectionId === 'drones-visitor-section') {
+            renderDroneVisitorList();
+        }
+        // Se for a seção de produtos, renderiza os produtos para usuários logados
+        else if (newSectionId === 'products-section') {
+            renderProducts();
+        }
+    }
+
+    // --- GESTÃO DE USUÁRIOS TEMPORÁRIOS ---
+    function createTemporaryUser(event) {
+        event.preventDefault();
+        const username = document.getElementById('temp-username').value;
+        const password = document.getElementById('temp-password').value;
+        const durationHours = parseInt(document.getElementById('temp-duration').value);
+        
+        if (USERS[username]) {
+            tempUserFeedback.textContent = 'Erro: Nome de usuário já existe.'; tempUserFeedback.style.color = 'red'; return;
+        }
+
+        const expiresAt = Date.now() + durationHours * 60 * 60 * 1000;
+        USERS[username] = { password, role: 'seller', type: 'temporary', expiresAt };
+
+        tempUserFeedback.textContent = `Usuário "${username}" criado com sucesso!`; tempUserFeedback.style.color = 'green';
+        createTempUserForm.reset(); renderTempUserList();
+        setTimeout(() => tempUserFeedback.textContent = '', 5000);
+    }
+    
+    function renderTempUserList() {
+        tempUserListContainer.innerHTML = '';
+        const tempUsers = Object.entries(USERS).filter(([_, user]) => user.type === 'temporary');
+
+        if(tempUsers.length === 0) {
+            tempUserListContainer.innerHTML = '<p>Nenhum usuário temporário criado.</p>';
+            return;
+        }
+
+        tempUsers.forEach(([username, user]) => {
+            const item = document.createElement('div');
+            item.className = 'temp-user-item';
+            const expires = new Date(user.expiresAt).toLocaleString('pt-BR');
+            item.innerHTML = `
+                <div class="user-info">
+                    <p><strong>${username}</strong></p>
+                    <p><small>Expira em: ${expires}</small></p>
+                </div>
+                <div class="user-actions">
+                    <button class="edit-btn" data-username="${username}">Editar</button>
+                    <button class="delete-btn" data-username="${username}">Excluir</button>
+                </div>
+            `;
+            item.querySelector('.edit-btn').addEventListener('click', () => openEditTempUserModal(username));
+            item.querySelector('.delete-btn').addEventListener('click', () => deleteTempUser(username));
+            tempUserListContainer.appendChild(item);
+        });
+    }
+
+    function openEditTempUserModal(username) {
+        const user = USERS[username];
+        modalTitle.textContent = `Editar Usuário: ${username}`;
+        modalBody.innerHTML = `
+            <form id="edit-temp-user-form">
+                <div class="input-group"><label for="edit-temp-password">Nova Senha</label><input type="text" id="edit-temp-password" value="${user.password}" required></div>
+                <div class="input-group"><label for="edit-temp-duration">Estender Duração (a partir de agora)</label><select id="edit-temp-duration">
+                    <option value="1">1 Hora</option><option value="8">8 Horas</option><option value="24">24 Horas</option><option value="72">72 Horas</option>
+                </select></div>
+                <button type="submit" class="action-button">Salvar Alterações</button>
+            </form>
+        `;
+        openModal();
+        document.getElementById('edit-temp-user-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newPassword = document.getElementById('edit-temp-password').value;
+            const newDuration = parseInt(document.getElementById('edit-temp-duration').value);
+            USERS[username].password = newPassword;
+            USERS[username].expiresAt = Date.now() + newDuration * 60 * 60 * 1000;
+            closeModal();
+            renderTempUserList();
+        });
+    }
+    
+    function deleteTempUser(username) {
+        if (confirm(`Tem certeza que deseja excluir o usuário temporário "${username}"?`)) {
+            delete USERS[username];
+            renderTempUserList();
+            if (currentUser && currentUser.username === username) {
+                handleLogout(); // Se o usuário logado for o que está sendo excluído, desloga
+                alert('Sua sessão foi encerrada, pois o usuário temporário foi excluído.');
+            }
+        }
+    }
+
+    function getRemainingTime(expiry) {
+        const total = expiry - Date.now();
+        const seconds = Math.floor((total / 1000) % 60);
+        const minutes = Math.floor((total / 1000 / 60) % 60);
+        const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+        return { hours, minutes, seconds };
+    }
+    
+    function showTemporaryUserWarning() {
+        clearInterval(tempUserInterval);
+        function updateWarning() {
+            const { hours, minutes, seconds } = getRemainingTime(currentUser.expiresAt);
+            if (hours < 0 || minutes < 0 || seconds < 0) {
+                modalBody.innerHTML = '<h2>Acesso Expirado</h2><p>O seu tempo de acesso terminou. A sessão será encerrada.</p>';
+                setTimeout(handleLogout, 3000);
+                clearInterval(tempUserInterval);
+            } else {
+                modalBody.innerHTML = `<h2>Acesso Temporário</h2><p>Esta é uma conta de convidado. O seu acesso irá expirar em:</p>
+                <h3 style="text-align:center;">${hours}h ${minutes}m ${seconds}s</h3>`;
+            }
+        }
+        updateWarning();
+        modalTitle.textContent = "Aviso";
+        openModal();
+        tempUserInterval = setInterval(updateWarning, 1000);
+    }
+    
+    // --- FUNÇÕES DE UTILIDADE E NOVAS FUNCIONALIDADES ---
+    function handleWhatsAppShare(product) {
+        const salePrice = product.salePrice.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
+        const message = `Olá! 👋\n\nEstou a enviar os detalhes sobre o *${product.name}* que conversámos. É um equipamento fantástico! 🚀\n\n*Especificações Principais:*\n${product.spec}\n\n*Valor de Venda:* ${salePrice}\n\nQualquer dúvida, estou à disposição!\n- Equipa Galvão Drones`;
+        const encodedMessage = encodeURIComponent(message);
+        // Sem número fixo para permitir ao usuário escolher o contato
+        const whatsappUrl = `https://wa.me/?text=${encodedMessage}`; 
+        window.open(whatsappUrl, '_blank');
+    }
+
+    function handleCustomerHelp(product) {
+        modalTitle.textContent = `Assistente para: ${product.name}`;
+        modalBody.innerHTML = `
+            <div class="input-group">
+                <label for="customer-question">Copie e cole a pergunta do cliente abaixo:</label>
+                <textarea id="customer-question" rows="4"></textarea>
+            </div>
+            <button id="ask-gemini-button" class="action-button">Perguntar à IA</button>
+        `;
+        openModal();
+
+        document.getElementById('ask-gemini-button').addEventListener('click', () => {
+            const customerQuestion = document.getElementById('customer-question').value;
+             if (customerQuestion && customerQuestion.trim() !== '') {
+                 const title = "Sugestão de Resposta para Cliente";
+                 // A IA agora se chama R2D2 e a prompt é mais direta
+                 const prompt = `R2D2: Responda de forma direta e clara (máximo 3 frases) à seguinte dúvida do cliente, considerando estas especificações do produto: "${product.spec}". Dúvida do cliente: "${customerQuestion}"`;
+                 callGeminiAPI(prompt, title);
+             }
+        });
+    }
+
+    // Função para o botão "Precisa de ajuda com esse produto?" no modo visitante (agora para Drones)
+    function handleVisitorProductHelp(productName, productSpec) {
+        modalTitle.textContent = `Ajuda sobre: ${productName}`;
+        modalBody.innerHTML = `
+            <div class="input-group">
+                <label for="visitor-product-question">Qual sua dúvida sobre o ${productName}?</label>
+                <textarea id="visitor-product-question" rows="4"></textarea>
+            </div>
+            <button id="ask-gemini-visitor-product-button" class="action-button">Obter Ajuda da IA</button>
+        `;
+        openModal();
+
+        document.getElementById('ask-gemini-visitor-product-button').addEventListener('click', () => {
+            const visitorQuestion = document.getElementById('visitor-product-question').value;
+            if (visitorQuestion && visitorQuestion.trim() !== '') {
+                const title = "Resposta da Galvão Drones";
+                callGeminiAPI(visitorQuestion, title, true, productSpec); // true para isProductHelp
+            }
+        });
+    }
+
+
+    function showSuppliers() {
+        const code = prompt("Para aceder a esta área, digite o código de acesso administrativo:");
+        if (code === CONFIDENTIAL_CODE) {
+            supplierList.innerHTML = '';
+            SUPPLIERS.forEach(supplier => {
+                const supplierCard = document.createElement('div');
+                supplierCard.className = 'card supplier-card';
+                supplierCard.innerHTML = `
+                    <h3>${supplier.name}</h3>
+                    <p><strong>Detalhes:</strong> ${supplier.details}</p>
+                    <div><strong>Pagamento:</strong><br>${supplier.payment.replace(/\n/g, '<br>')}</div>
+                    <p><strong>Produtos Principais:</strong> ${supplier.products}</p>
+                `;
+                supplierList.appendChild(supplierCard);
+            });
+            return true;
+        } else if (code !== null && code !== "") { alert('Código incorreto!'); return false; }
+        return false;
+    }
+
+    function openModal() { mainModal.style.display = 'block'; }
+    function closeModal() { mainModal.style.display = 'none'; modalBody.innerHTML = ''; clearInterval(tempUserInterval); }
+    function handleScroll() { mainContent.scrollTop > 200 ? scrollToTopButton.style.display = "block" : scrollToTopButton.style.display = "none"; }
+    function scrollTop() { mainContent.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+    // --- EVENT LISTENERS ---
+    loginButton.addEventListener('click', handleLogin);
+    visitorModeButton.addEventListener('click', handleVisitorMode); // Evento para o modo visitante
+    passwordInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleLogin(); });
+    logoutButton.addEventListener('click', handleLogout);
+    
+    // Event delegation for dynamic elements
+    mainContent.addEventListener('click', (e) => {
+        const target = e.target;
+        const productCard = target.closest('.product-card');
+
+        // Lógica para o modo visitante (seção Drones)
+        if (currentUser && currentUser.isVisitor && target.classList.contains('help-product-visitor-btn')) {
+            const productName = target.dataset.productName;
+            const productSpec = target.dataset.productSpec;
+            handleVisitorProductHelp(productName, productSpec);
+            return; // Impede que o clique continue para a lógica de produtos normais
+        }
+
+
+        // Bloqueia ações de produto para visitantes (já coberto pela `if (currentUser.isVisitor)` acima)
+        // Se `currentUser.role === 'seller'`, as ações normais devem ser permitidas.
+        if (currentUser && currentUser.isVisitor) {
+            return; 
+        }
+
+        if (productCard) {
+            const productId = parseInt(productCard.dataset.productId);
+            const product = PRODUCTS.find(p => p.id === productId);
+            if (!product) return;
+            
+            if (target.classList.contains('desc-button')) {
+                const title = `Descrição para: ${product.name}`;
+                const prompt = `R2D2: Gere uma descrição de venda curta e apelativa para o produto "${product.name}", focando nos benefícios e usando as especificações: ${product.spec}. Não inclua o preço.`;
+                callGeminiAPI(prompt, title);
+            } else if (target.classList.contains('args-button')) {
+                const title = `Argumentos para: ${product.name}`;
+                const prompt = `R2D2: Liste 3 a 4 argumentos de venda concisos para o produto "${product.name}", explicando brevemente por que cada uno é importante para o cliente, com base nas especificações: ${product.spec}.`;
+                callGeminiAPI(prompt, title);
+            } else if (target.classList.contains('whatsapp-button')) {
+                // WhatsApp para equipe interna: sem número fixo, permite selecionar contato
+                const message = `Olá! 👋\n\nEstou a enviar os detalhes sobre o *${product.name}* que conversámos. É um equipamento fantástico! 🚀\n\n*Especificações Principais:*\n${product.spec}\n\n*Valor de Venda:* ${product.salePrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}\n\nQualquer dúvida, estou à disposição!\n- Equipa Galvão Drones`;
+                const encodedMessage = encodeURIComponent(message);
+                window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
+            } else if (target.classList.contains('help-button')) {
+                handleCustomerHelp(product);
+            } else if (target.classList.contains('calculate-product-btn')) {
+                const resultContainer = productCard.querySelector('.product-calculator-result');
+                const paymentMethod = productCard.querySelector(`input[name="payment-method-${productId}"]:checked`).value;
+                const numInstallments = productCard.querySelector('.parcelas-select').value;
+                
+                let discountPercentage = 0;
+                const discountOptionDiv = productCard.querySelector(`#discount-option-${product.id}`);
+
+                // Se for administrador e o método for à vista, tenta pegar o desconto e exibe o campo
+                if (currentUser.role === 'admin' && paymentMethod === 'vista' && discountOptionDiv) {
+                    const discountInput = productCard.querySelector(`#discount-percentage-${product.id}`);
+                    if (discountInput) {
+                        discountPercentage = parseFloat(discountInput.value);
+                    }
+                    discountOptionDiv.classList.remove('hidden'); // Torna visível
+                } else if (discountOptionDiv) {
+                    discountOptionDiv.classList.add('hidden'); // Esconde se não for admin ou não for à vista
+                }
+
+
+                resultContainer.innerHTML = calculate(product.salePrice, numInstallments, paymentMethod, discountPercentage);
+            }
+        }
+    });
+
+    mainContent.addEventListener('change', (e) => {
+        if (e.target.matches('input[name^="payment-method-"]')) {
+            const card = e.target.closest('.product-card');
+            const installmentsDiv = card.querySelector('.installments-container');
+            const discountOptionDiv = card.querySelector('.discount-option');
+
+            installmentsDiv.classList.toggle('hidden', e.target.value !== 'parcelado');
+            
+            // Aqui, a lógica de esconder a caixa de desconto é mais simples:
+            // Se o método de pagamento não for "à vista" OU não for um admin, esconde a caixa de desconto.
+            // A exibição ao clicar no botão "Calcular" no modo "À vista" (para admin) já foi tratada acima.
+            if (discountOptionDiv && (e.target.value !== 'vista' || currentUser.role !== 'admin')) {
+                discountOptionDiv.classList.add('hidden');
+            }
+        }
+    });
+
+    navButtons.forEach(button => button.addEventListener('click', () => {
+        // Se for modo visitante, só permite clicar em "Info Empresa" ou "Drones"
+        if (currentUser && currentUser.isVisitor && button.dataset.section !== 'info-section' && button.dataset.section !== 'drones-visitor-section') {
+            return;
+        }
+        // MODIFICAÇÃO: Bloqueio para usuários de venda (seller)
+        if (currentUser && currentUser.role === 'seller' && (button.dataset.section === 'suppliers-section' || button.dataset.section === 'settings-section')) {
+            return;
+        }
+        switchTab(button.dataset.section);
+    }));
+
+    closeModalButton.addEventListener('click', closeModal);
+    window.addEventListener('click', (event) => { if (event.target == mainModal) { closeModal(); } });
+    productSearchInput.addEventListener('input', (e) => renderProducts(e.target.value));
+    droneVisitorSearchInput.addEventListener('input', (e) => renderDroneVisitorList(e.target.value)); // Evento para pesquisa de drones no modo visitante
+    createTempUserForm.addEventListener('submit', createTemporaryUser);
+    mainContent.addEventListener('scroll', handleScroll);
+    scrollToTopButton.addEventListener('click', scrollTop);
+    
+    // Listeners para a calculadora geral
+    generalCalculateButton.addEventListener('click', () => {
+        const baseValue = generalCalcValorBase.value;
+        const paymentMethod = document.querySelector('input[name="general-payment-method"]:checked').value;
+        const numInstallments = generalCalcParcelasSelect.value;
+        
+        let discountPercentage = 0;
+        // A calculadora geral não tem a opção de desconto à vista por produto, então não aplicamos aqui
+        // Se precisar adicionar, seria necessário um campo similar ao do produto
+
+        generalCalculatorResult.innerHTML = calculate(baseValue, numInstallments, paymentMethod, discountPercentage);
+    });
+
+    generalCalcPaymentRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            generalCalcInstallmentsContainer.classList.toggle('hidden', e.target.value !== 'parcelado');
+        });
+    });
+
+    // Toggle Nav Button no header (☰)
+    navToggleButton.addEventListener('click', () => {
+        navElement.classList.toggle('nav-open');
+        navToggleButton.textContent = navElement.classList.contains('nav-open') ? '✕' : '☰';
+    });
+
+    // Close button inside nav (✕)
+    navToggleButtonClose.addEventListener('click', () => {
+        closeMobileNav();
+    });
+
+    // Função para fechar a nav mobile
+    function closeMobileNav() {
+        if (window.innerWidth <= 768) { // Apenas em mobile
+            navElement.classList.remove('nav-open');
+            navToggleButton.textContent = '☰';
+        }
+    }
+
+    // Fechar nav clicando fora dela no mobile (se for overlay)
+    window.addEventListener('click', (event) => {
+        if (window.innerWidth <= 768 && navElement.classList.contains('nav-open') &&
+            !navElement.contains(event.target) && !navToggleButton.contains(event.target) && !headerElement.contains(event.target)) {
+            closeMobileNav();
+        }
+    });
+
+    // Event Listeners para o botão de Chat da IA
+    aiChatButton.addEventListener('click', () => {
+        aiChatModal.style.display = 'block';
+        aiQuestionInput.value = ''; // Limpa input anterior
+        aiResponseArea.innerHTML = ''; // Limpa resposta anterior
+        aiResponseArea.style.display = 'none'; // Esconde a área de resposta até uma nova query
+        aiLoader.style.display = 'none'; // Esconde o loader
+    });
+
+    aiChatCloseButton.addEventListener('click', () => {
+        aiChatModal.style.display = 'none';
+    });
+
+    submitAiQuestionButton.addEventListener('click', () => {
+        const question = aiQuestionInput.value.trim();
+        if (question) {
+            callGeminiAPI(question, "Resposta da IA", false, '', true); // true para isGeneralAI
+        }
+    });
+
+    // Fechar modal da IA se clicar fora
+    window.addEventListener('click', (event) => {
+        if (event.target == aiChatModal) {
+            aiChatModal.style.display = 'none';
+        }
+    });
+});
+</script>
+
+</body>
+</html>
