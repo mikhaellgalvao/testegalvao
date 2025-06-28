@@ -183,7 +183,8 @@
             margin: 0;
             font-size: 24px;
         }
-        #logout-button {
+        /* MODIFICADO: Estilos para o botão de logout. Agora o display é controlado via JS */
+        header #logout-button {
             background-color: var(--danger-color);
             color: white;
             border: none;
@@ -192,15 +193,15 @@
             cursor: pointer;
             font-weight: 500;
             transition: background-color 0.3s;
+            display: none; /* Escondido por padrão no CSS, JS controla */
         }
-        #logout-button:hover {
+        header #logout-button:hover {
             background-color: #c0392b;
         }
 
-        /* Estilos específicos para o cabeçalho no modo visitante */
-        .visitor-header #welcome-message,
-        .visitor-header #logout-button {
-            display: none;
+        /* Removido o display: none para o logout-button na classe visitor-header */
+        .visitor-header #welcome-message {
+            display: none; /* Mantém a welcome message escondida para visitantes */
         }
 
         .app-body {
@@ -267,6 +268,12 @@
             .app-body {
                 flex-direction: column; /* Pilha itens verticalmente no mobile */
                 min-height: calc(100vh - 60px); /* Reduz min-height para acomodar o header fixo */
+            }
+
+            /* NOVO: Ajustes para garantir que o conteúdo principal use a largura total no mobile */
+            main {
+                width: 100%;
+                box-sizing: border-box; /* Inclui padding na largura total */
             }
         }
 
@@ -550,6 +557,135 @@
             border: 1px solid #ddd;
             padding: 10px; /* Adicionado padding para melhor leitura */
         }
+
+        /* NOVO: Estilos para elementos em modo retrato */
+        @media (max-width: 768px) {
+            /* Alinhamento geral para conteúdo principal */
+            main .content-section > * {
+                margin-left: auto;
+                margin-right: auto;
+                max-width: 100%; /* Garante que elementos não ultrapassem a tela */
+                padding: 0 10px; /* Padding interno para evitar que o conteúdo cole nas bordas */
+                box-sizing: border-box;
+            }
+
+            /* Cartões de produtos/fornecedores/info */
+            .card {
+                padding: 15px; /* Reduz padding em telas menores */
+                margin-bottom: 10px; /* Espaçamento menor entre cards */
+            }
+
+            .card h3 {
+                font-size: 1.1em; /* Ajusta tamanho do título do card */
+            }
+
+            .product-spec, .price, .cost-price, .supplier-info {
+                font-size: 0.9em; /* Fontes um pouco menores para caber melhor */
+            }
+
+            /* Botões de ação dentro dos cards */
+            .action-buttons-container {
+                flex-direction: column; /* Empilha os botões verticalmente */
+                gap: 8px; /* Reduz o espaçamento entre eles */
+            }
+            .action-buttons-container button, .action-buttons-container a.action-button {
+                width: 100%; /* Ocupa a largura total do container */
+                padding: 10px; /* Ajusta o padding dos botões */
+                font-size: 0.9em;
+            }
+
+            /* Calculadora dentro dos cards */
+            .calculator-container .input-group {
+                margin-bottom: 10px; /* Reduz espaçamento entre grupos de input */
+            }
+            .payment-method-selector label {
+                margin-right: 10px;
+                font-size: 0.9em;
+            }
+            .discount-option {
+                flex-direction: column; /* Empilha label e input */
+                align-items: flex-start; /* Alinha ao início */
+                gap: 5px;
+            }
+            .discount-option input[type="number"] {
+                width: 100px; /* Mantém uma largura razoável */
+                padding: 5px;
+            }
+            .discount-option::after {
+                left: 0; /* Alinha o texto opaco */
+                top: auto;
+                bottom: -15px; /* Posiciona abaixo do input */
+                transform: none;
+            }
+            .calculate-product-btn {
+                width: 100%; /* Botão de calcular ocupa toda a largura */
+                padding: 10px;
+            }
+            .product-calculator-result, #general-calculator-result {
+                font-size: 1em;
+                padding: 10px;
+            }
+            .result-parcelado small {
+                font-size: 0.8em;
+            }
+
+            /* Campos de pesquisa */
+            .search-bar input {
+                padding: 10px 10px 10px 35px; /* Ajusta padding para ícone de busca */
+                font-size: 0.95em;
+            }
+            .search-bar::before {
+                left: 10px;
+                font-size: 16px;
+            }
+
+            /* Gestão de Usuários Temporários */
+            .temp-user-item {
+                flex-direction: column; /* Empilha informações e ações */
+                align-items: flex-start; /* Alinha ao início */
+                padding: 10px;
+            }
+            .user-info p {
+                font-size: 0.95em;
+            }
+            .user-actions {
+                width: 100%;
+                display: flex;
+                justify-content: flex-start; /* Alinha botões ao início */
+                margin-top: 10px;
+            }
+            .user-actions button {
+                margin-left: 0; /* Remove margem lateral */
+                margin-right: 10px; /* Adiciona espaçamento entre botões */
+                padding: 8px 10px;
+                font-size: 0.9em;
+            }
+
+            /* Informações da Empresa */
+            .info-card p {
+                font-size: 0.95em;
+            }
+            .contact-buttons-container {
+                flex-direction: column; /* Empilha os botões de contato */
+                gap: 8px;
+            }
+            .contact-buttons-container a.action-button {
+                width: 100%; /* Ocupa a largura total */
+            }
+
+            /* Modal da IA */
+            #ai-chat-modal .modal-content {
+                width: 90%; /* Aumenta a largura do modal no mobile */
+                margin: 20px auto; /* Mais espaço nas bordas */
+            }
+            #ai-question-input {
+                font-size: 0.95em;
+            }
+            #ai-response-area {
+                font-size: 0.9em;
+                padding: 8px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -697,20 +833,20 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- BANCO DE DADOS SIMULADO ---
-    // RESTAURADO: Senhas originais do seu código.
+    const currentYear = new Date().getFullYear(); 
+
     const USERS = {
         'mikhaell': { password: 'mk0639', role: 'admin', type: 'permanent' }, 
         'Maikhon':  { password: 'maik', role: 'admin', type: 'permanent' },
         'Ryan':     { password: 'ryan', role: 'admin', type: 'permanent' },
         'Fineias':  { password: 'fin', role: 'seller', type: 'permanent' },
         'Rafael':   { password: 'raf', role: 'seller', type: 'permanent' },
-        'Eduardo':  { password: 'edu', role: 'seller', type: 'permanent' },
+        'Eduardo': { password: 'edu' + currentYear, role: 'seller', type: 'permanent' }, // NOVO USUÁRIO E SENHA PADRÃO
         
-        // Usuários de venda atualizados com senhas seguindo o padrão das 3 primeiras letras + ano atual
-        // RESTAURADO: Estas senhas também foram revertidas para os valores que você tinha antes.
-        'mikhaellven': { password: 'mik', role: 'seller', type: 'permanent' },
-        'maikhonven':  { password: 'mai', role: 'seller', type: 'permanent' },
-        'ryanven':     { password: 'rya', role: 'seller', type: 'permanent' },
+        // Usuários de venda com senhas no padrão (ajustado para usar o ano atual)
+        'mikhaellven': { password: 'mik' + currentYear, role: 'seller', type: 'permanent' },
+        'maikhonven':  { password: 'mai' + currentYear, role: 'seller', type: 'permanent' },
+        'ryanven':     { password: 'rya' + currentYear, role: 'seller', type: 'permanent' },
     };
     const CONFIDENTIAL_CODE = '@0639';
     const PRODUCTS = [
@@ -862,6 +998,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const navElement = document.querySelector('nav'); // O elemento nav
     const appBody = document.querySelector('.app-body');
     const headerElement = document.querySelector('header'); // Adicionado para controle de classe
+
     const bodyElement = document.body; // Referência ao body para alterar a classe
 
     // Novos elementos da IA
@@ -903,7 +1040,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isProductHelp) {
             fullPrompt = `R2D2: Responda de forma direta e clara (máximo 3 frases) à seguinte dúvida do cliente sobre o produto "${productSpecs}". Dúvida do cliente: "${prompt}"`;
         } else if (isGeneralAI) { // Nova condição para perguntas da IA geral
-            // Use o ano atual de 2025 para perguntas relevantes ao tempo
+            // Use o ano atual para perguntas relevantes ao tempo
             const currentYearPrompt = new Date().getFullYear();
             fullPrompt = `Você é um assistente da Galvão Drones, especializada em drones e equipamentos DJI. Responda de forma útil, amigável e concisa (máximo 4 frases) às perguntas, utilizando o conhecimento de um especialista em drones. Se a pergunta for sobre produtos específicos da Galvão Drones, como modelos de drones ou equipamentos, use seu conhecimento para dar uma resposta detalhada sobre o universo de drones. Se a pergunta for sobre a empresa "Galvão Drones" (como localização, contato, serviços), forneça as seguintes informações: "A Galvão Drones está localizada na Rua 16, nº 304 – Setor Aeroviário, Goiânia – GO, CEP: 74435-240. Você pode nos contatar pelo telefone (62) 3636-0668 ou pelo WhatsApp 556236360668. Nosso website é www.galvaodrones.com.br e também estamos no Instagram (@galvao_drones) e YouTube (Galvão Drones)." Responda considerando o ano atual de ${currentYearPrompt}. Pergunta do usuário: "${prompt}"`;
         } else {
@@ -984,101 +1121,76 @@ document.addEventListener('DOMContentLoaded', () => {
         headerElement.classList.remove('visitor-header');
         // Remove a classe do modo visitante do body
         bodyElement.classList.remove('visitor-mode-bg'); 
-        // Fecha a nav mobile se estiver aberta
-        closeMobileNav();
         // Esconde o botão da IA ao sair
         aiChatButton.style.display = 'none'; 
         aiChatModal.style.display = 'none'; // Garante que o modal da IA também feche
+        // Fecha a nav mobile se estiver aberta
+        closeMobileNav();
     }
 
     function setupAppForUser() {
         if (currentUser.isVisitor) {
             welcomeMessage.textContent = 'Modo Visitante';
-            headerElement.classList.add('visitor-header'); // Adiciona classe para esconder elementos
+            headerElement.classList.add('visitor-header'); // Adiciona classe para esconder a welcome message
+            logoutButton.style.display = 'block'; // MOSTRAR botão de logout para visitantes
             bodyElement.classList.add('visitor-mode-bg'); // Adiciona classe para mudar o fundo
         } else {
             welcomeMessage.textContent = `Bem-vindo(a), ${currentUser.username}!`;
-            headerElement.classList.remove('visitor-header');
+            headerElement.classList.remove('visitor-header'); // Remove para usuários logados
+            logoutButton.style.display = 'block'; // MOSTRAR botão de logout para usuários logados
             bodyElement.classList.remove('visitor-mode-bg'); // Remove a classe do fundo
         }
 
         const isAdmin = currentUser.role === 'admin';
-        const isSeller = currentUser.role === 'seller'; // Novo: Para identificar usuários de venda
+        const isSeller = currentUser.role === 'seller';
         const isTempUser = currentUser.type === 'temporary';
         const isVisitor = currentUser.isVisitor;
         
         // Esconde ou mostra e reordena botões da navegação lateral conforme o tipo de usuário
-        
-        // Esconde tudo por padrão e depois mostra o que é relevante
         navButtons.forEach(button => button.classList.add('hidden'));
 
         if (isVisitor) {
-            // Mostra e ordena as opções para visitante
             dronesNavButton.classList.remove('hidden'); 
             infoEmpresaNavButton.classList.remove('hidden'); 
-
             dronesNavButton.style.order = 1; 
             infoEmpresaNavButton.style.order = 2; 
-
-            // Ativa a aba "Drones" por padrão para visitantes
-            switchTab('drones-visitor-section'); // Isso também renderizará a lista de drones
-        } else if (isSeller) { // Usuários de Venda
+            switchTab('drones-visitor-section');
+        } else if (isSeller) {
             productsNavButton.classList.remove('hidden');
             calculatorNavButton.classList.remove('hidden');
             dronesNavButton.classList.remove('hidden');
             infoEmpresaNavButton.classList.remove('hidden');
-
             productsNavButton.style.order = 1;
             calculatorNavButton.style.order = 2;
             dronesNavButton.style.order = 3;
             infoEmpresaNavButton.style.order = 4;
-            
-            // Ativa a aba "Produtos" por padrão para vendedores
             switchTab('products-section');
-        } 
-        else { // Usuários Admin (ou outros que talvez existam no futuro)
+        } else { // Administrador
             productsNavButton.classList.remove('hidden');
             calculatorNavButton.classList.remove('hidden');
             suppliersNavButton.classList.remove('hidden');
             settingsNavButton.classList.remove('hidden');
             dronesNavButton.classList.remove('hidden');
             infoEmpresaNavButton.classList.remove('hidden');
-
-            // Restaura a ordem padrão para usuários logados completos
             productsNavButton.style.order = 1;
             calculatorNavButton.style.order = 2;
             suppliersNavButton.style.order = 3;
             settingsNavButton.style.order = 4;
             dronesNavButton.style.order = 5;
             infoEmpresaNavButton.style.order = 6;
-            
-            // Ativa a aba "Produtos" por padrão para administradores
             switchTab('products-section');
         }
 
-        // Configura o cabeçalho para o modo visitante/logado
-        if (isVisitor) {
-            welcomeMessage.style.display = 'none'; // Oculta a mensagem de boas-vindas no modo visitante
-            logoutButton.style.display = 'none'; // Oculta o botão de logout no modo visitante
-        } else {
-            welcomeMessage.style.display = 'inline';
-            logoutButton.style.display = 'inline';
-        }
-
-        // Exibe/Oculta o botão de Chat da IA
-        if (!currentUser.isVisitor) { // Só mostra para usuários logados, não visitantes
-            aiChatButton.style.display = 'block';
-        } else {
-            aiChatButton.style.display = 'none';
-        }
-
+        // Exibe/Oculta o botão de Chat da IA (visível para todos os logados, incluindo visitantes)
+        aiChatButton.style.display = 'block';
+        
         // --- CNPJ Display (FIX) ---
         const cnpjDisplayLine = document.getElementById('cnpj-display-line');
         if (cnpjDisplayLine) {
             if (currentUser.isVisitor) {
                 cnpjDisplayLine.style.display = 'none';
             } else {
-                cnpjDisplayLine.style.display = 'block'; // Garante que é exibido para usuários não visitantes
+                cnpjDisplayLine.style.display = 'block';
             }
         }
         // --- FIM CNPJ Display (FIX) ---
@@ -1108,9 +1220,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // A filtragem por tipo de usuário para `productsToShow` não é mais necessária aqui
-        // pois a navegação já garante que esta função só será chamada para usuários logados
-        // e, para vendedores e admins, todos os produtos são visíveis.
         productsToShow = PRODUCTS.filter(p => 
             p.name.toLowerCase().includes(lowerCaseSearchTerm) || 
             p.spec.toLowerCase().includes(lowerCaseSearchTerm)
@@ -1524,7 +1633,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 callGeminiAPI(prompt, title);
             } else if (target.classList.contains('args-button')) {
                 const title = `Argumentos para: ${product.name}`;
-                const prompt = `R2D2: Liste 3 a 4 argumentos de venda concisos para o produto "${product.name}", explicando brevemente por que cada uno é importante para o cliente, com base nas especificações: ${product.spec}.`;
+                const prompt = `R2D2: Liste 3 a 4 argumentos de venda concisos para o produto "${product.name}", explicando brevemente por que cada um é importante para o cliente, com base nas especificações: ${product.spec}.`;
                 callGeminiAPI(prompt, title);
             } else if (target.classList.contains('whatsapp-button')) {
                 // WhatsApp para equipe interna: sem número fixo, permite selecionar contato
