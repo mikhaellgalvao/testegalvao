@@ -204,6 +204,20 @@
             display: none; /* Mantém a welcome message escondida para visitantes */
         }
 
+        /* NOVO: Estilo para o link de alteração de senha no header */
+        #change-password-link {
+            font-size: 0.8em;
+            color: #ccc;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-left: 10px; /* Espaço da mensagem de boas-vindas */
+            display: none; /* Escondido por padrão, JS controla */
+        }
+        #change-password-link:hover {
+            color: white;
+        }
+
+
         .app-body {
             display: flex;
             position: relative; /* Para o main-content não empurrar a nav */
@@ -615,6 +629,45 @@
             padding: 10px; /* Adicionado padding para melhor leitura */
         }
 
+        /* NOVO: Estilos para o modal de senha do fornecedor */
+        #supplier-password-modal .modal-content {
+            max-width: 400px;
+            text-align: center;
+        }
+        #supplier-password-modal .input-group input {
+            text-align: center;
+        }
+        #supplier-password-modal .error-message {
+            color: var(--danger-color);
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* NOVO: Modal de Alteração de Senha */
+        #change-password-modal .modal-content {
+            max-width: 450px;
+            text-align: center;
+        }
+        #change-password-modal .input-group {
+            margin-bottom: 15px;
+        }
+        #change-password-modal .input-group label {
+            font-size: 0.9em;
+        }
+        #change-password-modal .error-message {
+            color: var(--danger-color);
+            margin-top: 10px;
+            font-weight: 500;
+            display: none;
+        }
+        #change-password-modal .success-message {
+            color: var(--secondary-color);
+            margin-top: 10px;
+            font-weight: 500;
+            display: none;
+        }
+
+
         /* NOVO: Estilos para elementos em modo retrato */
         @media (max-width: 768px) {
             /* Alinhamento geral para conteúdo principal */
@@ -763,6 +816,7 @@
                 <div class="header-left">
                     <button id="nav-toggle-btn" class="nav-toggle-btn">☰</button>
                     <span id="welcome-message"></span>
+                    <span id="change-password-link">Alterar Senha</span>
                     <h1>Portal Interno</h1>
                 </div>
                 <div>
@@ -940,6 +994,38 @@
         </div>
     </div>
 
+    <div id="supplier-password-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="supplier-password-close-button">×</span>
+            <h3>Acesso Restrito</h3>
+            <p>Por favor, digite a senha para acessar as informações de fornecedores:</p>
+            <div class="input-group">
+                <input type="password" id="supplier-access-password" placeholder="Digite a senha">
+            </div>
+            <button id="submit-supplier-password" class="action-button">Acessar</button>
+            <p id="supplier-password-error" class="error-message">Senha incorreta.</p>
+        </div>
+    </div>
+
+    <div id="change-password-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="change-password-close-button">×</span>
+            <h3 id="change-password-modal-title">Alterar Senha</h3>
+            <p id="change-password-message">Por favor, defina uma nova senha para sua conta.</p>
+            <div class="input-group">
+                <label for="new-password">Nova Senha (mín. 6 dígitos)</label>
+                <input type="password" id="new-password">
+            </div>
+            <div class="input-group">
+                <label for="confirm-new-password">Confirmar Nova Senha</label>
+                <input type="password" id="confirm-new-password">
+            </div>
+            <button id="submit-change-password" class="action-button">Salvar Nova Senha</button>
+            <p id="change-password-error" class="error-message">Senhas não conferem ou são muito curtas.</p>
+            <p id="change-password-success" class="success-message">Senha alterada com sucesso!</p>
+        </div>
+    </div>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -947,18 +1033,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentYear = new Date().getFullYear(); 
 
     const USERS = {
-        'mikhaell': { password: 'mk0639', role: 'admin', type: 'permanent' }, 
-        'Maikhon':  { password: 'maik', role: 'admin', type: 'permanent' },
-        'Ryan':     { password: 'ryan', role: 'admin', type: 'permanent' },
-        'Fineias':  { password: 'fin', role: 'seller', type: 'permanent' },
-        'Rafael':   { password: 'raf', role: 'seller', type: 'permanent' },
-        'Eduardo': { password: 'edu' + currentYear, role: 'seller', type: 'permanent' }, 
+        'mikhaell': { password: 'mk0639', role: 'admin', type: 'permanent', firstLogin: false }, 
+        'Maikhon':  { password: 'maik', role: 'admin', type: 'permanent', firstLogin: false },
+        'Ryan':     { password: 'ryan', role: 'admin', type: 'permanent', firstLogin: false },
+        'Fineias':  { password: 'fin', role: 'seller', type: 'permanent', firstLogin: false },
+        'Rafael':   { password: 'raf', role: 'seller', type: 'permanent', firstLogin: false },
+        'Eduardo':  { password: 'edu' + currentYear, role: 'seller', type: 'permanent', firstLogin: true }, // NOVO USUÁRIO COM firstLogin: true
         
-        'mikhaellven': { password: 'mik' + currentYear, role: 'seller', type: 'permanent' },
-        'maikhonven':  { password: 'mai' + currentYear, role: 'seller', type: 'permanent' },
-        'ryanven':     { password: 'rya' + currentYear, role: 'seller', type: 'permanent' },
+        'mikhaellven': { password: 'mik' + currentYear, role: 'seller', type: 'permanent', firstLogin: true }, // Exemplo de usuário de venda que terá que trocar
+        'maikhonven':  { password: 'mai' + currentYear, role: 'seller', type: 'permanent', firstLogin: true },
+        'ryanven':     { password: 'rya' + currentYear, role: 'seller', type: 'permanent', firstLogin: true },
     };
-    const CONFIDENTIAL_CODE = '@0639';
+    // SENHA CONFIDENCIAL AGORA DEFINIDA AQUI E NÃO NO HTML
+    const CONFIDENTIAL_CODE = '@0639'; 
+
     // ATENÇÃO: PRODUCTS reestruturado para o novo modelo de 'sources'
     let PRODUCTS = [ 
         { id: 1, name: 'DJI Neo Standard', spec: '🛸 DJI Neo Standard ou Combo fly more\n🎥 Grava em 4K/30fps\n⏱️ Até 18 minutos de voo\n📡 Alcance de até 6 km\n⚖️ Peso de apenas 135 g\n🎮 Controle via app, com controle ou controle motion ( três versões)', salePrice: 1900, 
@@ -1155,6 +1243,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('password');
     const loginError = document.getElementById('login-error');
     const welcomeMessage = document.getElementById('welcome-message');
+    const changePasswordLink = document.getElementById('change-password-link'); // NOVO
     const visitorModeButton = document.getElementById('visitor-mode-button'); 
 
     const navButtons = document.querySelectorAll('.nav-button');
@@ -1234,9 +1323,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const aiResponseArea = document.getElementById('ai-response-area');
     const aiLoader = document.getElementById('ai-loader');
 
+    // NOVO: Elementos do modal de senha do fornecedor
+    const supplierPasswordModal = document.getElementById('supplier-password-modal');
+    const supplierAccessPasswordInput = document.getElementById('supplier-access-password');
+    const submitSupplierPasswordButton = document.getElementById('submit-supplier-password');
+    const supplierPasswordError = document.getElementById('supplier-password-error');
+    const supplierPasswordCloseButton = document.getElementById('supplier-password-close-button');
+
+    // NOVO: Elementos do modal de alteração de senha
+    const changePasswordModal = document.getElementById('change-password-modal');
+    const changePasswordModalTitle = document.getElementById('change-password-modal-title');
+    const changePasswordMessage = document.getElementById('change-password-message');
+    const newPasswordInput = document.getElementById('new-password');
+    const confirmNewPasswordInput = document.getElementById('confirm-new-password');
+    const submitChangePasswordButton = document.getElementById('submit-change-password');
+    const changePasswordError = document.getElementById('change-password-error');
+    const changePasswordSuccess = document.getElementById('change-password-success');
+    const changePasswordCloseButton = document.getElementById('change-password-close-button');
+
+
     let currentUser = null;
     let activeSectionId = 'products-section'; // Define a seção inicial padrão para usuários logados
     let tempUserInterval;
+    let pendingSupplierSectionAccess = false; // Flag para controlar o acesso pendente aos fornecedores
 
     // --- FUNÇÕES DA API GEMINI ---
     async function callGeminiAPI(prompt, title, isProductHelp = false, productSpecs = '', isGeneralAI = false) { 
@@ -1252,7 +1361,7 @@ document.addEventListener('DOMContentLoaded', () => {
             mainModal.style.display = 'none'; 
         }
 
-        const apiKey = "AIzaSyBQr00SKusVdv1sR7cjaJbFsfY5YaHQbH0"; // <<<<< Substitua pela sua chave Gemini REAL
+        const apiKey = "YOUR_GEMINI_API_KEY"; // <<<<< Substitua pela sua chave Gemini REAL
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`; 
         
         let fullPrompt = prompt;
@@ -1306,14 +1415,21 @@ document.addEventListener('DOMContentLoaded', () => {
             if (user.type === 'temporary' && Date.now() > user.expiresAt) {
                 loginError.textContent = 'Este usuário temporário expirou.';
                 loginError.style.display = 'block';
-                delete USERS[username];
                 return;
             }
-            currentUser = { ...user, username, isVisitor: false }; // Usuário logado
-            loginScreen.style.display = 'none';
-            appScreen.style.display = 'block';
-            loginError.style.display = 'none';
-            setupAppForUser();
+            currentUser = { ...user, username: username }; // Armazena o username do usuário logado
+
+            // NOVO: Verifica se é o primeiro login e se NÃO é um usuário temporário
+            if (currentUser.firstLogin && currentUser.type !== 'temporary') {
+                loginScreen.style.display = 'none';
+                appScreen.style.display = 'block'; // Mostra a tela principal
+                showChangePasswordModal(true); // true = obrigatório
+            } else {
+                loginScreen.style.display = 'none';
+                appScreen.style.display = 'block';
+                loginError.style.display = 'none';
+                setupAppForUser();
+            }
         } else {
             loginError.textContent = 'Usuário ou senha inválidos.';
             loginError.style.display = 'block';
@@ -1321,7 +1437,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleVisitorMode() {
-        currentUser = { username: 'Visitante', role: 'visitor', type: 'permanent', isVisitor: true }; // Modo visitante
+        currentUser = { username: 'Visitante', role: 'visitor', type: 'permanent', firstLogin: false }; // Modo visitante
         loginScreen.style.display = 'none';
         appScreen.style.display = 'block';
         loginError.style.display = 'none';
@@ -1342,6 +1458,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Esconde o botão da IA ao sair
         aiChatButton.style.display = 'none'; 
         aiChatModal.style.display = 'none'; // Garante que o modal da IA também feche
+        changePasswordLink.style.display = 'none'; // Esconde o link de alterar senha
         // Fecha a nav mobile se estiver aberta
         closeMobileNav();
     }
@@ -1367,8 +1484,9 @@ document.addEventListener('DOMContentLoaded', () => {
             dronesNavButton.style.order = 1; 
             infoEmpresaNavButton.style.order = 2; 
 
+            changePasswordLink.style.display = 'none'; // Esconde para visitantes
             switchTab('drones-visitor-section');
-        } else if (isSeller) {
+        } else { // Logado (Admin ou Seller)
             welcomeMessage.textContent = `Bem-vindo(a), ${currentUser.username}!`;
             headerElement.classList.remove('visitor-header'); 
             logoutButton.style.display = 'block'; 
@@ -1383,37 +1501,56 @@ document.addEventListener('DOMContentLoaded', () => {
             calculatorNavButton.style.order = 2;
             dronesNavButton.style.order = 3;
             infoEmpresaNavButton.style.order = 4;
+
+            // NOVO: Exibe o link de alterar senha para usuários logados (não visitantes e não temporários)
+            if (currentUser.type !== 'temporary') {
+                 changePasswordLink.style.display = 'inline';
+            } else {
+                 changePasswordLink.style.display = 'none';
+            }
+           
+
+            // NOVO: Acesso a seções de Admin (Gerir Usuários, Criar/Alterar Produto)
+            if (isAdmin) {
+                // Acesso a Fornecedores (para admins)
+                suppliersNavButton.classList.remove('hidden');
+                suppliersNavButton.style.order = 3; // Mantém a ordem
+
+                // Seções de Configurações para Admin
+                settingsNavButton.classList.remove('hidden'); // Botão pai de Configurações
+                settingsNavButton.style.order = 4; // Ordem do botão pai
+
+                // NOVO: Visibilidade das sub-opções de configurações (apenas para 'mikhaell' em Gerir Usuários)
+                if (currentUser.username === 'mikhaell') {
+                    manageUsersNavButton.classList.remove('hidden');
+                    manageUsersNavButton.style.order = 5;
+                } else { // Outros admins não veem gerir usuários
+                    manageUsersNavButton.classList.add('hidden');
+                }
+                
+                // Criar e Alterar Produto para todos os admins
+                createProductNavButton.classList.remove('hidden');
+                editProductNavButton.classList.remove('hidden');
+                createProductNavButton.style.order = 6;
+                editProductNavButton.style.order = 7;
+                
+                dronesNavButton.style.order = 8;
+                infoEmpresaNavButton.style.order = 9;
+            } else { // Se for seller, garante que estas opções estejam escondidas
+                suppliersNavButton.classList.add('hidden'); // Sellers não veem Fornecedores
+                settingsNavButton.classList.add('hidden'); // Sellers não veem Configurações
+                manageUsersNavButton.classList.add('hidden');
+                createProductNavButton.classList.add('hidden');
+                editProductNavButton.classList.add('hidden');
+
+                 // Ajusta a ordem para sellers
+                productsNavButton.style.order = 1;
+                calculatorNavButton.style.order = 2;
+                dronesNavButton.style.order = 3;
+                infoEmpresaNavButton.style.order = 4;
+            }
             
-            switchTab('products-section');
-        } else if (isAdmin) { // Administrador
-            welcomeMessage.textContent = `Bem-vindo(a), ${currentUser.username}!`;
-            headerElement.classList.remove('visitor-header'); 
-            logoutButton.style.display = 'block'; 
-            bodyElement.classList.remove('visitor-mode-bg'); 
-
-            productsNavButton.classList.remove('hidden');
-            calculatorNavButton.classList.remove('hidden');
-            suppliersNavButton.classList.remove('hidden');
-            settingsNavButton.classList.remove('hidden'); // Exibe o botão pai de Configurações
-            dronesNavButton.classList.remove('hidden');
-            infoEmpresaNavButton.classList.remove('hidden');
-
-            // Exibir as sub-opções de Configurações para o admin 'mikhaell'
-            manageUsersNavButton.classList.remove('hidden');
-            createProductNavButton.classList.remove('hidden');
-            editProductNavButton.classList.remove('hidden');
-
-            productsNavButton.style.order = 1;
-            calculatorNavButton.style.order = 2;
-            suppliersNavButton.style.order = 3;
-            settingsNavButton.style.order = 4; // Ordem do botão pai de Configurações
-            manageUsersNavButton.style.order = 5; // Sub-item
-            createProductNavButton.style.order = 6; // Sub-item
-            editProductNavButton.style.order = 7; // Sub-item
-            dronesNavButton.style.order = 8;
-            infoEmpresaNavButton.style.order = 9;
-            
-            switchTab('products-section'); // Inicia na seção de produtos
+            switchTab('products-section'); // Inicia na seção de produtos para logados
         }
 
         // Exibe/Oculta o botão de Chat da IA (visível para todos os logados, incluindo visitantes)
@@ -1422,7 +1559,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- CNPJ Display (FIX) ---
         const cnpjDisplayLine = document.getElementById('cnpj-display-line');
         if (cnpjDisplayLine) {
-            if (currentUser.isVisitor) {
+            if (isVisitor) {
                 cnpjDisplayLine.style.display = 'none';
             } else {
                 cnpjDisplayLine.style.display = 'block';
@@ -1439,6 +1576,7 @@ document.addEventListener('DOMContentLoaded', () => {
             navToggleButton.style.display = 'none';
         }
         
+        // Se for usuário temporário, mostra aviso
         if (isTempUser) {
             showTemporaryUserWarning();
         }
@@ -1600,53 +1738,76 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function switchTab(newSectionId) {
-        // Bloqueio de acesso para visitantes e usuários de venda
         const isVisitor = currentUser.isVisitor;
         const isSeller = currentUser.role === 'seller';
         const isAdmin = currentUser.role === 'admin';
+        const isMikhaell = currentUser.username === 'mikhaell';
         const isTempUser = currentUser.type === 'temporary';
 
-        // Lógica de acesso principal
-        if (isVisitor) {
-            if (newSectionId !== 'info-section' && newSectionId !== 'drones-visitor-section') {
-                alert('Apenas as seções "Drones" e "Info Empresa" estão disponíveis no Modo Visitante.');
-                return;
+        // Lógica de acesso principal e visibilidade das seções
+        let canAccess = false;
+
+        if (newSectionId === 'products-section' || newSectionId === 'calculator-section' || newSectionId === 'drones-visitor-section' || newSectionId === 'info-section') {
+            if (isVisitor && (newSectionId === 'drones-visitor-section' || newSectionId === 'info-section')) {
+                canAccess = true;
+            } else if (!isVisitor && (newSectionId === 'products-section' || newSectionId === 'calculator-section' || newSectionId === 'drones-visitor-section' || newSectionId === 'info-section')) {
+                canAccess = true;
             }
-        } else if (isSeller) { // Usuários de Venda e Temporários (que são seller)
-            if (newSectionId === 'suppliers-section' || newSectionId === 'manage-users-section' || newSectionId === 'create-product-section' || newSectionId === 'edit-product-section') {
+        } else if (newSectionId === 'suppliers-section') {
+            if (isAdmin) {
+                // Se o acesso a fornecedores já estava pendente (abriu o modal de senha), não reabre
+                if (pendingSupplierSectionAccess) {
+                    canAccess = true; // Permite a navegação após senha correta
+                } else {
+                    // Se não estava pendente, abre o modal de senha e retorna
+                    supplierPasswordModal.style.display = 'block';
+                    supplierAccessPasswordInput.value = '';
+                    supplierPasswordError.style.display = 'none';
+                    return; 
+                }
+            } else {
                 alert('Esta seção não está disponível para o seu perfil.');
                 return;
             }
-            if (isTempUser && newSectionId === 'settings-section') { // Usuários temporários não acessam o "pai" configurações
-                 alert('Esta seção não está disponível para o seu perfil.');
-                 return;
+        } else if (newSectionId === 'settings-section' || newSectionId === 'create-product-section' || newSectionId === 'edit-product-section') {
+            if (isAdmin) { // Admins podem acessar essas seções
+                canAccess = true;
+            } else {
+                alert('Esta seção não está disponível para o seu perfil.');
+                return;
             }
-        } else if (newSectionId === 'settings-section' && currentUser.username !== 'mikhaell' && !['manage-users-section', 'create-product-section', 'edit-product-section'].includes(newSectionId)) { 
-            // Apenas mikhaell tem acesso direto à seção 'settings-section' e suas sub-opções
-            alert('Apenas o administrador principal pode acessar as configurações.');
+        } else if (newSectionId === 'manage-users-section') {
+            if (isMikhaell) { // Apenas Mikhaell pode acessar Gerir Usuários
+                canAccess = true;
+            } else {
+                alert('Esta seção está restrita ao administrador principal.');
+                return;
+            }
+        }
+
+        if (!canAccess) {
+            // Se chegou aqui e não pode acessar, retorna e mantém a aba ativa atual
+            document.querySelector(`[data-section="${activeSectionId}"]`).classList.add('active');
             return;
         }
 
 
+        // Continuação da troca de aba
         contentSections.forEach(s => s.classList.remove('active')); 
-        // Remove 'active' de todos os botões, incluindo sub-botões
         document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
         
-        // Ativa o botão de navegação correspondente
         document.getElementById(newSectionId).classList.add('active');
 
-        // Lógica para ativar o botão correto na navegação (principal ou sub-menu)
         let targetButton = document.querySelector(`[data-section="${newSectionId}"]`);
         if (targetButton) {
             targetButton.classList.add('active');
-            // Se o botão clicado for um sub-botão, certifique-se de que o botão pai "Configurações" também esteja ativo
             if (targetButton.classList.contains('sub-nav-button')) {
                 settingsNavButton.classList.add('active');
             }
         }
 
         // NOVO: Lógica para mostrar/esconder o sub-menu de Configurações
-        if (newSectionId.includes('settings') && isAdmin && currentUser.username === 'mikhaell') {
+        if (newSectionId.includes('settings') && isAdmin) { // Agora todos os admins veem o sub-menu
             settingsSubNav.style.display = 'block';
         } else {
             settingsSubNav.style.display = 'none'; 
@@ -1676,8 +1837,8 @@ document.addEventListener('DOMContentLoaded', () => {
             tempUserFeedback.textContent = 'Erro: Nome de usuário já existe.'; tempUserFeedback.style.color = 'red'; return;
         }
 
-        const expiresAt = Date.now() + durationHours * 60 * 60 * 1000;
-        USERS[username] = { password, role: 'seller', type: 'temporary', expiresAt };
+        // NOVO: Usuários temporários NÃO terão firstLogin: true para não serem forçados a trocar senha
+        USERS[username] = { password, role: 'seller', type: 'temporary', expiresAt: Date.now() + durationHours * 60 * 60 * 1000, firstLogin: false };
 
         tempUserFeedback.textContent = `Usuário "${username}" criado com sucesso!`; tempUserFeedback.style.color = 'green';
         createTempUserForm.reset(); renderTempUserList();
@@ -1801,7 +1962,6 @@ document.addEventListener('DOMContentLoaded', () => {
             name,
             spec,
             salePrice,
-            // Armazena como um array de sources, mesmo que seja apenas um inicialmente
             sources: [{ 
                 supplierName: supplier || 'Não especificado', 
                 costPrice: isNaN(costPrice) ? 0 : costPrice 
@@ -1812,7 +1972,7 @@ document.addEventListener('DOMContentLoaded', () => {
         createProductFeedback.textContent = `Produto "${newProduct.name}" (ID: ${newProduct.id}) criado com sucesso!`;
         createProductFeedback.style.color = 'green';
         createProductForm.reset();
-        renderProducts(); // Renderiza a lista de produtos novamente após a criação
+        renderProducts(); 
     }
 
     function handleSearchProductToEdit() {
@@ -1828,13 +1988,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (product) {
             editProductDisplay.innerHTML = `<p>Produto encontrado: <strong>${product.name}</strong> (ID: ${product.id})</p>`;
             editProductForm.classList.remove('hidden');
-            editProductFeedback.textContent = ''; // Limpa feedback anterior
+            editProductFeedback.textContent = ''; 
 
             editProductIdInput.value = product.id;
             editProductNameInput.value = product.name;
             editProductSpecTextarea.value = product.spec;
             editProductSalePriceInput.value = product.salePrice;
-            // Para edição simplificada, pegamos o PRIMEIRO fornecedor ou deixamos vazio
             editProductCostPriceInput.value = product.sources[0] ? product.sources[0].costPrice : '';
             editProductSupplierInput.value = product.sources[0] ? product.sources[0].supplierName : '';
         } else {
@@ -1866,7 +2025,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Se já existe um fornecedor, atualiza. Se não, cria um novo no array sources.
         if (PRODUCTS[productIndex].sources && PRODUCTS[productIndex].sources.length > 0) {
             PRODUCTS[productIndex].sources[0].supplierName = supplier || 'Não especificado';
             PRODUCTS[productIndex].sources[0].costPrice = isNaN(costPrice) ? 0 : costPrice;
@@ -1883,7 +2041,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         editProductFeedback.textContent = `Produto "${name}" (ID: ${productId}) atualizado com sucesso!`;
         editProductFeedback.style.color = 'green';
-        renderProducts(); // Renderiza a lista de produtos novamente após alteração
+        renderProducts(); 
     }
 
 
@@ -1939,7 +2097,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função para navegar para o fornecedor na seção de Fornecedores
     function navigateToSupplierSection(supplierName) {
-        switchTab('suppliers-section');
+        // Redireciona para a seção de fornecedores sem pedir senha novamente
+        // Isso assume que o acesso já foi concedido ou é permitido.
+        contentSections.forEach(s => s.classList.remove('active'));
+        document.getElementById('suppliers-section').classList.add('active');
+        document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
+        suppliersNavButton.classList.add('active'); // Ativa o botão Fornecedores na navegação
+        activeSectionId = 'suppliers-section';
+
         setTimeout(() => {
             // Tenta encontrar o card do fornecedor com base no nome
             const targetSupplierCard = document.querySelector(`#supplier-list .supplier-card h3 strong[data-supplier-name="${supplierName}"]`);
@@ -1950,30 +2115,79 @@ document.addEventListener('DOMContentLoaded', () => {
                     targetSupplierCard.closest('.supplier-card').style.backgroundColor = ''; 
                 }, 3000);
             } else {
-                // Se o fornecedor não for encontrado na lista, pode exibir uma mensagem ou apenas ir para a seção.
                 console.log(`Fornecedor "${supplierName}" não encontrado na lista detalhada.`);
             }
         }, 300); 
     }
 
     function showSuppliers() {
-        const code = prompt("Para aceder a esta área, digite o código de acesso administrativo:");
-        if (code === CONFIDENTIAL_CODE) {
-            supplierList.innerHTML = '';
-            SUPPLIERS.forEach(supplier => {
-                const supplierCard = document.createElement('div');
-                supplierCard.className = 'card supplier-card';
-                supplierCard.innerHTML = `
-                    <h3><strong data-supplier-name="${supplier.name}">${supplier.name}</strong></h3>
-                    <p><strong>Detalhes:</strong> ${supplier.details}</p>
-                    <div><strong>Pagamento:</strong><br>${supplier.payment.replace(/\n/g, '<br>')}</div>
-                    <p><strong>Produtos Principais:</strong> ${supplier.products}</p>
-                `;
-                supplierList.appendChild(supplierCard);
-            });
-            return true;
-        } else if (code !== null && code !== "") { alert('Código incorreto!'); return false; }
-        return false;
+        supplierList.innerHTML = '';
+        SUPPLIERS.forEach(supplier => {
+            const supplierCard = document.createElement('div');
+            supplierCard.className = 'card supplier-card';
+            supplierCard.innerHTML = `
+                <h3><strong data-supplier-name="${supplier.name}">${supplier.name}</strong></h3>
+                <p><strong>Detalhes:</strong> ${supplier.details}</p>
+                <div><strong>Pagamento:</strong><br>${supplier.payment.replace(/\n/g, '<br>')}</div>
+                <p><strong>Produtos Principais:</strong> ${supplier.products}</p>
+            `;
+            supplierList.appendChild(supplierCard);
+        });
+        // Após mostrar os fornecedores, fecha o modal de senha
+        supplierPasswordModal.style.display = 'none'; 
+    }
+
+    // NOVO: Função para exibir o modal de alteração de senha
+    function showChangePasswordModal(isMandatory = false) {
+        changePasswordModal.style.display = 'block';
+        newPasswordInput.value = '';
+        confirmNewPasswordInput.value = '';
+        changePasswordError.style.display = 'none';
+        changePasswordSuccess.style.display = 'none';
+
+        if (isMandatory) {
+            changePasswordModalTitle.textContent = 'Defina Sua Senha';
+            changePasswordMessage.textContent = 'Por favor, defina uma nova senha para sua conta. É obrigatório no primeiro acesso.';
+            changePasswordCloseButton.style.display = 'none'; // Esconde o botão de fechar se for obrigatório
+        } else {
+            changePasswordModalTitle.textContent = 'Alterar Senha';
+            changePasswordMessage.textContent = 'Digite sua nova senha abaixo.';
+            changePasswordCloseButton.style.display = 'block'; // Mostra o botão de fechar para alteração voluntária
+        }
+    }
+
+    // NOVO: Função para lidar com a submissão do formulário de alteração de senha
+    function handleChangePassword() {
+        const newPass = newPasswordInput.value;
+        const confirmPass = confirmNewPasswordInput.value;
+        changePasswordError.style.display = 'none';
+        changePasswordSuccess.style.display = 'none';
+
+        if (newPass.length < 6) {
+            changePasswordError.textContent = 'A nova senha deve ter no mínimo 6 dígitos.';
+            changePasswordError.style.display = 'block';
+            return;
+        }
+        if (newPass !== confirmPass) {
+            changePasswordError.textContent = 'As senhas não conferem.';
+            changePasswordError.style.display = 'block';
+            return;
+        }
+
+        // Atualiza a senha no objeto USERS
+        USERS[currentUser.username].password = newPass;
+        USERS[currentUser.username].firstLogin = false; // Define firstLogin como false
+
+        changePasswordSuccess.textContent = 'Senha alterada com sucesso!';
+        changePasswordSuccess.style.display = 'block';
+
+        // Após sucesso, pode fechar o modal ou dar um tempo e fechar
+        setTimeout(() => {
+            changePasswordModal.style.display = 'none';
+            // Se a senha foi alterada porque era obrigatório no primeiro login, agora que pode prosseguir
+            // Chama setupAppForUser() para re-configurar a UI e esconder o aviso de troca de senha
+            setupAppForUser(); 
+        }, 1500);
     }
 
     function openModal() { mainModal.style.display = 'block'; }
@@ -1987,6 +2201,9 @@ document.addEventListener('DOMContentLoaded', () => {
     passwordInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleLogin(); });
     logoutButton.addEventListener('click', handleLogout);
     
+    // NOVO: Listener para o link de alterar senha no header
+    changePasswordLink.addEventListener('click', () => showChangePasswordModal(false)); // false = não obrigatório
+
     mainContent.addEventListener('click', (e) => {
         const target = e.target;
         const productCard = target.closest('.product-card');
@@ -1995,7 +2212,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (target.classList.contains('supplier-name-link')) {
             e.preventDefault(); 
             const supplierName = target.dataset.supplierName;
-            if (currentUser && currentUser.role === 'admin') { // Só admin pode clicar
+            if (currentUser && currentUser.role === 'admin') { 
                 navigateToSupplierSection(supplierName);
             }
             return; 
@@ -2075,7 +2292,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Lógica para o botão pai de Configurações
             if (button.id === 'settings-nav-button') {
-                if (currentUser && currentUser.username === 'mikhaell') {
+                if (currentUser && currentUser.role === 'admin') { // Apenas admins podem expandir
                     const isSubNavVisible = settingsSubNav.style.display === 'block';
                     settingsSubNav.style.display = isSubNavVisible ? 'none' : 'block';
                     settingsNavButton.classList.toggle('active', !isSubNavVisible); 
@@ -2084,7 +2301,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         switchTab('settings-section'); 
                     }
                 } else {
-                    alert('Apenas o administrador principal pode acessar as configurações.');
+                    alert('Esta seção está restrita ao perfil de administrador.');
                 }
                 return; 
             }
@@ -2095,7 +2312,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     closeModalButton.addEventListener('click', closeModal);
-    window.addEventListener('click', (event) => { if (event.target == mainModal) { closeModal(); } });
+    window.addEventListener('click', (event) => { 
+        if (event.target == mainModal) { closeModal(); } 
+        // NOVO: Fechar modal de senha do fornecedor se clicar fora
+        if (event.target == supplierPasswordModal) {
+            supplierPasswordModal.style.display = 'none';
+            pendingSupplierSectionAccess = false; 
+            // Opcional: Se o usuário fechar o modal, redireciona para uma seção "segura"
+            switchTab('products-section'); 
+        }
+        // NOVO: Fechar modal de alteração de senha se clicar fora e não for obrigatório
+        // Verifica se o botão de fechar do modal de senha está visível. Se sim, não é um fechamento obrigatório.
+        if (event.target == changePasswordModal && changePasswordCloseButton.style.display !== 'none') {
+            changePasswordModal.style.display = 'none';
+        }
+    });
     productSearchInput.addEventListener('input', (e) => renderProducts(e.target.value));
     droneVisitorSearchInput.addEventListener('input', (e) => renderDroneVisitorList(e.target.value)); 
     
@@ -2140,13 +2371,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    window.addEventListener('click', (event) => {
-        if (window.innerWidth <= 768 && navElement.classList.contains('nav-open') &&
-            !navElement.contains(event.target) && !navToggleButton.contains(event.target) && !headerElement.contains(event.target)) {
-            closeMobileNav();
-        }
-    });
-
     aiChatButton.addEventListener('click', () => {
         aiChatModal.style.display = 'block';
         aiQuestionInput.value = ''; 
@@ -2166,9 +2390,47 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    window.addEventListener('click', (event) => {
-        if (event.target == aiChatModal) {
-            aiChatModal.style.display = 'none';
+    // NOVO: Listeners para o modal de senha do fornecedor
+    submitSupplierPasswordButton.addEventListener('click', () => {
+        const enteredPassword = supplierAccessPasswordInput.value.trim();
+        if (enteredPassword === CONFIDENTIAL_CODE) {
+            supplierPasswordModal.style.display = 'none';
+            // Chama a função de troca de aba e renderiza os fornecedores
+            switchTab('suppliers-section'); 
+            pendingSupplierSectionAccess = false; 
+        } else {
+            supplierPasswordError.style.display = 'block';
+            supplierAccessPasswordInput.value = ''; 
+        }
+    });
+
+    supplierAccessPasswordInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            submitSupplierPasswordButton.click();
+        }
+    });
+
+    supplierPasswordCloseButton.addEventListener('click', () => {
+        supplierPasswordModal.style.display = 'none';
+        pendingSupplierSectionAccess = false; 
+        switchTab('products-section'); // Volta para uma seção padrão
+    });
+
+    // NOVO: Listeners para o modal de alteração de senha
+    submitChangePasswordButton.addEventListener('click', handleChangePassword);
+    newPasswordInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleChangePassword(); });
+    confirmNewPasswordInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleChangePassword(); });
+    
+    changePasswordCloseButton.addEventListener('click', () => {
+        // Se o botão de fechar for visível (não é obrigatório), apenas fecha.
+        // Se não for visível (é obrigatório), alerta e reabre.
+        if (changePasswordCloseButton.style.display !== 'none') {
+            changePasswordModal.style.display = 'none';
+        } else {
+            alert('A alteração de senha é obrigatória para o primeiro acesso. Por favor, defina sua nova senha.');
+            // Opcional: Aqui você pode adicionar um pequeno atraso antes de reabrir
+            // para que o usuário veja a mensagem.
+            // setTimeout(() => showChangePasswordModal(true), 100); 
         }
     });
 });
