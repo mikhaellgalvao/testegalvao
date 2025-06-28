@@ -221,6 +221,32 @@
             flex-direction: column; /* Para empilhar os botões verticalmente */
             flex-shrink: 0; /* Previne que a nav encolha */
         }
+
+        /* NOVO: Estilos para o grupo de navegação e sub-navegação */
+        .nav-item-group {
+            width: 100%;
+            position: relative; /* Para posicionamento de sub-menus */
+        }
+
+        .sub-nav {
+            background-color: var(--dark-grey); /* Fundo diferente para sub-menu */
+            padding-left: 10px; /* Indentação para sub-itens */
+        }
+
+        .sub-nav-button {
+            font-size: 0.95em; /* Fonte menor para sub-itens */
+            padding: 10px 20px; /* Ajuste de padding */
+            border-bottom: 1px solid #c0c0c0; /* Linha divisória mais clara */
+        }
+        .sub-nav-button:last-child {
+            border-bottom: none;
+        }
+        .sub-nav-button.active, .sub-nav-button:hover {
+            background-color: #a0a0a0; /* Cor mais escura no hover/active do sub-item */
+            color: white;
+        }
+
+
         /* Oculta nav por padrão no mobile, prepara para slide-in */
         @media (max-width: 768px) {
             nav {
@@ -411,6 +437,37 @@
         .cost-price { font-size: 1.1em; font-weight: 700; color: var(--danger-color); background-color: #fdd; padding: 5px; border-radius: 4px; display: inline-block; margin-top: 10px; }
         .supplier-info { font-size: 0.9em; font-weight: 500; color: var(--secondary-color); background-color: #e8f8f5; padding: 5px 8px; border-radius: 4px; display: inline-block; margin-top: 10px; margin-left: 10px;}
         
+        /* NOVO: Estilos para a lista de fornecedores por produto */
+        .product-suppliers-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0 0;
+            font-size: 0.9em;
+        }
+        .product-suppliers-list li {
+            background-color: #f8f8f8;
+            padding: 5px 10px;
+            border-radius: 3px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #eee;
+        }
+        .product-suppliers-list li .supplier-name-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .product-suppliers-list li .supplier-name-link:hover {
+            text-decoration: underline;
+        }
+        .product-suppliers-list li .cost-value {
+            color: var(--danger-color);
+            font-weight: 500;
+        }
+
+
         /* --- BOTÕES DE AÇÃO DO PRODUTO --- */
         .action-buttons-container { margin-top: 15px; display: flex; flex-wrap: wrap; gap: 10px; }
         .action-buttons-container button, .action-buttons-container a.action-button {
@@ -721,7 +778,16 @@
                     <button class="nav-button" data-section="products-section" id="products-nav-button" style="order: 1;">Produtos</button>
                     <button class="nav-button" data-section="calculator-section" id="calculator-nav-button" style="order: 2;">Calculadora</button>
                     <button class="nav-button" data-section="suppliers-section" id="suppliers-nav-button" style="order: 3;">Fornecedores</button>
-                    <button class="nav-button" data-section="settings-section" id="settings-nav-button" style="order: 4;">Configurações</button>
+                    
+                    <div class="nav-item-group" style="order: 4;">
+                        <button class="nav-button" data-section="settings-section" id="settings-nav-button">Configurações</button>
+                        <div class="sub-nav" id="settings-sub-nav" style="display: none;">
+                            <button class="nav-button sub-nav-button" data-section="manage-users-section" id="manage-users-nav-button">Gerir Usuários</button>
+                            <button class="nav-button sub-nav-button" data-section="create-product-section" id="create-product-nav-button">Criar Produto</button>
+                            <button class="nav-button sub-nav-button" data-section="edit-product-section" id="edit-product-nav-button">Alterar Produto</button>
+                        </div>
+                    </div>
+                    
                     <button class="nav-button" data-section="drones-visitor-section" id="drones-nav-button" style="order: 5;">Drones</button>
                     <button class="nav-button" data-section="info-section" id="info-empresa-nav-button" style="order: 6;">Info Empresa</button>
                 </nav>
@@ -758,8 +824,14 @@
                         </div>
                     </section>
                     <section id="suppliers-section" class="content-section"><h2>Fornecedores (Acesso Confidencial)</h2><div id="supplier-list"></div></section>
-                    <section id="settings-section" class="content-section">
-                        <h2>Configurações</h2>
+                    
+                    <section id="settings-section" class="content-section active">
+                        <h2>Configurações do Sistema</h2>
+                        <p>Selecione uma opção de configuração no menu lateral.</p>
+                        </section>
+
+                    <section id="manage-users-section" class="content-section">
+                        <h2>Gerir Usuários Temporários</h2>
                         <div class="card">
                             <h3>Criar Usuário Temporário</h3>
                             <form id="create-temp-user-form">
@@ -771,8 +843,47 @@
                             </form>
                         </div>
                         <div id="temp-user-list-container">
-                            <h3>Gerir Usuários Temporários</h3>
+                            <h3>Usuários Temporários Ativos</h3>
                             <div id="temp-user-list" class="card"></div>
+                        </div>
+                    </section>
+
+                    <section id="create-product-section" class="content-section">
+                        <h2>Criar Novo Produto</h2>
+                        <div class="card">
+                            <form id="create-product-form">
+                                <div class="input-group"><label for="new-product-name">Nome do Produto</label><input type="text" id="new-product-name" required></div>
+                                <div class="input-group"><label for="new-product-spec">Especificações</label><textarea id="new-product-spec" rows="5" placeholder="Liste as especificações detalhadas"></textarea></div>
+                                <div class="input-group"><label for="new-product-sale-price">Preço de Venda (R$)</label><input type="number" id="new-product-sale-price" step="0.01" min="0" required></div>
+                                <div class="input-group"><label for="new-product-cost-price">Preço de Custo (R$)</label><input type="number" id="new-product-cost-price" step="0.01" min="0"></div>
+                                <div class="input-group"><label for="new-product-supplier">Fornecedor Principal</label><input type="text" id="new-product-supplier" placeholder="Nome do fornecedor"></div>
+                                <button type="submit" class="action-button">Salvar Novo Produto</button>
+                                <p id="create-product-feedback" style="margin-top: 15px; font-weight: bold;"></p>
+                            </form>
+                        </div>
+                    </section>
+
+                    <section id="edit-product-section" class="content-section">
+                        <h2>Alterar Produto Existente</h2>
+                        <div class="card">
+                            <div class="input-group">
+                                <label for="edit-product-search-id">Buscar por ID do Produto</label>
+                                <input type="number" id="edit-product-search-id" placeholder="Digite o ID do produto">
+                                <button id="search-product-to-edit" class="action-button" style="width: auto; margin-top: 10px;">Buscar</button>
+                            </div>
+                            <div id="edit-product-display" style="margin-top: 20px;">
+                                <p>Use a busca acima para carregar os dados do produto.</p>
+                            </div>
+                            <form id="edit-product-form" class="hidden">
+                                <input type="hidden" id="edit-product-id">
+                                <div class="input-group"><label for="edit-product-name">Nome do Produto</label><input type="text" id="edit-product-name" required></div>
+                                <div class="input-group"><label for="edit-product-spec">Especificações</label><textarea id="edit-product-spec" rows="5"></textarea></div>
+                                <div class="input-group"><label for="edit-product-sale-price">Preço de Venda (R$)</label><input type="number" id="edit-product-sale-price" step="0.01" min="0" required></div>
+                                <div class="input-group"><label for="edit-product-cost-price">Preço de Custo (R$)</label><input type="number" id="edit-product-cost-price" step="0.01" min="0"></div>
+                                <div class="input-group"><label for="edit-product-supplier">Fornecedor Principal</label><input type="text" id="edit-product-supplier"></div>
+                                <button type="submit" class="action-button">Salvar Alterações</button>
+                                <p id="edit-product-feedback" style="margin-top: 15px; font-weight: bold;"></p>
+                            </form>
                         </div>
                     </section>
                     <section id="drones-visitor-section" class="content-section">
@@ -841,88 +952,174 @@ document.addEventListener('DOMContentLoaded', () => {
         'Ryan':     { password: 'ryan', role: 'admin', type: 'permanent' },
         'Fineias':  { password: 'fin', role: 'seller', type: 'permanent' },
         'Rafael':   { password: 'raf', role: 'seller', type: 'permanent' },
-        'Eduardo': { password: 'edu' + currentYear, role: 'seller', type: 'permanent' }, // NOVO USUÁRIO E SENHA PADRÃO
+        'Eduardo': { password: 'edu' + currentYear, role: 'seller', type: 'permanent' }, 
         
-        // Usuários de venda com senhas no padrão (ajustado para usar o ano atual)
         'mikhaellven': { password: 'mik' + currentYear, role: 'seller', type: 'permanent' },
         'maikhonven':  { password: 'mai' + currentYear, role: 'seller', type: 'permanent' },
         'ryanven':     { password: 'rya' + currentYear, role: 'seller', type: 'permanent' },
     };
     const CONFIDENTIAL_CODE = '@0639';
-    const PRODUCTS = [
-        { id: 1, name: 'DJI Neo Standard', spec: '🛸 DJI Neo Standard ou Combo fly more\n🎥 Grava em 4K/30fps\n⏱️ Até 18 minutos de voo\n📡 Alcance de até 6 km\n⚖️ Peso de apenas 135 g\n🎮 Controle via app, com controle ou controle motion ( três versões)', salePrice: 1900, costPrice: 1340, supplier: 'Arroba Celulares' },
-        { id: 2, name: 'DJI Neo Combo', spec: '🛸 DJI Neo Standard ou Combo fly more\n🎥 Grava em 4K/30fps\n⏱️ Até 18 minutos de voo\n📡 Alcance de até 6 km\n⚖️ Peso de apenas 135 g\n🎮 Controle via app, com controle ou controle motion ( três versões)', salePrice: 3500, costPrice: 2460, supplier: 'Arroba Celulares' },
-        { id: 3, name: 'DJI Mini 3 (sem tela)', spec: '🛸 DJI Mini 3\n🎥 Grava em 4K HDR a 30fps\n⏱️ Até 38 minutos de voo\n📡 Distância de até 18 km\n⚖️ Peso leve: 249 g\n🎮 Controle com ou sem tela (duas versões)', salePrice: 3990, costPrice: 2990, supplier: 'Arroba Celulares' },
-        { id: 4, name: 'DJI Mini 3 (com tela)', spec: '🛸 DJI Mini 3\n🎥 Grava em 4K HDR a 30fps\n⏱️ Até 38 minutos de voo\n📡 Distância de até 18 km\n⚖️ Peso leve: 249 g\n🎮 Controle com ou sem tela (duas versões)', salePrice: 4785, costPrice: 3785, supplier: 'Arroba Celulares' },
-        { id: 5, name: 'DJI Flip Fly More Combo (com tela)', spec: '🛸 DJI Flip\n🎥 4K a 60fps (com slow motion de até 100fps!)\n⏱️ Até 31 minutos no ar\n📡 Alcance médio de 13 km\n⚖️ Menos de 249 g\n🎮 Disponível com ou sem controle com tela', salePrice: 7990, costPrice: 5320, supplier: 'DJI Grupo Multi' },
-        { id: 64, name: 'DJI Mini 4 Pro Fly More Combo Plus (com tela)', spec: '🛸 DJI Mini 4 Pro\n🎥 Incrível 4K HDR a 100fps + fotos de 48 MP\n⏱️ Até 45 minutos no air\n📡 Alcance de até 25 km\n⚖️ Abaixo de 249 g\n🎮 Controle com tela (DJI RC 2)', salePrice: 9000.00, costPrice: 6990.00, supplier: 'DJI Grupo Multi' },
-        { id: 67, name: 'DJI Avata 2 Fly More Combo (1 bateria)', spec: '🛸 DJI Avata 2\n🎥 Gravação 4K 60fps com lente ultrawide\n⏱️ Até 23 minutos de voo imersivo\n📡 Alcance de até 13 km\n⚖️ Peso de 377 g\n🎮 Controle por movimento + óculos FPV (sem tela)', salePrice: 10590.00, costPrice: 7069.91, supplier: 'DJI Grupo Multi' },
-        { id: 68, name: 'DJI Avata 2 Fly More Combo (3 baterias)', spec: '🛸 DJI Avata 2\n🎥 Gravação 4K 60fps com lente ultrawide\n⏱️ Até 23 minutos de voo imersivo\n📡 Alcance de até 13 km\n⚖️ Peso de 377 g\n🎮 Controle por movimento + óculos FPV (sem tela)', salePrice: 12990.00, costPrice: 8674.53, supplier: 'DJI Grupo Multi' },
-        { id: 65, name: 'DJI Air 3S Standard (sem tela)', spec: '🛸 DJI Air 3S (Versão Standard)\n🎥 4K 60fps com sensores duplos (wide + tele)\n⏱️ Até 45 minutos no ar\n📡 Alcance insano de 32 km\n⚖️ Peso de 724 g\n🎮 Controle sem tela (standard)', salePrice: 12790.00, costPrice: 8532.92, supplier: 'DJI Grupo Multi' },
-        { id: 72, name: 'DJI Mavic 4 Pro Combo (com tela)', spec: '🚀 DJI Mavic 4 Pro\n🎥 5.1K a 120fps com sensor 4/3 CMOS\n⏱️ Até 46 minutos de voo\n📡 Alcance de até 32 km\n⚖️ 958 g\n🎮 Controle com tela (DJI RC Pro)', salePrice: 26670.00, costPrice: 19920.00, supplier: 'GoHobby Distribuidora de VANT LTDA' },
-        { id: 71, name: 'DJI Mavic 4 Pro Creator Combo (HDMI, 512GB)', spec: '🚀 DJI Mavic 4 Pro Creator Combo\nMesmo conjunto do Mavic 4 Pro com:\n🎒 Acessórios profissionais\n🔋 Baterias extras e hub inteligente\n🧳 Maleta reforçada para transporte\n🎮 Controle com tela (DJI RC Pro 2)', salePrice: 35650.00, costPrice: 26650.00, supplier: 'GoHobby Distribuidora de VANT LTDA' },
-        { id: 39, name: 'DJI Mavic 3 Multispectral', spec: '🌱 DJI Mavic 3 Multispectral (Versão Standard)\n🎥 Câmera RGB 20 MP + 4 sensores multispectrais\n⏱️ Até 43 minutos por voo\n📡 Alcance de 15 km\n⚖️ 951 g\n🎮 Controle com tela (DJI RC Pro Enterprise)\n🧪 Ideal para agricultura de precisão e NDVI', salePrice: 43970, costPrice: 32990.00, supplier: 'GoHobby Distribuidora de VANT LTDA' },
-        { id: 40, name: 'DJI Mavic 3 Thermal', spec: '🔥 DJI Mavic 3 Thermal (Versão Standard)\n🎥 4K + câmera térmica 640x512 px\n⏱️ Até 45 minutos por voo\n📡 Alcance de 15 km\n⚖️ 920 g\n🎮 Controle com tela (DJI RC Pro Enterprise)\n🔥 Ideal para inspeção, resgate e segurança', salePrice: 41700, costPrice: 31990.00, supplier: 'GoHobby Distribuidora de VANT LTDA' },
-        { id: 41, name: 'DJI Mavic 3 Enterprise', spec: '🗺️ DJI Mavic 3 Enterprise (Versão Standard)\n🎥 Câmera RGB 20 MP com obturador mecânico\n🗺️ Compatível com RTK, alto-falante e holofote\n⏱️ Até 45 minutos de voo\n📡 Alcance de 15 km\n⚖️ 915 g\n🎮 Controle com tela (DJI RC Pro Enterprise)\n📐 Indicado para mapeamentos e medições técnicas', salePrice: 31270, costPrice: 23990.00, supplier: 'GoHobby Distribuidora de VANT LTDA' },
-        { id: 42, name: 'DJI Matrice 4T', spec: '🛠️ DJI Matrice 4T (Versão Standard)\n🎥 RGB 48 MP + Zoom híbrido 56x + Câmera térmica de alta resolução\n🧭 Visão tripla: Wide, Zoom e Térmica\n⏱️ Até 55 minutos por voo\n📡 Alcance de até 20 km\n⚖️ Peso: 3,7 kg\n🎮 Controle DJI RC Plus com tela de 7” ultra brilhante\n💼 IP55 – Ideal para resgate, combate a incêndio e inspeções', salePrice: 61990, costPrice: 45302.65, supplier: 'GoHobby Distribuidora de VANT LTDA' },
-        { id: 43, name: 'DJI Matrice 4E', spec: '🛠️ DJI Matrice 4E (Versão Standard)\n🎥 Câmera ampla de 20 MP com obturador mecânico\n🧭 Suporte a RTK, payloads e expansões avançadas\n⏱️ Até 55 minutos de voo\n📡 Alcance de até 20 km\n⚖️ Peso: 3,4 kg\n🎮 Controle DJI RC Plus\n🔧 Ideal para mapeamento, segurança e vigilância industrial', salePrice: 58589.97, costPrice: 43112.98, supplier: 'GoHobby Distribuidora de VANT LTDA' },
-        { id: 113, name: 'DJI Matrice 30T', spec: '🛠️ DJI Matrice 30T (Versão Standard)\n🎥 Câmera Wide 48 MP + Zoom Híbrido + Câmera Térmica\n⏱️ Até 41 minutos por voo\n📡 Alcance de até 15 km\n⚖️ Peso: 3,77 kg\n🎮 Controle DJI RC Plus com tela de 7”\n💼 Proteção IP55 – Ideal para operações em campo aberto', salePrice: 0, costPrice: 0, supplier: 'GoHobby Distribuidora de VANT LTDA' },
-        { id: 114, name: 'DJI Matrice 350 RTK', spec: '🛠️ DJI Matrice 350 RTK (Versão Standard)\n🎥 Compatível com payloads L2, P1, H30T e sensores externos\n🧭 RTK integrado para mapeamento de alta precisão\n⏱️ Até 55 minutos de voo\n📡 Alcance de até 20 km\n⚖️ Peso médio de 3,8 kg sem carga\n🎮 Controle DJI RC Plus com tela de 7”\n💼 Estrutura reforçada com proteção IP55', salePrice: 0, costPrice: 0, supplier: 'GoHobby Distribuidora de VANT LTDA' },
-        { id: 44, name: 'GOHOBBY SENTINEL', spec: '🛡️ GOHOBBY Sentinel\nUm sistema passivo de detecção, sem interferências, ideal para monitoramento discreto:\n📡 Frequências: 2.4 GHz, 5.1 GHz, 5.8 GHz\n🛩️ Protocolos suportados: DJI (O1–O4), Autel, eWiFi, PAL, NTSC, LightBridge, Datalink\n📍 Alcance de detecção: até 5 km\n🔁 Detecção simultânea: até 10 drones\n⏱️ Tempo de localização: ≤ 3 s\n🕒 Autonomia da bateria: até 12 h\n🎯 Precisão de localização: ≤ 3 m\n💻 Tela: 6.3” touchscreen\n🌐 Conectividade: Wi‑Fi e LTE\n⚖️ Peso: 0,65 kg + bateria externa (~0,6 kg)\n⚙️ IP: IP54', salePrice: 135990, costPrice: 108590.00, supplier: 'GoHobby Distribuidora de VANT LTDA' },
-        { id: 45, name: 'SKYFEND HUNTER', spec: '🌩️ Skyfend Hunter (AFA100)\nUm jammer portátil com detecção e contra-ação integrada, típico “gun”:\n📡 Detecção omnidirecional: até 2 km\n🚫 Jamming direcional: até 3 km\n📶 Cobertura de frequência: 400 MHz–6 GHz (RF + GNSS: GPS, Glonass, Beidou, Galileo)\n⏱️ Autonomia: até 8 h em espera e 1 h com jamming ativo\n🕌 Tela: touchscreen 3,5”\n🔄 Adaptabilidade: adaptação automática de frequência\n⚙️ IP: IP65\n⚖️ Peso: aprox. 6,5 kg', salePrice: 379749, costPrice: 265822.10, supplier: 'GoHobby Distribuidora de VANT LTDA' },
-        { id: 46, name: 'SKYFEND BLADER', spec: '⚡ Skyfend Blader\nUm jammer portátil de alta potência, enxuto e focado na neutralização:\n🌐 Alcance de jamming: até 1,5 km\n📶 Cobertura de frequência: 868 MHz, 915 MHz, 1.2 GHz, 1.4 GHz, 1.6 GHz, 2.4 GHz, 4.95 GHz, 5.2–5.8 GHz\n⏱️ Jamming ativado: até 30 min\n🧭 Direção e campo de visão: azimute ±15°, pitch ±10°\n⚖️ Peso: ≈ 4 kg\n⚙️ IP: IP65', salePrice: 147898.28, costPrice: 106328.80, supplier: 'GoHobby Distribuidora de VANT LTDA' },
-        { id: 31, name: 'Câmera DJI Osmo Pocket 3 Standard', spec: '📷 DJI Osmo Pocket 3 Standard\n🎥 Gravação em 4K com sensor grande\n📱 Tela articulada touchscreen\n🔁 Gimbal mecânico de 3 eixos\n💡 Ideal para criadores que filmam em movimento\n🔋 Autonomia de até 120 minutos\n📦 Compacta e leve: cabe no bolso', salePrice: 6990, costPrice: 4658.47, supplier: 'Arroba Celulares' },
-        { id: 92, name: 'Câmera DJI Osmo Action 4 Adventure Combo', spec: '📷 DJI Osmo Action 4 Adventure Combo\n🎥 Vídeos em 4K HDR a 120 fps\n🌊 À prova d’agua até 18 metros (sem case)\n🔋 Inclui 2 baterias extras + suporte de carregamento\n📱 Controle via app DJI Mimo\n📦 Pensada para esportes e ambientes extremos', salePrice: 4790.00, costPrice: 3194.13, supplier: 'DJI Grupo Multi' },
-        { id: 94, name: 'Câmera DJI Osmo Action 4 Standard Combo', spec: '📷 DJI Osmo Action 4 Standard Combo\n🎥 4K ultra amplo com estabilização RockSteady\n🎯 Lente grande angular com excelente captação de luz\n📱 Integração total com o app DJI\n🧳 Compacta, ideal para vloggers e aventureiros iniciantes', salePrice: 3490.00, costPrice: 2400.00, supplier: 'DJI Grupo Multi' },
-        { id: 93, name: 'Câmera DJI Osmo Action 5 Pro Standard Combo', spec: '📷 DJI Osmo Action 5 Pro Standard Combo\n🎥 4K a 120 fps com sensor aprimorado para pouca luz\n🌀 Estabilização RockSteady 3.0 + HorizonSteady\n🔋 Bateria de longa duração com carregamento rápido\n🎧 Áudio com 3 microfones e cancelamento de ruído\n📦 Perfeita para profissionais e criadores exigentes', salePrice: 4490.00, costPrice: 2992.69, supplier: 'DJI Grupo Multi' },
-        { id: 97, name: 'Estabilizador DJI Osmo Mobile 7P', spec: '🎮 DJI Osmo Mobile 7P BR\n📱 Compatível com celulares grandes\n🌀 Modos de acompanhamento e gestos\n🔋 Bateria para até 10h de uso', salePrice: 2090.00, costPrice: 1396.50, supplier: 'Arroba Celulares' },
-        { id: 96, name: 'Estabilizador DJI Osmo Mobile 7', spec: '🎮 DJI Osmo Mobile 7 BR\n📱 Novo sistema de equilíbrio automático\n🔋 Leve, com autonomia prolongada\n🧠 Integração nativa com app DJI', salePrice: 1249.00, costPrice: 835.23, supplier: 'Arroba Celulares' },
-        { id: 99, name: 'Estabilizador DJI Osmo Mobile 6', spec: '🎮 DJI Osmo Mobile 6 (Cinza Escuro ou Platinum)\n🔋 6h de uso, com ActiveTrack 5.0\n📱 Compacto e retrátil\n🧲 Design magnético para montagem rápida', salePrice: 1390.00, costPrice: 930.10, supplier: 'Arroba Celulares' },
-        { id: 95, name: 'Estabilizador DJI Osmo Mobile SE', spec: '🎮 DJI Osmo Mobile SE\n📱 Versão acessível e eficiente\n🎯 Boa estabilidade para vídeos casuais\n🧳 Ideal para iniciantes', salePrice: 990.00, costPrice: 663.49, supplier: 'Arroba Celulares' },
-        { id: 33, name: 'Estabilizador DJI RS 3 Pro Combo', spec: '🎮 DJI RS 3 Pro Combo\n🎥 Suporte para câmeras profissionais até 4,5 kg\n🧠 LIDAR focagem + ActiveTrack Pro\n🔋 Até 12h de uso com bateria BG30', salePrice: 7990, costPrice: 5790.00, supplier: 'GoHobby Distribuidora de VANT LTDA' },
-        { id: 35, name: 'Estabilizador DJI RS 4 Pro Combo', spec: '🎮 DJI RS 4 Pro Combo\n🎥 Suporte avançado para rigs pesados\n📡 Conectividade profissional\n🔋 Bateria BG70 de alta duração', salePrice: 12790, costPrice: 8900.00, supplier: 'GoHobby Distribuidora de VANT LTDA' },
-        { id: 34, name: 'Estabilizador DJI RS 4 Mini', spec: '🎮 DJI RS 4 Mini\n🎥 Câmeras até 2 kg\n🔧 Ultra leve, com braço de rotação larga\n🔋 Até 10h com autonomia', salePrice: 3890, costPrice: 2840.00, supplier: 'Arroba Celulares' },
-        { id: 32, name: 'Estabilizador DJI RS 3 Mini', spec: '🎮 DJI RS 3 Mini\n🎥 Ideal para câmeras mirrorless\n📦 Compacto e balanceado\n🔋 10h de bateria', salePrice: 2690, costPrice: 2335.00, supplier: 'Arroba Celulares' },
-        { id: 18, name: 'Controle DJI Motion 3', spec: '🎮 DJI Motion 3\n🖐️ Controle por movimento\n🎮 Compatível com DJI Neo, Avata 2 e Air 3\n📡 Transmissão precisa + experiência imersiva', salePrice: 1099, costPrice: 734.09, supplier: 'DJI Grupo Multi' },
-        { id: 19, name: 'Controle DJI RC', spec: '🎮 DJI RC\n📱 Suporte para smartphone\n📡 Alcance até 10 km\n⚖️ Design leve e ergonômico', salePrice: 3290, costPrice: 2195.65, supplier: 'Arroba Celulares' },
-        { id: 20, name: 'Controle DJI RC 2', spec: '🎮 DJI RC 2\n📺 Tela HD integrada\n📡 Alcance de até 20 km\n🔋 Autonomia de 4h', salePrice: 3590, costPrice: 2395.43, supplier: 'DJI Grupo Multi' },
-        { id: 21, name: 'Controle DJI RC Pro (HDMI)', spec: '🎮 DJI RC Pro (HDMI)\n🎥 Saída HDMI e sistema Android\n📡 Ultra responsivo com controle DJI Fly\n📺 Tela de alto brilho com 1000 nits', salePrice: 10990, costPrice: 7330.69, supplier: 'GoHobby Distribuidora de VANT LTDA' },
-        { id: 100, name: 'Microfone DJI Mic 2 (2 TX + 1 RX + Case)', spec: '🎤 DJI Mic 2 (2 transmissores + 1 receptor + case)\n🎧 Áudio estéreo digital de altíssima fidelidade (24-bit)\n🔋 Gravação interna com backup automático\n📡 Alcance de até 250 metros em área aberto\n🧳 Case com recarga rápida e transporte seguro\n🔗 Compatível com câmeras DSLR, celulares e computadores', salePrice: 4090.00, costPrice: 2731.69, supplier: 'Arroba Celulares' },
-        { id: 36, name: 'Microfone DJI Mic Mini (1 TX + 1 RX)', spec: '🎤 DJI Mic Mini (1 transmissor + 1 receptor)\n🎧 Super compacto e leve – ideal para creators\n🔋 Autonomia de até 6 horas por unidade\n📦 Sem case de recarga – prático para uso imediato\n🎯 Plug and play com portas USB-C e Lightning', salePrice: 859, costPrice: 523.29, supplier: 'Arroba Celulares' },
-        { id: 37, name: 'Microfone DJI Mic Mini (2 TX + 1 RX + Case)', spec: '🎤 DJI Mic Mini (2 transmissores + 1 receptor + case)\n🎧 Gravação estéreo dupla com sincronização inteligente\n🔋 Case de transporte com recarga automática\n📡 Conexão simultânea com dispositivos duplos\n📱 Perfeito para entrevistas, podcasts e vídeos de equipe.', salePrice: 1590, costPrice: 1062.43, supplier: 'Arroba Celulares' },
-        { id: 115, name: 'Bateria DJI Neo', spec: '🔋 Bateria DJI Neo\n⏱️ Autonomia de até 18 minutos por carga\n⚡ Tecnologia LiPo com proteção inteligente\n🔌 Recarga via hub ou carregador USB-C\n📦 Compatível exclusivamente com o DJI Neo', salePrice: 0, costPrice: 0, supplier: 'Arroba Celulares' },
-        { id: 12, name: 'Bateria DJI Avata', spec: '🔋 Bateria DJI Avata\n⏱️ Cerca de 18 minutos de voo FPV\n🎮 Ideal para uso com goggles e motion controller\n⚡ Proteção contra curto, descarga e superaquecimento\n📦 Peso médio: 162 g', salePrice: 1489, costPrice: 994.06, supplier: 'DJI Grupo Multi' },
-        { id: 13, name: 'Bateria DJI Avata 2', spec: '🔋 Bateria DJI Avata 2\n⏱️ Aproximadamente 23 minutos de voo imersivo\n📡 Otimizada para voos com DJI Goggles 3\n⚡ Equilíbrio entre leveza e performance\n📦 Recarregável via hub dedicado', salePrice: 1149, costPrice: 767.21, supplier: 'DJI Grupo Multi' },
-        { id: 104, name: 'Bateria Mini 3 Pro / 4 Pro', spec: '🔋 Bateria DJI Mini 3 / Mini 4 Pro (Standard)\n⏱️ Até 34 minutos de voo\n⚡ Compacta, com sensores de segurança\n🔋 Indicador de carga inteligente\n📦 Peso médio: 80 g', salePrice: 749.00, costPrice: 570.00, supplier: 'Arroba Celulares' },
-        { id: 105, name: 'Bateria Mini 3 Pro Plus', spec: '🔋 Bateria DJI Plus Mini 3 / Mini 4 Pro (Alta Capacidade)\n⏱️ Até 45 minutos por carga\n⚡ Ideal para voos longos e gravações contínuas\n🔋 Compatível com DJI Fly – modo “max performance”\n📦 Leve e resistente', salePrice: 1190.00, costPrice: 825.00, supplier: 'Arroba Celulares' },
-        { id: 15, name: 'Bateria DJI Air 3S / Air 3', spec: '🔋 Bateria DJI Air 3S / Air 3\n⏱️ Até 45 minutos por carga\n⚡ Células de alta densidade e vida útil prolongada\n📦 Compatível com modo de priorização de carga via hub\n🔋 Recarga otimizada via carregador 100W', salePrice: 1890, costPrice: 1261.94, supplier: 'DJI Grupo Multi' },
-        { id: 82, name: 'Bateria DJI Mini 2 / SE / 2 SE / 4K', spec: '🔋 Bateria DJI Mini 2 / SE / 2 SE / 4K\n⏱️ Entre 22 e 31 minutos de voo (varia conforme o modelo)\n⚡ Bateria compacta, estável e eficiente\n📦 Ideal para pilotos iniciantes ou voos recreativos\n🔋 Recarregável via hub Mini 2', salePrice: 649.00, costPrice: 433.38, supplier: 'Arroba Celulares' },
-        { id: 83, name: 'Bateria TB51 DJI Inspire 3', spec: '🔋 Bateria TB51 (Inspire 3)\n⏱️ Performance profissional com tempo estendido de voo\n📦 Sistema avançado de aquecimento automático\n⚡ Compatível com estação de carga DJI BS51\n🔋 Controle inteligente de ciclo e temperatura', salePrice: 3999.00, costPrice: 2669.76, supplier: 'GoHobby Distribuidora de VANT LTDA' },
-        { id: 81, name: 'Bateria de alta capacidade DJI RS BG70', spec: '🔋 Bateria DJI RS BG70 (para RS 4 Pro)\n⏱️ Até 12 horas de autonomia contínua\n⚙️ Fixação direta no estabilizador RS 4 Pro\n📦 Indicador de status em tempo real\n🔋 Recarga via conector magnético de alta voltagem', salePrice: 1490.00, costPrice: 996.07, supplier: 'GoHobby Distribuidora de VANT LTDA' },
-        { id: 79, name: 'Protetores de Hélices DJI Neo', spec: '🛡️ Protetores de Hélice DJI Neo\n⚙️ Leves, seguros e ideais para indoor', salePrice: 119.00, costPrice: 100.00, supplier: 'Arroba Celulares' },
-        { id: 78, name: 'Protetores de Hélices DJI Mini 3', spec: '🛡️ Protetores de Hélice DJI Mini 3\n⚙️ Encaixe rápido, protege hélices em espaços apertados', salePrice: 379.00, costPrice: 285.00, supplier: 'Arroba Celulares' },
-        { id: 77, name: 'Hélices DJI Neo – 2 Pares', spec: '🌀 Hélices DJI Neo – 2 Pares', salePrice: 79.00, costPrice: 53.06, supplier: 'Arroba Celulares' },
-        { id: 75, name: 'Hélices DJI Flip – 2 Pares', spec: '🌀 Hélices DJI Flip – 2 Pares', salePrice: 104.90, costPrice: 70.31, supplier: 'Arroba Celulares' },
-        { id: 73, name: 'Hélices DJI Mini 2/SE/2 SE/4K – 2 Pares', spec: '🌀 Hélices DJI Mini 2/SE/2 SE/4K – 2 Pares', salePrice: 119.00, costPrice: 53.06, supplier: 'Arroba Celulares' },
-        { id: 76, name: 'Hélices DJI Inspire 3 – Par', spec: '🌀 Hélices DJI Inspire 3 – Par', salePrice: 499.00, costPrice: 391.91, supplier: 'GoHobby Distribuidora de VANT LTDA' },
-        { id: 74, name: 'Hélices DJI Avata 2 – 2 Pares', spec: '🌀 Hélices DJI Avata 2 – 2 Pares', salePrice: 109.00, costPrice: 70.31, supplier: 'DJI Grupo Multi' },
-        { id: 38, name: 'DJI Goggles 3', spec: '👓 DJI Goggles 3\n📺 Duas telas OLED 1080p de alta nitidez\n🧠 Sistema de head tracking imersivo com baixa latência\n🔋 Bateria interna com até 3 horas de autonomia\n📡 Transmissão O4 compatível com Avata 2, Mini 4 Pro,  Air 3 e Neo\n🧳 Ajuste ergonômico para conforto prolongado', salePrice: 6490, costPrice: 4327.89, supplier: 'DJI Grupo Multi' },
-        { id: 88, name: 'DJI Goggles N3', spec: '👓 DJI Goggles N3\n📺 Compatíveis com o DJI Neo e Motion Controller 3\n🔋 Bateria interna com até 2 horas de uso contínuo\n🌀 Imersão FPV com mínima latência\n📦 Design leve e dobrável, ideal para transporte', salePrice: 2990.00, costPrice: 1999.56, supplier: 'Arroba Celulares' },
-        { id: 25, name: 'Hub de Carregamento DJI Avata 2', spec: '🔁 Hub de Carregamento DJI Avata 2\n🔋 Sistema inteligente de carregamento e equalização\n⚡ Alta eficiência térmica\n🔌 Compatível com powerbanks USB-C PD\n📦 Ideal para voos FPV com múltiplas baterias', salePrice: 499, costPrice: 333.62, supplier: 'DJI Grupo Multi' },
-        { id: 26, name: 'Hub de Carregamento DJI Neo', spec: '🔁 Hub de Carregamento DJI Neo\n🔋 Carga sequencial de até 3 baterias\n⚡ Tempo médio por unidade: 75 minutos\n🔌 Compatível com carregadores 65W DJI\n📦 Leve, portátil e de encaixe rápido', salePrice: 419, costPrice: 280.00, supplier: 'Arroba Celulares' },
-        { id: 27, name: 'Hub de Carregamento DJI Mini 3 / 3 Pro / 4 Pro', spec: '🔁 Hub de Carregamento DJI Mini 3 / 3 Pro / 4 Pro\n🔋 Até 3 baterias com transferência de carga\n⚡ Balanceamento automático\n📦 Ideal para operação em campo', salePrice: 519, costPrice: 347.01, supplier: 'Arroba Celulares' },
-        { id: 28, name: 'Hub de Carregamento DJI Air 3 / Air 3S', spec: '🔁 Hub de Carregamento DJI Air 3 / Air 3S\n🔋 Gestão automática da ordem de carga\n⚡ Suporte a carregamento paralelo\n📱 Status visível via app DJI Fly\n📦 Compacto com LEDs indicadores', salePrice: 799, costPrice: 500.09, supplier: 'DJI Grupo Multi' },
-        { id: 29, name: 'Carregador USB-C DJI 100W', spec: '⚡ Carregador USB-C DJI 100W\n🔌 Carga dupla simultânea (hub + controle)\n⚡ Reconhecimento inteligente de voltagem\n⏱️ Carga total entre 60 e 90 min por bateria\n📱 Compatível com outros dispositivos USB-C', salePrice: 619, costPrice: 415.23, supplier: 'DJI Grupo Multi' },
-        { id: 30, name: 'Carregador USB-C DJI 65W', spec: '⚡ Carregador USB-C DJI 65W\n🔋 Leve e versátil\n⚡ Ideal para controles e baterias padrão DJI\n📦 Proteção contra sobrecarga e superaquecimento\n🧳 Perfeito para uso portátil', salePrice: 389, costPrice: 573.86, supplier: 'Arroba Celulares' },
-        { id: 16, name: 'Estação de Energia DJI Power 1000', spec: '🔌 DJI Power 1000\n⚡ Potência total: 1000W\n🔋 Bateria interna de longa duração (1024 Wh)\n🔌 Diversas saídas: USB-C, AC, DC e carregamento solar\n📦 Ideal para operações em campo, emergências e drones de grande porte\n🧳 Design robusto, com alça retrátil e tela inteligente', salePrice: 9590, costPrice: 6314.47, supplier: 'DJI Grupo Multi' },
-        { id: 17, name: 'Estação de Energia DJI Power 500', spec: '🔌 DJI Power 500\n⚡ Potência total: 500W\n🔋 Capacidade de 512 Wh\n🔌 Entradas e saídas para múltiplos dispositivos simultâneos\n📦 Portátil e eficiente para filmagens externas, inspeções ou backup em locais remotos\n🧳 Compacta e fácil de transportar', salePrice: 6190, costPrice: 4071.35, supplier: 'DJI Grupo Multi' },
-        { id: 80, name: 'Sistema DJI Focus Pro – All-In-One Combo', spec: '🎯 Sistema DJI Focus Pro – All-In-One Combo\n🎥 Foco automático inteligente para câmeras profissionais\n📡 Controle remoto de alta precisão com delay ultrabaixo\n🔋 Motor silencioso com bateria integrada de longa duração\n⚙️ Compatível com estabilizadores da linha RS e câmeras DSLR/cinema\n🧠 Modos: foco manual, automático e via reconhecimento facial\n📦 Inclui motor, controle, cabo de dados e acessórios profissionais\n🧳 Ideal para produções de alto nível, cinema, comerciais e conteúdo técnico', salePrice: 16990.00, costPrice: 11133.54, supplier: 'GoHobby Distribuidora de VANT LTDA' },
-        { id: 86, name: 'Sistema DJI SDR Transmission Combo', spec: '📶 Sistema DJI SDR Transmission Combo\n📡 Transmissão de vídeo em tempo real com ultra baixa latência\n📺 Entrada HDMI para câmeras externas (profissionais ou drone FPV customizado)\n📱 Compatível com smartphones ou tablets via suportes dedicados\n🔌 Alimentação via bateria integrada ou ou fonte externa\n🎯 Ideal para transmissões ao vivo, monitoramento técnico ou gravações de precisão\n📦 Combo inclui receptor SDR, cabos, suporte de fixação e encaixes ajustáveis', salePrice: 5990.00, costPrice: 4004.27, supplier: 'Arroba Celulares' },
-        { id: 84, name: 'Suporte de Telefone SDR', spec: '📱 Suporte de Telefone SDR\n🧲 Suporte magnético com ajuste de ângulo e altura\n📦 Compatível com celulares de até 7”', salePrice: 579.00, costPrice: 257.45, supplier: 'Arroba Celulares' },
-        { id: 85, name: 'Suporte de Tablet SDR', spec: '💻 Suporte de Tablet SDR\n📐 Estrutura expandida para tablets de até 10”\n⚙️ Base firme com regulagem personalizada\n🧳 Ideal para visualização ampla em campo', salePrice: 579.00, costPrice: 500.09, supplier: 'Arroba Celulares' },
-        { id: 89, name: 'Hard Case Mavic Air 2 / Air 2S', spec: '🎒 Hard Case Mavic Air 2 / Air 2S\n💼 Proteção rígida + interior espumado', salePrice: 599.00, costPrice: 339.72, supplier: 'Arroba Celulares' },
-        { id: 90, name: 'Kit Apoio DJI RC Plus', spec: '🎒 Kit Apoio DJI RC Plus\n🧳 Tira de ombro + apoio de cintura\n🎮 Ideal para longas operações', salePrice: 769.00, costPrice: 140.73, supplier: 'GoHobby Distribuidora de VANT LTDA' },
-        { id: 91, name: 'Garrafa DJI 650mL – Preto Gradiente', spec: '🥤 Garrafa DJI 650mL – Preto Gradiente\n💧 Estilo DJI com hidratação', salePrice: 149.00, costPrice: 79.88, supplier: 'DJI Grupo Multi' },
+    // ATENÇÃO: CONVERTIDO PARA 'let' e REESTRUTURADO PARA SUPORTAR MÚLTIPLOS FORNECEDORES/CUSTOS
+    let PRODUCTS = [ 
+        { id: 1, name: 'DJI Neo Standard', spec: '🛸 DJI Neo Standard ou Combo fly more\n🎥 Grava em 4K/30fps\n⏱️ Até 18 minutos de voo\n📡 Alcance de até 6 km\n⚖️ Peso de apenas 135 g\n🎮 Controle via app, com controle ou controle motion ( três versões)', salePrice: 1900, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 1340 }] },
+        { id: 2, name: 'DJI Neo Combo', spec: '🛸 DJI Neo Standard ou Combo fly more\n🎥 Grava em 4K/30fps\n⏱️ Até 18 minutos de voo\n📡 Alcance de até 6 km\n⚖️ Peso de apenas 135 g\n🎮 Controle via app, com controle ou controle motion ( três versões)', salePrice: 3500, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 2460 }] },
+        { id: 3, name: 'DJI Mini 3 (sem tela)', spec: '🛸 DJI Mini 3\n🎥 Grava em 4K HDR a 30fps\n⏱️ Até 38 minutos de voo\n📡 Distância de até 18 km\n⚖️ Peso leve: 249 g\n🎮 Controle com ou sem tela (duas versões)', salePrice: 3990, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 2990 }] },
+        { id: 4, name: 'DJI Mini 3 (com tela)', spec: '🛸 DJI Mini 3\n🎥 Grava em 4K HDR a 30fps\n⏱️ Até 38 minutos de voo\n📡 Distância de até 18 km\n⚖️ Peso leve: 249 g\n🎮 Controle com ou sem tela (duas versões)', salePrice: 4785, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 3785 }] },
+        { id: 5, name: 'DJI Flip Fly More Combo (com tela)', spec: '🛸 DJI Flip\n🎥 4K a 60fps (com slow motion de até 100fps!)\n⏱️ Até 31 minutos no ar\n📡 Alcance médio de 13 km\n⚖️ Menos de 249 g\n🎮 Disponível com ou sem controle com tela', salePrice: 7990, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 5320 }] },
+        { id: 64, name: 'DJI Mini 4 Pro Fly More Combo Plus (com tela)', spec: '🛸 DJI Mini 4 Pro\n🎥 Incrível 4K HDR a 100fps + fotos de 48 MP\n⏱️ Até 45 minutos no air\n📡 Alcance de até 25 km\n⚖️ Abaixo de 249 g\n🎮 Controle com tela (DJI RC 2)', salePrice: 9000.00, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 6990.00 }] },
+        { id: 67, name: 'DJI Avata 2 Fly More Combo (1 bateria)', spec: '🛸 DJI Avata 2\n🎥 Gravação 4K 60fps com lente ultrawide\n⏱️ Até 23 minutos de voo imersivo\n📡 Alcance de até 13 km\n⚖️ Peso de 377 g\n🎮 Controle por movimento + óculos FPV (sem tela)', salePrice: 10590.00, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 7069.91 }] },
+        { id: 68, name: 'DJI Avata 2 Fly More Combo (3 baterias)', spec: '🛸 DJI Avata 2\n🎥 Gravação 4K 60fps com lente ultrawide\n⏱️ Até 23 minutos de voo imersivo\n📡 Alcance de até 13 km\n⚖️ Peso de 377 g\n🎮 Controle por movimento + óculos FPV (sem tela)', salePrice: 12990.00, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 8674.53 }] },
+        { id: 65, name: 'DJI Air 3S Standard (sem tela)', spec: '🛸 DJI Air 3S (Versão Standard)\n🎥 4K 60fps com sensores duplos (wide + tele)\n⏱️ Até 45 minutos no ar\n📡 Alcance insano de 32 km\n⚖️ Peso de 724 g\n🎮 Controle sem tela (standard)', salePrice: 12790.00, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 8532.92 }] },
+        { id: 72, name: 'DJI Mavic 4 Pro Combo (com tela)', spec: '🚀 DJI Mavic 4 Pro\n🎥 5.1K a 120fps com sensor 4/3 CMOS\n⏱️ Até 46 minutos de voo\n📡 Alcance de até 32 km\n⚖️ 958 g\n🎮 Controle com tela (DJI RC Pro)', salePrice: 26670.00, 
+            sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 19920.00 }] },
+        { id: 71, name: 'DJI Mavic 4 Pro Creator Combo (HDMI, 512GB)', spec: '🚀 DJI Mavic 4 Pro Creator Combo\nMesmo conjunto do Mavic 4 Pro com:\n🎒 Acessórios profissionais\n🔋 Baterias extras e hub inteligente\n🧳 Maleta reforçada para transporte\n🎮 Controle com tela (DJI RC Pro 2)', salePrice: 35650.00, 
+            sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 26650.00 }] },
+        { id: 39, name: 'DJI Mavic 3 Multispectral', spec: '🌱 DJI Mavic 3 Multispectral (Versão Standard)\n🎥 Câmera RGB 20 MP + 4 sensores multispectrais\n⏱️ Até 43 minutos por voo\n📡 Alcance de 15 km\n⚖️ 951 g\n🎮 Controle com tela (DJI RC Pro Enterprise)\n🧪 Ideal para agricultura de precisão e NDVI', salePrice: 43970, 
+            sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 32990.00 }] },
+        { id: 40, name: 'DJI Mavic 3 Thermal', spec: '🔥 DJI Mavic 3 Thermal (Versão Standard)\n🎥 4K + câmera térmica 640x512 px\n⏱️ Até 45 minutos por voo\n📡 Alcance de 15 km\n⚖️ 920 g\n🎮 Controle com tela (DJI RC Pro Enterprise)\n🔥 Ideal para inspeção, resgate e segurança', salePrice: 41700, 
+            sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 31990.00 }] },
+        { id: 41, name: 'DJI Mavic 3 Enterprise', spec: '🗺️ DJI Mavic 3 Enterprise (Versão Standard)\n🎥 Câmera RGB 20 MP com obturador mecânico\n🗺️ Compatível com RTK, alto-falante e holofote\n⏱️ Até 45 minutos de voo\n📡 Alcance de 15 km\n⚖️ 915 g\n🎮 Controle com tela (DJI RC Pro Enterprise)\n📐 Indicado para mapeamentos e medições técnicas', salePrice: 31270, 
+            sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 23990.00 }] },
+        { id: 42, name: 'DJI Matrice 4T', spec: '🛠️ DJI Matrice 4T (Versão Standard)\n🎥 RGB 48 MP + Zoom híbrido 56x + Câmera térmica de alta resolução\n🧭 Visão tripla: Wide, Zoom e Térmica\n⏱️ Até 55 minutos por voo\n📡 Alcance de até 20 km\n⚖️ Peso: 3,7 kg\n🎮 Controle DJI RC Plus com tela de 7” ultra brilhante\n💼 IP55 – Ideal para resgate, combate a incêndio e inspeções', salePrice: 61990, 
+            sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 45302.65 }] },
+        { id: 43, name: 'DJI Matrice 4E', spec: '🛠️ DJI Matrice 4E (Versão Standard)\n🎥 Câmera ampla de 20 MP com obturador mecânico\n🧭 Suporte a RTK, payloads e expansões avançadas\n⏱️ Até 55 minutos de voo\n📡 Alcance de até 20 km\n⚖️ Peso: 3,4 kg\n🎮 Controle DJI RC Plus\n🔧 Ideal para mapeamento, segurança e vigilância industrial', salePrice: 58589.97, 
+            sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 43112.98 }] },
+        { id: 113, name: 'DJI Matrice 30T', spec: '🛠️ DJI Matrice 30T (Versão Standard)\n🎥 Câmera Wide 48 MP + Zoom Híbrido + Câmera Térmica\n⏱️ Até 41 minutos por voo\n📡 Alcance de até 15 km\n⚖️ Peso: 3,77 kg\n🎮 Controle DJI RC Plus com tela de 7”\n💼 Proteção IP55 – Ideal para operações em campo aberto', salePrice: 0, 
+            sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 0 }] },
+        { id: 114, name: 'DJI Matrice 350 RTK', spec: '🛠️ DJI Matrice 350 RTK (Versão Standard)\n🎥 Compatível com payloads L2, P1, H30T e sensores externos\n🧭 RTK integrado para mapeamento de alta precisão\n⏱️ Até 55 minutos de voo\n📡 Alcance de até 20 km\n⚖️ Peso médio de 3,8 kg sem carga\n🎮 Controle DJI RC Plus com tela de 7”\n💼 Estrutura reforçada com proteção IP55', salePrice: 0, 
+            sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 0 }] },
+        { id: 44, name: 'GOHOBBY SENTINEL', spec: '🛡️ GOHOBBY Sentinel\nUm sistema passivo de detecção, sem interferências, ideal para monitoramento discreto:\n📡 Frequências: 2.4 GHz, 5.1 GHz, 5.8 GHz\n🛩️ Protocolos suportados: DJI (O1–O4), Autel, eWiFi, PAL, NTSC, LightBridge, Datalink\n📍 Alcance de detecção: até 5 km\n🔁 Detecção simultânea: até 10 drones\n⏱️ Tempo de localização: ≤ 3 s\n🕒 Autonomia da bateria: até 12 h\n🎯 Precisão de localização: ≤ 3 m\n💻 Tela: 6.3” touchscreen\n🌐 Conectividade: Wi‑Fi e LTE\n⚖️ Peso: 0,65 kg + bateria externa (~0,6 kg)\n⚙️ IP: IP54', salePrice: 135990, 
+            sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 108590.00 }] },
+        { id: 45, name: 'SKYFEND HUNTER', spec: '🌩️ Skyfend Hunter (AFA100)\nUm jammer portátil com detecção e contra-ação integrada, típico “gun”:\n📡 Detecção omnidirecional: até 2 km\n🚫 Jamming direcional: até 3 km\n📶 Cobertura de frequência: 400 MHz–6 GHz (RF + GNSS: GPS, Glonass, Beidou, Galileo)\n⏱️ Autonomia: até 8 h em espera e 1 h com jamming ativo\n🕌 Tela: touchscreen 3,5”\n🔄 Adaptabilidade: adaptação automática de frequência\n⚙️ IP: IP65\n⚖️ Peso: aprox. 6,5 kg', salePrice: 379749, 
+            sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 265822.10 }] },
+        { id: 46, name: 'SKYFEND BLADER', spec: '⚡ Skyfend Blader\nUm jammer portátil de alta potência, enxuto e focado na neutralização:\n🌐 Alcance de jamming: até 1,5 km\n📶 Cobertura de frequência: 868 MHz, 915 MHz, 1.2 GHz, 1.4 GHz, 1.6 GHz, 2.4 GHz, 4.95 GHz, 5.2–5.8 GHz\n⏱️ Jamming ativado: até 30 min\n🧭 Direção e campo de visão: azimute ±15°, pitch ±10°\n⚖️ Peso: ≈ 4 kg\n⚙️ IP: IP65', salePrice: 147898.28, 
+            sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 106328.80 }] },
+        { id: 31, name: 'Câmera DJI Osmo Pocket 3 Standard', spec: '📷 DJI Osmo Pocket 3 Standard\n🎥 Gravação em 4K com sensor grande\n📱 Tela articulada touchscreen\n🔁 Gimbal mecânico de 3 eixos\n💡 Ideal para criadores que filmam em movimento\n🔋 Autonomia de até 120 minutos\n📦 Compacta e leve: cabe no bolso', salePrice: 6990, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 4658.47 }] },
+        { id: 92, name: 'Câmera DJI Osmo Action 4 Adventure Combo', spec: '📷 DJI Osmo Action 4 Adventure Combo\n🎥 Vídeos em 4K HDR a 120 fps\n🌊 À prova d’agua até 18 metros (sem case)\n🔋 Inclui 2 baterias extras + suporte de carregamento\n📱 Controle via app DJI Mimo\n📦 Pensada para esportes e ambientes extremos', salePrice: 4790.00, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 3194.13 }] },
+        { id: 94, name: 'Câmera DJI Osmo Action 4 Standard Combo', spec: '📷 DJI Osmo Action 4 Standard Combo\n🎥 4K ultra amplo com estabilização RockSteady\n🎯 Lente grande angular com excelente captação de luz\n📱 Integração total com o app DJI\n🧳 Compacta, ideal para vloggers e aventureiros iniciantes', salePrice: 3490.00, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 2400.00 }] },
+        { id: 93, name: 'Câmera DJI Osmo Action 5 Pro Standard Combo', spec: '📷 DJI Osmo Action 5 Pro Standard Combo\n🎥 4K a 120 fps com sensor aprimorado para pouca luz\n🌀 Estabilização RockSteady 3.0 + HorizonSteady\n🔋 Bateria de longa duração com carregamento rápido\n🎧 Áudio com 3 microfones e cancelamento de ruído\n📦 Perfeita para profissionais e criadores exigentes', salePrice: 4490.00, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 2992.69 }] },
+        { id: 97, name: 'Estabilizador DJI Osmo Mobile 7P', spec: '🎮 DJI Osmo Mobile 7P BR\n📱 Compatível com celulares grandes\n🌀 Modos de acompanhamento e gestos\n🔋 Bateria para até 10h de uso', salePrice: 2090.00, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 1396.50 }] },
+        { id: 96, name: 'Estabilizador DJI Osmo Mobile 7', spec: '🎮 DJI Osmo Mobile 7 BR\n📱 Novo sistema de equilíbrio automático\n🔋 Leve, com autonomia prolongada\n🧠 Integração nativa com app DJI', salePrice: 1249.00, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 835.23 }] },
+        { id: 99, name: 'Estabilizador DJI Osmo Mobile 6', spec: '🎮 DJI Osmo Mobile 6 (Cinza Escuro ou Platinum)\n🔋 6h de uso, com ActiveTrack 5.0\n📱 Compacto e retrátil\n🧲 Design magnético para montagem rápida', salePrice: 1390.00, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 930.10 }] },
+        { id: 95, name: 'Estabilizador DJI Osmo Mobile SE', spec: '🎮 DJI Osmo Mobile SE\n📱 Versão acessível e eficiente\n🎯 Boa estabilidade para vídeos casuais\n🧳 Ideal para iniciantes', salePrice: 990.00, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 663.49 }] },
+        { id: 33, name: 'Estabilizador DJI RS 3 Pro Combo', spec: '🎮 DJI RS 3 Pro Combo\n🎥 Suporte para câmeras profissionais até 4,5 kg\n🧠 LIDAR focagem + ActiveTrack Pro\n🔋 Até 12h de uso com bateria BG30', salePrice: 7990, 
+            sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 5790.00 }] },
+        { id: 35, name: 'Estabilizador DJI RS 4 Pro Combo', spec: '🎮 DJI RS 4 Pro Combo\n🎥 Suporte avançado para rigs pesados\n📡 Conectividade profissional\n🔋 Bateria BG70 de alta duração', salePrice: 12790, 
+            sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 8900.00 }] },
+        { id: 34, name: 'Estabilizador DJI RS 4 Mini', spec: '🎮 DJI RS 4 Mini\n🎥 Câmeras até 2 kg\n🔧 Ultra leve, com braço de rotação larga\n🔋 Até 10h com autonomia', salePrice: 3890, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 2840.00 }] },
+        { id: 32, name: 'Estabilizador DJI RS 3 Mini', spec: '🎮 DJI RS 3 Mini\n🎥 Ideal para câmeras mirrorless\n📦 Compacto e balanceado\n🔋 10h de bateria', salePrice: 2690, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 2335.00 }] },
+        { id: 18, name: 'Controle DJI Motion 3', spec: '🎮 DJI Motion 3\n🖐️ Controle por movimento\n🎮 Compatível com DJI Neo, Avata 2 e Air 3\n📡 Transmissão precisa + experiência imersiva', salePrice: 1099, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 734.09 }] },
+        { id: 19, name: 'Controle DJI RC', spec: '🎮 DJI RC\n📱 Suporte para smartphone\n📡 Alcance até 10 km\n⚖️ Design leve e ergonômico', salePrice: 3290, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 2195.65 }] },
+        { id: 20, name: 'Controle DJI RC 2', spec: '🎮 DJI RC 2\n📺 Tela HD integrada\n📡 Alcance de até 20 km\n🔋 Autonomia de 4h', salePrice: 3590, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 2395.43 }] },
+        { id: 21, name: 'Controle DJI RC Pro (HDMI)', spec: '🎮 DJI RC Pro (HDMI)\n🎥 Saída HDMI e sistema Android\n📡 Ultra responsivo com controle DJI Fly\n📺 Tela de alto brilho com 1000 nits', salePrice: 10990, 
+            sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 7330.69 }] },
+        { id: 100, name: 'Microfone DJI Mic 2 (2 TX + 1 RX + Case)', spec: '🎤 DJI Mic 2 (2 transmissores + 1 receptor + case)\n🎧 Áudio estéreo digital de altíssima fidelidade (24-bit)\n🔋 Gravação interna com backup automático\n📡 Alcance de até 250 metros em área aberto\n🧳 Case com recarga rápida e transporte seguro\n🔗 Compatível com câmeras DSLR, celulares e computadores', salePrice: 4090.00, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 2731.69 }] },
+        { id: 36, name: 'Microfone DJI Mic Mini (1 TX + 1 RX)', spec: '🎤 DJI Mic Mini (1 transmissor + 1 receptor)\n🎧 Super compacto e leve – ideal para creators\n🔋 Autonomia de até 6 horas por unidade\n📦 Sem case de recarga – prático para uso imediato\n🎯 Plug and play com portas USB-C e Lightning', salePrice: 859, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 523.29 }] },
+        { id: 37, name: 'Microfone DJI Mic Mini (2 TX + 1 RX + Case)', spec: '🎤 DJI Mic Mini (2 transmissores + 1 receptor + case)\n🎧 Gravação estéreo dupla com sincronização inteligente\n🔋 Case de transporte com recarga automática\n📡 Conexão simultânea com dispositivos duplos\n📱 Perfeito para entrevistas, podcasts e vídeos de equipe.', salePrice: 1590, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 1062.43 }] },
+        { id: 115, name: 'Bateria DJI Neo', spec: '🔋 Bateria DJI Neo\n⏱️ Autonomia de até 18 minutos por carga\n⚡ Tecnologia LiPo com proteção inteligente\n🔌 Recarga via hub ou carregador USB-C\n📦 Compatível exclusivamente com o DJI Neo', salePrice: 0, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 0 }] },
+        { id: 12, name: 'Bateria DJI Avata', spec: '🔋 Bateria DJI Avata\n⏱️ Cerca de 18 minutos de voo FPV\n🎮 Ideal para uso com goggles e motion controller\n⚡ Proteção contra curto, descarga e superaquecimento\n📦 Peso médio: 162 g', salePrice: 1489, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 994.06 }] },
+        { id: 13, name: 'Bateria DJI Avata 2', spec: '🔋 Bateria DJI Avata 2\n⏱️ Aproximadamente 23 minutos de voo imersivo\n📡 Otimizada para voos com DJI Goggles 3\n⚡ Equilíbrio entre leveza e performance\n📦 Recarregável via hub dedicado', salePrice: 1149, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 767.21 }] },
+        { id: 104, name: 'Bateria Mini 3 Pro / 4 Pro', spec: '🔋 Bateria DJI Mini 3 / Mini 4 Pro (Standard)\n⏱️ Até 34 minutos de voo\n⚡ Compacta, com sensores de segurança\n🔋 Indicador de carga inteligente\n📦 Peso médio: 80 g', salePrice: 749.00, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 570.00 }] },
+        { id: 105, name: 'Bateria Mini 3 Pro Plus', spec: '🔋 Bateria DJI Plus Mini 3 / Mini 4 Pro (Alta Capacidade)\n⏱️ Até 45 minutos por carga\n⚡ Ideal para voos longos e gravações contínuas\n🔋 Compatível com DJI Fly – modo “max performance”\n📦 Leve e resistente', salePrice: 1190.00, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 825.00 }] },
+        { id: 15, name: 'Bateria DJI Air 3S / Air 3', spec: '🔋 Bateria DJI Air 3S / Air 3\n⏱️ Até 45 minutos por carga\n⚡ Células de alta densidade e vida útil prolongada\n📦 Compatível com modo de priorização de carga via hub\n🔋 Recarga otimizada via carregador 100W', salePrice: 1890, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 1261.94 }] },
+        { id: 82, name: 'Bateria DJI Mini 2 / SE / 2 SE / 4K', spec: '🔋 Bateria DJI Mini 2 / SE / 2 SE / 4K\n⏱️ Entre 22 e 31 minutos de voo (varia conforme o modelo)\n⚡ Bateria compacta, estável e eficiente\n📦 Ideal para pilotos iniciantes ou voos recreativos\n🔋 Recarregável via hub Mini 2', salePrice: 649.00, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 433.38 }] },
+        { id: 83, name: 'Bateria TB51 DJI Inspire 3', spec: '🔋 Bateria TB51 (Inspire 3)\n⏱️ Performance profissional com tempo estendido de voo\n📦 Sistema avançado de aquecimento automático\n⚡ Compatível com estação de carga DJI BS51\n🔋 Controle inteligente de ciclo e temperatura', salePrice: 3999.00, 
+            sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 2669.76 }] },
+        { id: 81, name: 'Bateria de alta capacidade DJI RS BG70', spec: '🔋 Bateria DJI RS BG70 (para RS 4 Pro)\n⏱️ Até 12 horas de autonomia contínua\n⚙️ Fixação direta no estabilizador RS 4 Pro\n📦 Indicador de status em tempo real\n🔋 Recarga via conector magnético de alta voltagem', salePrice: 1490.00, 
+            sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 996.07 }] },
+        { id: 79, name: 'Protetores de Hélices DJI Neo', spec: '🛡️ Protetores de Hélice DJI Neo\n⚙️ Leves, seguros e ideais para indoor', salePrice: 119.00, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 100.00 }] },
+        { id: 78, name: 'Protetores de Hélices DJI Mini 3', spec: '🛡️ Protetores de Hélice DJI Mini 3\n⚙️ Encaixe rápido, protege hélices em espaços apertados', salePrice: 379.00, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 285.00 }] },
+        { id: 77, name: 'Hélices DJI Neo – 2 Pares', spec: '🌀 Hélices DJI Neo – 2 Pares', salePrice: 79.00, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 53.06 }] },
+        { id: 75, name: 'Hélices DJI Flip – 2 Pares', spec: '🌀 Hélices DJI Flip – 2 Pares', salePrice: 104.90, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 70.31 }] },
+        { id: 73, name: 'Hélices DJI Mini 2/SE/2 SE/4K – 2 Pares', spec: '🌀 Hélices DJI Mini 2/SE/2 SE/4K – 2 Pares', salePrice: 119.00, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 53.06 }] },
+        { id: 76, name: 'Hélices DJI Inspire 3 – Par', spec: '🌀 Hélices DJI Inspire 3 – Par', salePrice: 499.00, 
+            sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 391.91 }] },
+        { id: 74, name: 'Hélices DJI Avata 2 – 2 Pares', spec: '🌀 Hélices DJI Avata 2 – 2 Pares', salePrice: 109.00, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 70.31 }] },
+        { id: 38, name: 'DJI Goggles 3', spec: '👓 DJI Goggles 3\n📺 Duas telas OLED 1080p de alta nitidez\n🧠 Sistema de head tracking imersivo com baixa latência\n🔋 Bateria interna com até 3 horas de autonomia\n📡 Transmissão O4 compatível com Avata 2, Mini 4 Pro,  Air 3 e Neo\n🧳 Ajuste ergonômico para conforto prolongado', salePrice: 6490, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 4327.89 }] },
+        { id: 88, name: 'DJI Goggles N3', spec: '👓 DJI Goggles N3\n📺 Compatíveis com o DJI Neo e Motion Controller 3\n🔋 Bateria interna com até 2 horas de uso contínuo\n🌀 Imersão FPV com mínima latência\n📦 Design leve e dobrável, ideal para transporte', salePrice: 2990.00, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 1999.56 }] },
+        { id: 25, name: 'Hub de Carregamento DJI Avata 2', spec: '🔁 Hub de Carregamento DJI Avata 2\n🔋 Sistema inteligente de carregamento e equalização\n⚡ Alta eficiência térmica\n🔌 Compatível com powerbanks USB-C PD\n📦 Ideal para voos FPV com múltiplas baterias', salePrice: 499, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 333.62 }] },
+        { id: 26, name: 'Hub de Carregamento DJI Neo', spec: '🔁 Hub de Carregamento DJI Neo\n🔋 Carga sequencial de até 3 baterias\n⚡ Tempo médio por unidade: 75 minutos\n🔌 Compatível com carregadores 65W DJI\n📦 Leve, portátil e de encaixe rápido', salePrice: 419, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 280.00 }] },
+        { id: 27, name: 'Hub de Carregamento DJI Mini 3 / 3 Pro / 4 Pro', spec: '🔁 Hub de Carregamento DJI Mini 3 / 3 Pro / 4 Pro\n🔋 Até 3 baterias com transferência de carga\n⚡ Balanceamento automático\n📦 Ideal para operação em campo', salePrice: 519, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 347.01 }] },
+        { id: 28, name: 'Hub de Carregamento DJI Air 3 / Air 3S', spec: '🔁 Hub de Carregamento DJI Air 3 / Air 3S\n🔋 Gestão automática da ordem de carga\n⚡ Suporte a carregamento paralelo\n📱 Status visível via app DJI Fly\n📦 Compacto com LEDs indicadores', salePrice: 799, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 500.09 }] },
+        { id: 29, name: 'Carregador USB-C DJI 100W', spec: '⚡ Carregador USB-C DJI 100W\n🔌 Carga dupla simultânea (hub + controle)\n⚡ Reconhecimento inteligente de voltagem\n⏱️ Carga total entre 60 e 90 min por bateria\n📱 Compatível com outros dispositivos USB-C', salePrice: 619, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 415.23 }] },
+        { id: 30, name: 'Carregador USB-C DJI 65W', spec: '⚡ Carregador USB-C DJI 65W\n🔋 Leve e versátil\n⚡ Ideal para controles e baterias padrão DJI\n📦 Proteção contra sobrecarga e superaquecimento\n🧳 Perfeito para uso portátil', salePrice: 389, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 573.86 }] },
+        { id: 16, name: 'Estação de Energia DJI Power 1000', spec: '🔌 DJI Power 1000\n⚡ Potência total: 1000W\n🔋 Bateria interna de longa duração (1024 Wh)\n🔌 Diversas saídas: USB-C, AC, DC e carregamento solar\n📦 Ideal para operações em campo, emergências e drones de grande porte\n🧳 Design robusto, com alça retrátil e tela inteligente', salePrice: 9590, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 6314.47 }] },
+        { id: 17, name: 'Estação de Energia DJI Power 500', spec: '🔌 DJI Power 500\n⚡ Potência total: 500W\n🔋 Capacidade de 512 Wh\n🔌 Entradas e saídas para múltiplos dispositivos simultâneos\n📦 Portátil e eficiente para filmagens externas, inspeções ou backup em locais remotos\n🧳 Compacta e fácil de transportar', salePrice: 6190, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 4071.35 }] },
+        { id: 80, name: 'Sistema DJI Focus Pro – All-In-One Combo', spec: '🎯 Sistema DJI Focus Pro – All-In-One Combo\n🎥 Foco automático inteligente para câmeras profissionais\n📡 Controle remoto de alta precisão com delay ultrabaixo\n🔋 Motor silencioso com bateria integrada de longa duração\n⚙️ Compatível com estabilizadores da linha RS e câmeras DSLR/cinema\n🧠 Modos: foco manual, automático e via reconhecimento facial\n📦 Inclui motor, controle, cabo de dados e acessórios profissionais\n🧳 Ideal para produções de alto nível, cinema, comerciais e conteúdo técnico', salePrice: 16990.00, 
+            sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 11133.54 }] },
+        { id: 86, name: 'Sistema DJI SDR Transmission Combo', spec: '📶 Sistema DJI SDR Transmission Combo\n📡 Transmissão de vídeo em tempo real com ultra baixa latência\n📺 Entrada HDMI para câmeras externas (profissionais ou drone FPV customizado)\n📱 Compatível com smartphones ou tablets via suportes dedicados\n🔌 Alimentação via bateria integrada ou ou fonte externa\n🎯 Ideal para transmissões ao vivo, monitoramento técnico ou gravações de precisão\n📦 Combo inclui receptor SDR, cabos, suporte de fixação e encaixes ajustáveis', salePrice: 5990.00, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 4004.27 }] },
+        { id: 84, name: 'Suporte de Telefone SDR', spec: '📱 Suporte de Telefone SDR\n🧲 Suporte magnético com ajuste de ângulo e altura\n📦 Compatível com celulares de até 7”', salePrice: 579.00, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 257.45 }] },
+        { id: 85, name: 'Suporte de Tablet SDR', spec: '💻 Suporte de Tablet SDR\n📐 Estrutura expandida para tablets de até 10”\n⚙️ Base firme com regulagem personalizada\n🧳 Ideal para visualização ampla em campo', salePrice: 579.00, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 500.09 }] },
+        { id: 89, name: 'Hard Case Mavic Air 2 / Air 2S', spec: '🎒 Hard Case Mavic Air 2 / Air 2S\n💼 Proteção rígida + interior espumado', salePrice: 599.00, 
+            sources: [{ supplierName: 'Arroba Celulares', costPrice: 339.72 }] },
+        { id: 90, name: 'Kit Apoio DJI RC Plus', spec: '🎒 Kit Apoio DJI RC Plus\n🧳 Tira de ombro + apoio de cintura\n🎮 Ideal para longas operações', salePrice: 769.00, 
+            sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 140.73 }] },
+        { id: 91, name: 'Garrafa DJI 650mL – Preto Gradiente', spec: '🥤 Garrafa DJI 650mL – Preto Gradiente\n💧 Estilo DJI com hidratação', salePrice: 149.00, 
+            sources: [{ supplierName: 'DJI Grupo Multi', costPrice: 79.88 }] },
+        // Exemplo de produto com MÚLTIPLOS fornecedores
+        { id: 1000, name: 'Bateria Universal P-Drone', spec: '🔋 Bateria de alta capacidade universal', salePrice: 1500.00,
+            sources: [
+                { supplierName: 'Arroba Celulares', costPrice: 1000.00 },
+                { supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 950.00 }
+            ]
+        },
+        { id: 1001, name: 'Kit Hélice Super Resistente (2 Pares)', spec: '🌀 Hélices de fibra de carbono para alta durabilidade.', salePrice: 250.00,
+            sources: [
+                { supplierName: 'DJI Grupo Multi', costPrice: 150.00 },
+                { supplierName: 'Arroba Celulares', costPrice: 160.00 }
+            ]
+        }
     ];
     const SUPPLIERS = [
         { 
@@ -958,33 +1155,60 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('password');
     const loginError = document.getElementById('login-error');
     const welcomeMessage = document.getElementById('welcome-message');
-    const visitorModeButton = document.getElementById('visitor-mode-button'); // Novo botão
+    const visitorModeButton = document.getElementById('visitor-mode-button'); 
 
     const navButtons = document.querySelectorAll('.nav-button');
     const contentSections = document.querySelectorAll('.content-section');
-    const productsNavButton = document.getElementById('products-nav-button'); // Adicionado
-    const calculatorNavButton = document.getElementById('calculator-nav-button'); // Adicionado
+    const productsNavButton = document.getElementById('products-nav-button'); 
+    const calculatorNavButton = document.getElementById('calculator-nav-button'); 
     const suppliersNavButton = document.getElementById('suppliers-nav-button');
-    const settingsNavButton = document.getElementById('settings-nav-button');
-    const dronesNavButton = document.getElementById('drones-nav-button'); // Renomeado para mais clareza para logados
-    const infoEmpresaNavButton = document.getElementById('info-empresa-nav-button'); // Usando ID agora
+    const settingsNavButton = document.getElementById('settings-nav-button'); 
+    const dronesNavButton = document.getElementById('drones-nav-button'); 
+    const infoEmpresaNavButton = document.getElementById('info-empresa-nav-button'); 
+
+    // Novos botões de sub-navegação em Configurações
+    const manageUsersNavButton = document.getElementById('manage-users-nav-button');
+    const createProductNavButton = document.getElementById('create-product-nav-button');
+    const editProductNavButton = document.getElementById('edit-product-nav-button');
+    const settingsSubNav = document.getElementById('settings-sub-nav'); // O div que contém os sub-botões
+
 
     const productList = document.getElementById('product-list');
     const supplierList = document.getElementById('supplier-list');
     const productSearchInput = document.getElementById('product-search');
-    const droneVisitorList = document.getElementById('drone-visitor-list'); // Lista de drones para visitante
-    const droneVisitorSearchInput = document.getElementById('drone-visitor-search'); // Campo de busca para visitante
+    const droneVisitorList = document.getElementById('drone-visitor-list'); 
+    const droneVisitorSearchInput = document.getElementById('drone-visitor-search'); 
 
     const mainModal = document.getElementById('main-modal');
     const modalTitle = document.getElementById('modal-title');
     const modalBody = document.getElementById('modal-body');
     const closeModalButton = document.querySelector('.close-button');
 
+    // Elementos da seção Gerir Usuários
     const createTempUserForm = document.getElementById('create-temp-user-form');
     const tempUserFeedback = document.getElementById('temp-user-feedback');
+    const tempUserListContainer = document.getElementById('temp-user-list');
+
+    // Elementos da seção Criar Produto
+    const createProductForm = document.getElementById('create-product-form');
+    const createProductFeedback = document.getElementById('create-product-feedback');
+
+    // Elementos da seção Alterar Produto
+    const editProductSearchIdInput = document.getElementById('edit-product-search-id');
+    const searchProductToEditButton = document.getElementById('search-product-to-edit');
+    const editProductDisplay = document.getElementById('edit-product-display');
+    const editProductForm = document.getElementById('edit-product-form');
+    const editProductIdInput = document.getElementById('edit-product-id');
+    const editProductNameInput = document.getElementById('edit-product-name');
+    const editProductSpecTextarea = document.getElementById('edit-product-spec');
+    const editProductSalePriceInput = document.getElementById('edit-product-sale-price');
+    const editProductCostPriceInput = document.getElementById('edit-product-cost-price');
+    const editProductSupplierInput = document.getElementById('edit-product-supplier');
+    const editProductFeedback = document.getElementById('edit-product-feedback');
+
+
     const mainContent = document.getElementById('main-content');
     const scrollToTopButton = document.getElementById('scroll-to-top');
-    const tempUserListContainer = document.getElementById('temp-user-list');
 
     const generalCalcValorBase = document.getElementById('general-valor-base');
     const generalCalcPaymentRadios = document.querySelectorAll('input[name="general-payment-method"]');
@@ -994,12 +1218,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const generalCalculatorResult = document.getElementById('general-calculator-result');
 
     const navToggleButton = document.getElementById('nav-toggle-btn');
-    const navToggleButtonClose = document.getElementById('nav-toggle-btn-close'); // Novo botão para fechar a nav
-    const navElement = document.querySelector('nav'); // O elemento nav
+    const navToggleButtonClose = document.getElementById('nav-toggle-btn-close'); 
+    const navElement = document.querySelector('nav'); 
     const appBody = document.querySelector('.app-body');
-    const headerElement = document.querySelector('header'); // Adicionado para controle de classe
+    const headerElement = document.querySelector('header'); 
 
-    const bodyElement = document.body; // Referência ao body para alterar a classe
+    const bodyElement = document.body; 
 
     // Novos elementos da IA
     const aiChatButton = document.getElementById('ai-chat-button');
@@ -1016,33 +1240,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- FUNÇÕES DA API GEMINI ---
     async function callGeminiAPI(prompt, title, isProductHelp = false, productSpecs = '', isGeneralAI = false) { 
-        // Se não for uma pergunta da IA geral, usa o modal principal
         if (!isGeneralAI) {
             modalTitle.textContent = title;
             modalBody.innerHTML = '<div class="loader"></div>';
             openModal(); 
         } else {
-            // Se for uma pergunta da IA geral, usa o modal específico da IA
             aiChatModal.style.display = 'block';
             aiLoader.style.display = 'block';
-            aiResponseArea.style.display = 'none'; // Esconde resposta anterior
-            aiResponseArea.innerHTML = ''; // Limpa resposta anterior
-            // Opcional: fechar o modal principal se ele estiver aberto e a IA geral for acionada
+            aiResponseArea.style.display = 'none'; 
+            aiResponseArea.innerHTML = ''; 
             mainModal.style.display = 'none'; 
         }
 
-        // AVISO DE SEGURANÇA: Chaves de API expostas no frontend não são seguras para produção.
-        // Por favor, considere usar um servidor backend para proteger sua chave em um ambiente real.
         const apiKey = "AIzaSyBQr00SKusVdv1sR7cjaJbFsfY5YaHQbH0"; // <<<<< Substitua pela sua chave Gemini REAL
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`; 
         
         let fullPrompt = prompt;
         if (isProductHelp) {
             fullPrompt = `R2D2: Responda de forma direta e clara (máximo 3 frases) à seguinte dúvida do cliente sobre o produto "${productSpecs}". Dúvida do cliente: "${prompt}"`;
-        } else if (isGeneralAI) { // Nova condição para perguntas da IA geral
-            // Use o ano atual para perguntas relevantes ao tempo
-            const currentYearPrompt = new Date().getFullYear();
-            fullPrompt = `Você é um assistente da Galvão Drones, especializada em drones e equipamentos DJI. Responda de forma útil, amigável e concisa (máximo 4 frases) às perguntas, utilizando o conhecimento de um especialista em drones. Se a pergunta for sobre produtos específicos da Galvão Drones, como modelos de drones ou equipamentos, use seu conhecimento para dar uma resposta detalhada sobre o universo de drones. Se a pergunta for sobre a empresa "Galvão Drones" (como localização, contato, serviços), forneça as seguintes informações: "A Galvão Drones está localizada na Rua 16, nº 304 – Setor Aeroviário, Goiânia – GO, CEP: 74435-240. Você pode nos contatar pelo telefone (62) 3636-0668 ou pelo WhatsApp 556236360668. Nosso website é www.galvaodrones.com.br e também estamos no Instagram (@galvao_drones) e YouTube (Galvão Drones)." Responda considerando o ano atual de ${currentYearPrompt}. Pergunta do usuário: "${prompt}"`;
+        } else if (isGeneralAI) { 
+            const currentDateTime = new Date().toLocaleString('pt-BR', { dateStyle: 'full', timeStyle: 'long' });
+            fullPrompt = `Você é um assistente da Galvão Drones, especializada em drones e equipamentos DJI. Responda de forma útil, amigável e concisa (máximo 4 frases) às perguntas, utilizando o conhecimento de um especialista em drones. Se a pergunta for sobre produtos específicos da Galvão Drones, como modelos de drones ou equipamentos, use seu conhecimento para dar uma resposta detalhada sobre o universo de drones. Se a pergunta for sobre a empresa "Galvão Drones" (como localização, contato, serviços), forneça as seguintes informações: "A Galvão Drones está localizada na Rua 16, nº 304 – Setor Aeroviário, Goiânia – GO, CEP: 74435-240. Você pode nos contatar pelo telefone (62) 3636-0668 ou pelo WhatsApp 556236360668. Nosso website é www.galvaodrones.com.br e também estamos no Instagram (@galvao_drones) e YouTube (Galvão Drones)." Considere a data e hora atual: ${currentDateTime}. Pergunta do usuário: "${prompt}"`;
         } else {
              fullPrompt = `R2D2: ${prompt}`;
         }
@@ -1129,56 +1347,73 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function setupAppForUser() {
-        if (currentUser.isVisitor) {
-            welcomeMessage.textContent = 'Modo Visitante';
-            headerElement.classList.add('visitor-header'); // Adiciona classe para esconder a welcome message
-            logoutButton.style.display = 'block'; // MOSTRAR botão de logout para visitantes
-            bodyElement.classList.add('visitor-mode-bg'); // Adiciona classe para mudar o fundo
-        } else {
-            welcomeMessage.textContent = `Bem-vindo(a), ${currentUser.username}!`;
-            headerElement.classList.remove('visitor-header'); // Remove para usuários logados
-            logoutButton.style.display = 'block'; // MOSTRAR botão de logout para usuários logados
-            bodyElement.classList.remove('visitor-mode-bg'); // Remove a classe do fundo
-        }
-
+        const isVisitor = currentUser.isVisitor;
         const isAdmin = currentUser.role === 'admin';
         const isSeller = currentUser.role === 'seller';
         const isTempUser = currentUser.type === 'temporary';
-        const isVisitor = currentUser.isVisitor;
         
-        // Esconde ou mostra e reordena botões da navegação lateral conforme o tipo de usuário
+        // Resetar visibilidade e ordem da navegação
         navButtons.forEach(button => button.classList.add('hidden'));
+        settingsSubNav.style.display = 'none'; // Esconde o sub-menu de Configurações por padrão
 
         if (isVisitor) {
+            welcomeMessage.textContent = 'Modo Visitante';
+            headerElement.classList.add('visitor-header'); 
+            logoutButton.style.display = 'block'; 
+            bodyElement.classList.add('visitor-mode-bg'); 
+
             dronesNavButton.classList.remove('hidden'); 
             infoEmpresaNavButton.classList.remove('hidden'); 
             dronesNavButton.style.order = 1; 
             infoEmpresaNavButton.style.order = 2; 
+
             switchTab('drones-visitor-section');
         } else if (isSeller) {
+            welcomeMessage.textContent = `Bem-vindo(a), ${currentUser.username}!`;
+            headerElement.classList.remove('visitor-header'); 
+            logoutButton.style.display = 'block'; 
+            bodyElement.classList.remove('visitor-mode-bg'); 
+
             productsNavButton.classList.remove('hidden');
             calculatorNavButton.classList.remove('hidden');
             dronesNavButton.classList.remove('hidden');
             infoEmpresaNavButton.classList.remove('hidden');
+
             productsNavButton.style.order = 1;
             calculatorNavButton.style.order = 2;
             dronesNavButton.style.order = 3;
             infoEmpresaNavButton.style.order = 4;
+            
             switchTab('products-section');
-        } else { // Administrador
+        } else if (isAdmin) { // Administrador
+            welcomeMessage.textContent = `Bem-vindo(a), ${currentUser.username}!`;
+            headerElement.classList.remove('visitor-header'); 
+            logoutButton.style.display = 'block'; 
+            bodyElement.classList.remove('visitor-mode-bg'); 
+
             productsNavButton.classList.remove('hidden');
             calculatorNavButton.classList.remove('hidden');
             suppliersNavButton.classList.remove('hidden');
-            settingsNavButton.classList.remove('hidden');
+            settingsNavButton.classList.remove('hidden'); // Exibe o botão pai de Configurações
             dronesNavButton.classList.remove('hidden');
             infoEmpresaNavButton.classList.remove('hidden');
+
+            // Exibir as sub-opções de Configurações para o admin 'mikhaell'
+            manageUsersNavButton.classList.remove('hidden');
+            createProductNavButton.classList.remove('hidden');
+            editProductNavButton.classList.remove('hidden');
+
             productsNavButton.style.order = 1;
             calculatorNavButton.style.order = 2;
             suppliersNavButton.style.order = 3;
-            settingsNavButton.style.order = 4;
-            dronesNavButton.style.order = 5;
-            infoEmpresaNavButton.style.order = 6;
-            switchTab('products-section');
+            settingsNavButton.style.order = 4; // Ordem do botão pai de Configurações
+            manageUsersNavButton.style.order = 5; // Sub-item
+            createProductNavButton.style.order = 6; // Sub-item
+            editProductNavButton.style.order = 7; // Sub-item
+            dronesNavButton.style.order = 8;
+            infoEmpresaNavButton.style.order = 9;
+            
+            switchTab('products-section'); // Inicia na seção de produtos
         }
 
         // Exibe/Oculta o botão de Chat da IA (visível para todos os logados, incluindo visitantes)
@@ -1212,15 +1447,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderProducts(searchTerm = '') {
         productList.innerHTML = '';
         const lowerCaseSearchTerm = searchTerm.toLowerCase();
-        let productsToShow = [];
-
-        // Esta função agora é APENAS para usuários LOGADOS (não visitantes)
+        
         if (currentUser.isVisitor) {
             productList.innerHTML = '<p>Funcionalidade de produtos não disponível no modo visitante. Use a seção "Drones".</p>';
             return;
         }
 
-        productsToShow = PRODUCTS.filter(p => 
+        const productsToShow = PRODUCTS.filter(p => 
             p.name.toLowerCase().includes(lowerCaseSearchTerm) || 
             p.spec.toLowerCase().includes(lowerCaseSearchTerm)
         );
@@ -1236,22 +1469,33 @@ document.addEventListener('DOMContentLoaded', () => {
             const isAdmin = currentUser.role === 'admin';
             const isSeller = currentUser.role === 'seller';
             
-            // Determina o texto do "Valor de Venda"
             const salePriceLabel = isSeller ? 'Valor' : 'Valor de Venda';
             
-            let adminCostInfo = '';
-            if (isAdmin) { // Valor de custo SÓ para administradores
-                adminCostInfo = `
-                    <p class="cost-price">Valor de Custo: ${product.costPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
-                    <p class="supplier-info">📦 Fornecedor: ${product.supplier || 'Não especificado'}</p>
-                `;
+            let adminCostInfoHTML = '';
+            if (isAdmin) { 
+                adminCostInfoHTML = `<ul class="product-suppliers-list">`;
+                if (product.sources && product.sources.length > 0) {
+                    product.sources.forEach(source => {
+                        adminCostInfoHTML += `
+                            <li>
+                                <a href="#" class="supplier-name-link" data-supplier-name="${source.supplierName}">
+                                    ${source.supplierName}
+                                </a>
+                                <span class="cost-value">${source.costPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+                            </li>
+                        `;
+                    });
+                } else {
+                    adminCostInfoHTML += `<li><span class="cost-value">N/A (Sem Fornecedor)</span></li>`;
+                }
+                adminCostInfoHTML += `</ul>`;
             }
 
             productCard.innerHTML = `
                 <h3>${product.name}</h3>
                 <p class="product-spec"><strong>Especificações:</strong><br>${product.spec}</p>
                 <p class="price">${salePriceLabel}: ${product.salePrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
-                ${adminCostInfo}
+                ${isAdmin ? `<h4>Custos por Fornecedor:</h4>${adminCostInfoHTML}` : ''}
                 <div class="action-buttons-container">
                     <button class="gemini-button desc-button">✨ Gerar Descrição</button>
                     <button class="gemini-button args-button">✨ Criar Argumentos</button>
@@ -1285,11 +1529,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Nova função para renderizar produtos para VISITANTES (agora chamada "Drones") ---
     function renderDroneVisitorList(searchTerm = '') {
         droneVisitorList.innerHTML = '';
         const lowerCaseSearchTerm = searchTerm.toLowerCase();
-        // Filtra apenas os produtos que são "drones" - você pode precisar de uma propriedade 'category' nos seus produtos reais
         const dronesToShow = PRODUCTS.filter(p => 
             (p.name.toLowerCase().includes("dji") || p.name.toLowerCase().includes("drone") || p.name.toLowerCase().includes("mavic") || p.name.toLowerCase().includes("avata") || p.name.toLowerCase().includes("matrice") || p.name.toLowerCase().includes("skyfend") || p.name.toLowerCase().includes("sentinel") || p.name.toLowerCase().includes("neo")) &&
             (p.name.toLowerCase().includes(lowerCaseSearchTerm) || p.spec.toLowerCase().includes(lowerCaseSearchTerm))
@@ -1302,8 +1544,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         dronesToShow.forEach(product => {
             const droneCard = document.createElement('div');
-            droneCard.className = 'card product-card'; // Reutiliza estilo de card de produto
-            droneCard.dataset.productId = product.id; // Mantém ID para referência
+            droneCard.className = 'card product-card'; 
+            droneCard.dataset.productId = product.id; 
             
             droneCard.innerHTML = `
                 <h3>${product.name}</h3>
@@ -1318,7 +1560,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
     function calculate(baseValue, numInstallments, paymentMethod, discountPercentage = 0) {
         const valor = parseFloat(baseValue);
         if (isNaN(valor) || valor <= 0) {
@@ -1327,14 +1568,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         let taxa, valorFinal;
 
-        // Para "À vista", usamos a taxa de 1 parcela
         taxa = INSTALLMENT_RATES[1] || 0;
         valorFinal = valor * (1 + taxa);
 
-        // Aplica o desconto se o usuário for admin e o desconto for válido para pagamento à vista
         if (currentUser.role === 'admin' && paymentMethod === 'vista' && discountPercentage > 0 && discountPercentage <= 15) {
             valorFinal = valorFinal * (1 - (discountPercentage / 100));
-            // Arredonda para duas casas decimais
             valorFinal = parseFloat(valorFinal.toFixed(2)); 
         }
 
@@ -1360,50 +1598,68 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function switchTab(newSectionId) {
-        // Bloqueia acesso a seções para visitantes e usuários temporários
-        if (currentUser && currentUser.isVisitor && newSectionId !== 'info-section' && newSectionId !== 'drones-visitor-section') {
-            alert('Apenas as seções "Drones" e "Info Empresa" estão disponíveis no Modo Visitante.');
+        // Bloqueio de acesso para visitantes e usuários de venda
+        const isVisitor = currentUser.isVisitor;
+        const isSeller = currentUser.role === 'seller';
+        const isAdmin = currentUser.role === 'admin';
+        const isTempUser = currentUser.type === 'temporary';
+
+        // Lógica de acesso principal
+        if (isVisitor) {
+            if (newSectionId !== 'info-section' && newSectionId !== 'drones-visitor-section') {
+                alert('Apenas as seções "Drones" e "Info Empresa" estão disponíveis no Modo Visitante.');
+                return;
+            }
+        } else if (isSeller) { // Usuários de Venda e Temporários (que são seller)
+            if (newSectionId === 'suppliers-section' || newSectionId === 'manage-users-section' || newSectionId === 'create-product-section' || newSectionId === 'edit-product-section') {
+                alert('Esta seção não está disponível para o seu perfil.');
+                return;
+            }
+            if (isTempUser && newSectionId === 'settings-section') { // Usuários temporários não acessam o "pai" configurações
+                 alert('Esta seção não está disponível para o seu perfil.');
+                 return;
+            }
+        } else if (newSectionId === 'settings-section' && currentUser.username !== 'mikhaell' && !['manage-users-section', 'create-product-section', 'edit-product-section'].includes(newSectionId)) { 
+            // Apenas mikhaell tem acesso direto à seção 'settings-section' e suas sub-opções
+            alert('Apenas o administrador principal pode acessar as configurações.');
             return;
         }
-        // MODIFICAÇÃO: Bloqueio para usuários de venda (seller) e temporários
-        if (currentUser && currentUser.role === 'seller' && (newSectionId === 'suppliers-section' || newSectionId === 'settings-section')) {
-            alert('Esta seção não está disponível para o seu perfil.');
-            return;
-        }
-        if (currentUser && currentUser.type === 'temporary' && !['products-section', 'calculator-section', 'drones-visitor-section', 'info-section'].includes(newSectionId)) {
-            alert('Esta seção não está disponível para usuários temporários.');
-            return;
-        }
+
+
+        contentSections.forEach(s => s.classList.remove('active')); 
+        // Remove 'active' de todos os botões, incluindo sub-botões
+        document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
         
-        if (newSectionId === 'suppliers-section' && (!currentUser || currentUser.role !== 'admin')) { 
-             document.querySelector(`.nav-button[data-section="${activeSectionId}"]`).classList.add('active');
-            return; 
-        }
-        if (newSectionId === 'settings-section' && (!currentUser || currentUser.username !== 'mikhaell')) { 
-            document.querySelector(`.nav-button[data-section="${activeSectionId}"]`).classList.add('active');
-            return;
-        }
-        if (newSectionId === 'settings-section') renderTempUserList();
-        
-        contentSections.forEach(s => s.classList.remove('active')); navButtons.forEach(b => b.classList.remove('active'));
+        // Ativa o botão de navegação correspondente
         document.getElementById(newSectionId).classList.add('active');
-        // O ID do botão agora é usado para garantir que o correto seja ativado
-        const targetButtonId = newSectionId === 'drones-visitor-section' ? 'drones-nav-button' : (newSectionId === 'info-section' ? 'info-empresa-nav-button' : newSectionId.replace('-section', '-nav-button'));
-        document.getElementById(targetButtonId).classList.add('active');
+
+        // Lógica para ativar o botão correto na navegação (principal ou sub-menu)
+        let targetButton = document.querySelector(`[data-section="${newSectionId}"]`);
+        if (targetButton) {
+            targetButton.classList.add('active');
+            // Se o botão clicado for um sub-botão, certifique-se de que o botão pai "Configurações" também esteja ativo
+            if (targetButton.classList.contains('sub-nav-button')) {
+                settingsNavButton.classList.add('active');
+            }
+        }
+
+        // NOVO: Lógica para mostrar/esconder o sub-menu de Configurações
+        if (newSectionId.includes('settings') && isAdmin && currentUser.username === 'mikhaell') {
+            settingsSubNav.style.display = 'block';
+        } else {
+            settingsSubNav.style.display = 'none'; 
+        }
+
         activeSectionId = newSectionId;
 
-        // Fecha o menu lateral no mobile ao selecionar uma opção
+        // Funções de renderização específicas da seção
+        if (newSectionId === 'manage-users-section') renderTempUserList();
+        if (newSectionId === 'products-section') renderProducts();
+        if (newSectionId === 'drones-visitor-section') renderDroneVisitorList();
+
+
         if (window.innerWidth <= 768) {
             closeMobileNav();
-        }
-
-        // Renderiza a lista de drones novamente se a seção for "Drones"
-        if (newSectionId === 'drones-visitor-section') {
-            renderDroneVisitorList();
-        }
-        // Se for a seção de produtos, renderiza os produtos para usuários logados
-        else if (newSectionId === 'products-section') {
-            renderProducts();
         }
     }
 
@@ -1516,13 +1772,124 @@ document.addEventListener('DOMContentLoaded', () => {
         openModal();
         tempUserInterval = setInterval(updateWarning, 1000);
     }
-    
-    // --- FUNÇÕES DE UTILIDADE E NOVAS FUNCIONALIDADES ---
+
+    // --- FUNÇÕES DE CRIAÇÃO E ALTERAÇÃO DE PRODUTOS ---
+    function generateNewProductId() {
+        if (PRODUCTS.length === 0) return 1;
+        const maxId = Math.max(...PRODUCTS.map(p => p.id));
+        return maxId + 1;
+    }
+
+    function handleCreateProduct(event) {
+        event.preventDefault();
+        const name = document.getElementById('new-product-name').value.trim();
+        const spec = document.getElementById('new-product-spec').value.trim();
+        const salePrice = parseFloat(document.getElementById('new-product-sale-price').value);
+        const costPrice = parseFloat(document.getElementById('new-product-cost-price').value);
+        const supplier = document.getElementById('new-product-supplier').value.trim();
+
+        if (!name || !spec || isNaN(salePrice) || salePrice <= 0) {
+            createProductFeedback.textContent = 'Preencha todos os campos obrigatórios (Nome, Especificações, Preço de Venda).';
+            createProductFeedback.style.color = 'red';
+            return;
+        }
+
+        const newProduct = {
+            id: generateNewProductId(),
+            name,
+            spec,
+            salePrice,
+            // Armazena como um array de sources, mesmo que seja apenas um inicialmente
+            sources: [{ 
+                supplierName: supplier || 'Não especificado', 
+                costPrice: isNaN(costPrice) ? 0 : costPrice 
+            }] 
+        };
+
+        PRODUCTS.push(newProduct);
+        createProductFeedback.textContent = `Produto "${newProduct.name}" (ID: ${newProduct.id}) criado com sucesso!`;
+        createProductFeedback.style.color = 'green';
+        createProductForm.reset();
+        // Opcional: Atualizar a lista de produtos visível (se for relevante para o admin)
+        renderProducts(); 
+    }
+
+    function handleSearchProductToEdit() {
+        const productId = parseInt(editProductSearchIdInput.value);
+        if (isNaN(productId)) {
+            editProductDisplay.innerHTML = '<p style="color:red;">Por favor, digite um ID de produto válido.</p>';
+            editProductForm.classList.add('hidden');
+            return;
+        }
+
+        const product = PRODUCTS.find(p => p.id === productId);
+
+        if (product) {
+            editProductDisplay.innerHTML = `<p>Produto encontrado: <strong>${product.name}</strong> (ID: ${product.id})</p>`;
+            editProductForm.classList.remove('hidden');
+            editProductFeedback.textContent = ''; // Limpa feedback anterior
+
+            editProductIdInput.value = product.id;
+            editProductNameInput.value = product.name;
+            editProductSpecTextarea.value = product.spec;
+            editProductSalePriceInput.value = product.salePrice;
+            // Para edição simplificada, pegamos o primeiro fornecedor ou deixamos vazio
+            editProductCostPriceInput.value = product.sources[0] ? product.sources[0].costPrice : '';
+            editProductSupplierInput.value = product.sources[0] ? product.sources[0].supplierName : '';
+        } else {
+            editProductDisplay.innerHTML = '<p style="color:orange;">Produto não encontrado com o ID fornecido.</p>';
+            editProductForm.classList.add('hidden');
+        }
+    }
+
+    function handleEditProduct(event) {
+        event.preventDefault();
+        const productId = parseInt(editProductIdInput.value);
+        const productIndex = PRODUCTS.findIndex(p => p.id === productId);
+
+        if (productIndex === -1) {
+            editProductFeedback.textContent = 'Erro: Produto não encontrado para alteração.';
+            editProductFeedback.style.color = 'red';
+            return;
+        }
+
+        const name = editProductNameInput.value.trim();
+        const spec = editProductSpecTextarea.value.trim();
+        const salePrice = parseFloat(editProductSalePriceInput.value);
+        const costPrice = parseFloat(editProductCostPriceInput.value);
+        const supplier = editProductSupplierInput.value.trim();
+
+        if (!name || !spec || isNaN(salePrice) || salePrice <= 0) {
+            editProductFeedback.textContent = 'Preencha todos os campos obrigatórios (Nome, Especificações, Preço de Venda).';
+            editProductFeedback.style.color = 'red';
+            return;
+        }
+
+        // Atualiza o produto, mantendo a estrutura de sources
+        PRODUCTS[productIndex] = {
+            id: productId,
+            name,
+            spec,
+            salePrice,
+            // Para simplificar a edição, substituímos ou adicionamos o primeiro fornecedor
+            sources: [{ 
+                supplierName: supplier || 'Não especificado', 
+                costPrice: isNaN(costPrice) ? 0 : costPrice 
+            }]
+        };
+
+        editProductFeedback.textContent = `Produto "${name}" (ID: ${productId}) atualizado com sucesso!`;
+        editProductFeedback.style.color = 'green';
+        // Opcional: renderizar novamente a lista de produtos após alteração
+        renderProducts();
+    }
+
+
+    // --- FUNÇÕES DE UTILIDADE GERAL ---
     function handleWhatsAppShare(product) {
         const salePrice = product.salePrice.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
         const message = `Olá! 👋\n\nEstou a enviar os detalhes sobre o *${product.name}* que conversámos. É um equipamento fantástico! 🚀\n\n*Especificações Principais:*\n${product.spec}\n\n*Valor de Venda:* ${salePrice}\n\nQualquer dúvida, estou à disposição!\n- Equipa Galvão Drones`;
         const encodedMessage = encodeURIComponent(message);
-        // Sem número fixo para permitir ao usuário escolher o contato
         const whatsappUrl = `https://wa.me/?text=${encodedMessage}`; 
         window.open(whatsappUrl, '_blank');
     }
@@ -1542,14 +1909,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const customerQuestion = document.getElementById('customer-question').value;
              if (customerQuestion && customerQuestion.trim() !== '') {
                  const title = "Sugestão de Resposta para Cliente";
-                 // A IA agora se chama R2D2 e a prompt é mais direta
                  const prompt = `R2D2: Responda de forma direta e clara (máximo 3 frases) à seguinte dúvida do cliente, considerando estas especificações do produto: "${product.spec}". Dúvida do cliente: "${customerQuestion}"`;
                  callGeminiAPI(prompt, title);
              }
         });
     }
 
-    // Função para o botão "Precisa de ajuda com esse produto?" no modo visitante (agora para Drones)
     function handleVisitorProductHelp(productName, productSpec) {
         modalTitle.textContent = `Ajuda sobre: ${productName}`;
         modalBody.innerHTML = `
@@ -1565,11 +1930,28 @@ document.addEventListener('DOMContentLoaded', () => {
             const visitorQuestion = document.getElementById('visitor-product-question').value;
             if (visitorQuestion && visitorQuestion.trim() !== '') {
                 const title = "Resposta da Galvão Drones";
-                callGeminiAPI(visitorQuestion, title, true, productSpec); // true para isProductHelp
+                callGeminiAPI(visitorQuestion, title, true, productSpec); 
             }
         });
     }
 
+    // Função para navegar para o fornecedor na seção de Fornecedores
+    function navigateToSupplierSection(supplierName) {
+        switchTab('suppliers-section');
+        // Opcional: tentar rolar para o fornecedor específico, se a lista for longa
+        // Isso exigiria que cada card de fornecedor tivesse um ID correspondente ao nome.
+        setTimeout(() => {
+            const targetSupplierCard = document.querySelector(`#supplier-list .supplier-card h3 strong[data-supplier-name="${supplierName}"]`);
+            if (targetSupplierCard) {
+                targetSupplierCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // Adicionar um destaque temporário para o fornecedor
+                targetSupplierCard.closest('.supplier-card').style.backgroundColor = '#fffacd'; // Amarelo claro
+                setTimeout(() => {
+                    targetSupplierCard.closest('.supplier-card').style.backgroundColor = ''; // Remove destaque
+                }, 3000);
+            }
+        }, 300); // Pequeno atraso para a aba mudar primeiro
+    }
 
     function showSuppliers() {
         const code = prompt("Para aceder a esta área, digite o código de acesso administrativo:");
@@ -1578,8 +1960,9 @@ document.addEventListener('DOMContentLoaded', () => {
             SUPPLIERS.forEach(supplier => {
                 const supplierCard = document.createElement('div');
                 supplierCard.className = 'card supplier-card';
+                // Adicionado data-supplier-name ao strong para fácil localização
                 supplierCard.innerHTML = `
-                    <h3>${supplier.name}</h3>
+                    <h3><strong data-supplier-name="${supplier.name}">${supplier.name}</strong></h3>
                     <p><strong>Detalhes:</strong> ${supplier.details}</p>
                     <div><strong>Pagamento:</strong><br>${supplier.payment.replace(/\n/g, '<br>')}</div>
                     <p><strong>Produtos Principais:</strong> ${supplier.products}</p>
@@ -1598,26 +1981,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- EVENT LISTENERS ---
     loginButton.addEventListener('click', handleLogin);
-    visitorModeButton.addEventListener('click', handleVisitorMode); // Evento para o modo visitante
+    visitorModeButton.addEventListener('click', handleVisitorMode); 
     passwordInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleLogin(); });
     logoutButton.addEventListener('click', handleLogout);
     
-    // Event delegation for dynamic elements
     mainContent.addEventListener('click', (e) => {
         const target = e.target;
         const productCard = target.closest('.product-card');
+
+        // Lógica para link de fornecedor em produto (apenas para admins)
+        if (target.classList.contains('supplier-name-link')) {
+            e.preventDefault(); // Impede o comportamento padrão do link
+            const supplierName = target.dataset.supplierName;
+            if (currentUser && currentUser.role === 'admin') {
+                navigateToSupplierSection(supplierName);
+            }
+            return; 
+        }
 
         // Lógica para o modo visitante (seção Drones)
         if (currentUser && currentUser.isVisitor && target.classList.contains('help-product-visitor-btn')) {
             const productName = target.dataset.productName;
             const productSpec = target.dataset.productSpec;
             handleVisitorProductHelp(productName, productSpec);
-            return; // Impede que o clique continue para a lógica de produtos normais
+            return; 
         }
 
-
-        // Bloqueia ações de produto para visitantes (já coberto pela `if (currentUser.isVisitor)` acima)
-        // Se `currentUser.role === 'seller'`, as ações normais devem ser permitidas.
         if (currentUser && currentUser.isVisitor) {
             return; 
         }
@@ -1636,7 +2025,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const prompt = `R2D2: Liste 3 a 4 argumentos de venda concisos para o produto "${product.name}", explicando brevemente por que cada um é importante para o cliente, com base nas especificações: ${product.spec}.`;
                 callGeminiAPI(prompt, title);
             } else if (target.classList.contains('whatsapp-button')) {
-                // WhatsApp para equipe interna: sem número fixo, permite selecionar contato
                 const message = `Olá! 👋\n\nEstou a enviar os detalhes sobre o *${product.name}* que conversámos. É um equipamento fantástico! 🚀\n\n*Especificações Principais:*\n${product.spec}\n\n*Valor de Venda:* ${product.salePrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}\n\nQualquer dúvida, estou à disposição!\n- Equipa Galvão Drones`;
                 const encodedMessage = encodeURIComponent(message);
                 window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
@@ -1650,18 +2038,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 let discountPercentage = 0;
                 const discountOptionDiv = productCard.querySelector(`#discount-option-${product.id}`);
 
-                // Se for administrador e o método for à vista, tenta pegar o desconto e exibe o campo
                 if (currentUser.role === 'admin' && paymentMethod === 'vista' && discountOptionDiv) {
                     const discountInput = productCard.querySelector(`#discount-percentage-${product.id}`);
                     if (discountInput) {
                         discountPercentage = parseFloat(discountInput.value);
                     }
-                    discountOptionDiv.classList.remove('hidden'); // Torna visível
+                    discountOptionDiv.classList.remove('hidden'); 
                 } else if (discountOptionDiv) {
-                    discountOptionDiv.classList.add('hidden'); // Esconde se não for admin ou não for à vista
+                    discountOptionDiv.classList.add('hidden'); 
                 }
-
-
                 resultContainer.innerHTML = calculate(product.salePrice, numInstallments, paymentMethod, discountPercentage);
             }
         }
@@ -1675,45 +2060,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
             installmentsDiv.classList.toggle('hidden', e.target.value !== 'parcelado');
             
-            // Aqui, a lógica de esconder a caixa de desconto é mais simples:
-            // Se o método de pagamento não for "à vista" OU não for um admin, esconde a caixa de desconto.
-            // A exibição ao clicar no botão "Calcular" no modo "À vista" (para admin) já foi tratada acima.
             if (discountOptionDiv && (e.target.value !== 'vista' || currentUser.role !== 'admin')) {
                 discountOptionDiv.classList.add('hidden');
             }
         }
     });
 
-    navButtons.forEach(button => button.addEventListener('click', () => {
-        // Se for modo visitante, só permite clicar em "Info Empresa" ou "Drones"
-        if (currentUser && currentUser.isVisitor && button.dataset.section !== 'info-section' && button.dataset.section !== 'drones-visitor-section') {
-            return;
-        }
-        // MODIFICAÇÃO: Bloqueio para usuários de venda (seller)
-        if (currentUser && currentUser.role === 'seller' && (button.dataset.section === 'suppliers-section' || button.dataset.section === 'settings-section')) {
-            return;
-        }
-        switchTab(button.dataset.section);
-    }));
+    // Event listeners para os botões de navegação
+    // MODIFICADO: Lógica para o botão de Configurações e seus sub-itens
+    document.querySelectorAll('nav button').forEach(button => {
+        button.addEventListener('click', () => {
+            const sectionId = button.dataset.section;
+
+            // Lógica para o botão pai de Configurações
+            if (button.id === 'settings-nav-button') {
+                if (currentUser && currentUser.username === 'mikhaell') {
+                    // Alterna a visibilidade do sub-menu
+                    const isSubNavVisible = settingsSubNav.style.display === 'block';
+                    settingsSubNav.style.display = isSubNavVisible ? 'none' : 'block';
+                    settingsNavButton.classList.toggle('active', !isSubNavVisible); // Ativa/desativa o botão pai
+                    
+                    // Se o sub-menu for aberto, não muda a seção principal imediatamente
+                    // Se for fechado, volta para a seção padrão de configurações (que pode ser a tela inicial)
+                    if (!isSubNavVisible) {
+                        // Ativa a seção pai apenas se ela for clicada para abrir o sub-menu
+                        switchTab('settings-section'); 
+                    }
+                } else {
+                    alert('Apenas o administrador principal pode acessar as configurações.');
+                }
+                return; // Impede que o clique no botão pai Settings navegue para a seção genérica
+            }
+            
+            // Para todos os outros botões (incluindo os sub-botões de Configurações)
+            switchTab(sectionId);
+        });
+    });
 
     closeModalButton.addEventListener('click', closeModal);
     window.addEventListener('click', (event) => { if (event.target == mainModal) { closeModal(); } });
     productSearchInput.addEventListener('input', (e) => renderProducts(e.target.value));
-    droneVisitorSearchInput.addEventListener('input', (e) => renderDroneVisitorList(e.target.value)); // Evento para pesquisa de drones no modo visitante
+    droneVisitorSearchInput.addEventListener('input', (e) => renderDroneVisitorList(e.target.value)); 
+    
+    // Listeners para Formulários de Configurações
     createTempUserForm.addEventListener('submit', createTemporaryUser);
+    createProductForm.addEventListener('submit', handleCreateProduct);
+    searchProductToEditButton.addEventListener('click', handleSearchProductToEdit);
+    editProductForm.addEventListener('submit', handleEditProduct);
+
+
     mainContent.addEventListener('scroll', handleScroll);
     scrollToTopButton.addEventListener('click', scrollTop);
     
-    // Listeners para a calculadora geral
     generalCalculateButton.addEventListener('click', () => {
         const baseValue = generalCalcValorBase.value;
         const paymentMethod = document.querySelector('input[name="general-payment-method"]:checked').value;
         const numInstallments = generalCalcParcelasSelect.value;
         
         let discountPercentage = 0;
-        // A calculadora geral não tem a opção de desconto à vista por produto, então não aplicamos aqui
-        // Se precisar adicionar, seria necessário um campo similar ao do produto
-
         generalCalculatorResult.innerHTML = calculate(baseValue, numInstallments, paymentMethod, discountPercentage);
     });
 
@@ -1723,26 +2127,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Toggle Nav Button no header (☰)
     navToggleButton.addEventListener('click', () => {
         navElement.classList.toggle('nav-open');
         navToggleButton.textContent = navElement.classList.contains('nav-open') ? '✕' : '☰';
     });
 
-    // Close button inside nav (✕)
     navToggleButtonClose.addEventListener('click', () => {
         closeMobileNav();
     });
 
-    // Função para fechar a nav mobile
     function closeMobileNav() {
-        if (window.innerWidth <= 768) { // Apenas em mobile
+        if (window.innerWidth <= 768) { 
             navElement.classList.remove('nav-open');
             navToggleButton.textContent = '☰';
         }
     }
 
-    // Fechar nav clicando fora dela no mobile (se for overlay)
     window.addEventListener('click', (event) => {
         if (window.innerWidth <= 768 && navElement.classList.contains('nav-open') &&
             !navElement.contains(event.target) && !navToggleButton.contains(event.target) && !headerElement.contains(event.target)) {
@@ -1750,13 +2150,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Event Listeners para o botão de Chat da IA
     aiChatButton.addEventListener('click', () => {
         aiChatModal.style.display = 'block';
-        aiQuestionInput.value = ''; // Limpa input anterior
-        aiResponseArea.innerHTML = ''; // Limpa resposta anterior
-        aiResponseArea.style.display = 'none'; // Esconde a área de resposta até uma nova query
-        aiLoader.style.display = 'none'; // Esconde o loader
+        aiQuestionInput.value = ''; 
+        aiResponseArea.innerHTML = ''; 
+        aiResponseArea.style.display = 'none'; 
+        aiLoader.style.display = 'none'; 
     });
 
     aiChatCloseButton.addEventListener('click', () => {
@@ -1766,11 +2165,10 @@ document.addEventListener('DOMContentLoaded', () => {
     submitAiQuestionButton.addEventListener('click', () => {
         const question = aiQuestionInput.value.trim();
         if (question) {
-            callGeminiAPI(question, "Resposta da IA", false, '', true); // true para isGeneralAI
+            callGeminiAPI(question, "Resposta da IA", false, '', true); 
         }
     });
 
-    // Fechar modal da IA se clicar fora
     window.addEventListener('click', (event) => {
         if (event.target == aiChatModal) {
             aiChatModal.style.display = 'none';
