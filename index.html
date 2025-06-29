@@ -2322,8 +2322,8 @@ document.addEventListener('DOMContentLoaded', () => {
             switchTab('products-section'); 
         }
         // NOVO: Fechar modal de alteração de senha se clicar fora e não for obrigatório
-        // Verifica se o botão de fechar do modal de senha está visível. Se sim, não é um fechamento obrigatório.
-        if (event.target == changePasswordModal && changePasswordCloseButton.style.display !== 'none') {
+        // Verifica se o botão de fechar do modal de alteração está visível. Se sim, não é um fechamento obrigatório.
+        if (event.target == changePasswordModal && changePasswordCloseButton.style.display !== 'none' && !changePasswordModal.contains(event.target)) {
             changePasswordModal.style.display = 'none';
         }
     });
@@ -2395,7 +2395,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const enteredPassword = supplierAccessPasswordInput.value.trim();
         if (enteredPassword === CONFIDENTIAL_CODE) {
             supplierPasswordModal.style.display = 'none';
-            // Chama a função de troca de aba e renderiza os fornecedores
             switchTab('suppliers-section'); 
             pendingSupplierSectionAccess = false; 
         } else {
@@ -2422,15 +2421,11 @@ document.addEventListener('DOMContentLoaded', () => {
     confirmNewPasswordInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleChangePassword(); });
     
     changePasswordCloseButton.addEventListener('click', () => {
-        // Se o botão de fechar for visível (não é obrigatório), apenas fecha.
-        // Se não for visível (é obrigatório), alerta e reabre.
-        if (changePasswordCloseButton.style.display !== 'none') {
-            changePasswordModal.style.display = 'none';
-        } else {
+        // Se o modal de senha obrigatório está aberto, não permite fechar pelo "X"
+        if (changePasswordModal.style.display === 'block' && changePasswordCloseButton.style.display === 'none') {
             alert('A alteração de senha é obrigatória para o primeiro acesso. Por favor, defina sua nova senha.');
-            // Opcional: Aqui você pode adicionar um pequeno atraso antes de reabrir
-            // para que o usuário veja a mensagem.
-            // setTimeout(() => showChangePasswordModal(true), 100); 
+        } else {
+            changePasswordModal.style.display = 'none';
         }
     });
 });
