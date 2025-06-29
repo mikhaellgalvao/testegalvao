@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal de Consultas Internas - Galvão Drones</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230E5847'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-12h2v4h4v2h-4v4h-2v-4H7v-2h4V8z'%3E%3C/path%3E%3Cpath d='M13.25 7.15c-.24-.24-.58-.36-.92-.36s-.68.12-.92.36L8.4 9.16c-.24.24-.36.58-.36.92s.12.68.36.92l.71.71c.24.24.58.36.92.36s.68-.12.92-.36l2.93-2.93c.24-.24.36-.58.36-.92s-.12-.68-.36-.92l-.71-.71zM10.75 16.85c.24.24.58.36.92.36s-.68-.12.92-.36l2.93-2.93c-.24-.24-.36-.58-.36-.92s-.12-.68-.36-.92l-.71-.71c-.24-.24-.58-.36-.92-.36s-.68.12-.92.36l-2.93 2.93c-.24.24-.36.58-.36.92s.12.68.36.92l.71.71zM18.8 8.4l-.71-.71c-.24-.24-.58-.36-.92-.36s-.68.12-.92.36L13.3 9.77c-.24.24-.36.58-.36.92s.12.68.36.92l.71.71c.24.24.58.36.92.36s.68-.12.92-.36l3.85-3.85c.24-.24.36-.58.36-.92s-.12-.68-.36-.92zM5.2 15.6l.71.71c.24.24.58.36.92.36s.68-.12.92.36l3.85-3.85c-.24-.24-.36-.58-.36-.92s-.12-.68-.36-.92l-.71-.71c-.24-.24-.58-.36-.92-.36s-.68.12-.92.36L5.2 14.68c-.24.24-.36.58-.36.92s.12.68.36.92z'%3E%3C/path%3E%3C/svg%3E" type="image/svg+xml">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230E5847'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-12h2v4h4v2h-4v4h-2v-4H7v-2h4V8z'%3E%3C/path%3E%3Cpath d='M13.25 7.15c-.24-.24-.58-.36-.92-.36s-.68.12-.92.36L8.4 9.16c-.24.24-.36.58-.36.92s.12.68.36.92l.71.71c.24.24.58.36.92.36s.68-.12.92-.36l2.93-2.93c-.24-.24-.36-.58-.36-.92s-.12-.68-.36-.92l-.71-.71zM10.75 16.85c.24.24.58.36.92.36s-.68-.12.92-.36l2.93-2.93c-.24-.24-.36-.58-.36-.92s-.12-.68-.36-.92l-.71-.71c-.24-.24-.58-.36-.92-.36s-.68.12-.92.36l-2.93 2.93c-.24.24-.36.58-.36.92s-.12.68.36.92l.71.71zM18.8 8.4l-.71-.71c-.24-.24-.58-.36-.92-.36s-.68.12-.92.36L13.3 9.77c-.24.24-.36.58-.36.92s-.12.68.36.92l.71.71c.24.24.58.36.92.36s.68-.12.92-.36l3.85-3.85c-.24-.24-.36-.58-.36-.92s-.12-.68-.36-.92zM5.2 15.6l.71.71c.24.24.58.36.92.36s-.68-.12-.92.36l3.85-3.85c-.24-.24-.36-.58-.36.92s-.12-.68-.36-.92l-.71-.71c-.24-.24-.58-.36-.92-.36s-.68.12-.92.36L5.2 14.68c-.24.24-.36.58-.36.92s-.12.68.36.92z'%3E%3C/path%3E%3C/svg%3E" type="image/svg+xml">
     <style>
         /* --- ESTILOS GERAIS (CSS) COM A PALETA GALVÃO DRONES --- */
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
@@ -264,28 +264,28 @@
         /* Oculta nav por padrão no mobile, prepara para slide-in */
         @media (max-width: 768px) {
             nav {
-                position: fixed; /* Fixa a nav sobre o conteúdo */
-                top: 0; /* Começa no topo da viewport */
+                position: fixed;
+                top: 0;
                 left: 0;
-                height: 100vh; /* Altura total da viewport */
-                width: 250px; /* Largura da nav quando aberta */
+                height: 100vh;
+                width: 250px;
                 min-width: 250px;
-                transform: translateX(-100%); /* Começa fora da tela (escondida) */
-                z-index: 999; /* Garante que fique acima de outros elementos */
-                box-shadow: 2px 0 5px rgba(0,0,0,0.2); /* Sombra para destacar */
-                padding-top: 60px; /* Espaço para o cabeçalho do app, que tem 60px de altura */
-                border-right: 1px solid var(--dark-grey); /* Mantém borda */
+                transform: translateX(-100%);
+                z-index: 999;
+                box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+                padding-top: 60px;
+                border-right: 1px solid var(--dark-grey);
             }
-            nav.nav-open { /* Classe para quando a nav está aberta */
-                transform: translateX(0); /* Desliza para dentro da tela */
+            nav.nav-open {
+                transform: translateX(0);
             }
             .nav-header {
-                display: flex; /* Mostra o cabeçalho da nav no mobile */
-                position: absolute; /* Fixa o cabeçalho no topo da nav */
+                display: flex;
+                position: absolute;
                 top: 0;
                 width: 100%;
-                height: 60px; /* Mesma altura do header principal */
-                background-color: var(--secondary-color); /* Cor de fundo para o cabeçalho da nav */
+                height: 60px;
+                background-color: var(--secondary-color);
                 color: white;
                 padding: 15px 20px;
                 box-sizing: border-box;
@@ -302,18 +302,18 @@
              .nav-header span {
                 flex-grow: 1;
                 text-align: center;
-                margin-left: -20px; /* Ajuste para centralizar o texto "Menu" */
-                font-size: 1.2em; /* Tamanho do título do menu */
+                margin-left: -20px;
+                font-size: 1.2em;
             }
             .app-body {
-                flex-direction: column; /* Pilha itens verticalmente no mobile */
-                min-height: calc(100vh - 60px); /* Reduz min-height para acomodar o header fixo */
+                flex-direction: column;
+                min-height: calc(100vh - 60px);
             }
 
             /* NOVO: Ajustes para garantir que o conteúdo principal use a largura total no mobile */
             main {
                 width: 100%;
-                box-sizing: border-box; /* Inclui padding na largura total */
+                box-sizing: border-box;
             }
         }
 
@@ -350,7 +350,7 @@
         main {
             flex-grow: 1;
             padding: 30px;
-            max-height: calc(100vh - 60px); /* Ajusta max-height para acomodar o header fixo */
+            max-height: calc(100vh - 60px);
             overflow-y: auto;
             position: relative;
             transition: margin-left 0.3s ease;
@@ -358,29 +358,29 @@
         @media (max-width: 768px) {
             main {
                 padding: 20px;
-                max-height: calc(100vh - 60px); /* Ajusta a altura da área de conteúdo para caber o header */
-                width: 100%; /* Ocupa a largura total */
+                max-height: calc(100vh - 60px);
+                width: 100%;
             }
             header {
                 padding: 10px 15px;
-                position: sticky; /* Fixa o header no topo */
+                position: sticky;
                 top: 0;
-                z-index: 100; /* Garante que o header fique sobre o conteúdo */
+                z-index: 100;
             }
             header h1 {
                 font-size: 20px;
             }
             #nav-toggle-btn {
-                margin-right: 0; /* Remove a margem extra no mobile */
-                z-index: 1000; /* Garante que o botão esteja sempre visível no topo */
+                margin-right: 0;
+                z-index: 1000;
             }
             .header-left {
                 gap: 10px;
-                flex-grow: 1; /* Permite que o welcome message ocupe o espaço */
+                flex-grow: 1;
             }
             #welcome-message {
-                margin-left: 0; /* Ajusta a margem para telas menores */
-                flex-grow: 1; /* Permite que ocupe o espaço */
+                margin-left: 0;
+                flex-grow: 1;
             }
         }
 
@@ -402,6 +402,48 @@
              margin-top: 30px;
         }
 
+        /* NOVO: Estilos para a grade de opções na tela de configurações */
+        #settings-options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        #settings-options-grid .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        #settings-options-grid .card h3 {
+            color: var(--primary-color);
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            border-bottom: none;
+        }
+        #settings-options-grid .card p {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        /* Estilo para o botão de retorno */
+        .back-to-settings-button {
+            background-color: var(--dark-grey);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            margin-bottom: 20px; /* Espaço abaixo do botão */
+            display: inline-block; /* Para não ocupar a largura total */
+            width: auto; /* Ajusta a largura ao conteúdo */
+        }
+
+        .back-to-settings-button:hover {
+            background-color: #95a5a6;
+        }
+
+
         /* --- Barra de Pesquisa --- */
         .search-bar {
             margin-bottom: 20px;
@@ -416,17 +458,17 @@
         
         /* --- ESTILOS DOS CARDS --- */
         .card {
-            position: relative; /* Necessário para o pseudo-elemento */
+            position: relative;
             border: 1px solid #ddd;
             padding: 20px;
             margin-bottom: 15px;
             border-radius: 5px;
             transition: box-shadow 0.3s;
-            z-index: 1; /* Garante que o conteúdo fique acima do background */
+            z-index: 1;
         }
 
         .card::before {
-            content: ""; /* Fundamental para o pseudo-elemento aparecer */
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
@@ -436,16 +478,16 @@
             background-size: 50%;
             background-position: center;
             background-repeat: no-repeat;
-            opacity: 0.15; /* Ajuste este valor para a opacidade desejada */
-            z-index: -1; /* Envia o background para trás do conteúdo */
-            border-radius: 5px; /* Mantém o mesmo border-radius do card */
+            opacity: 0.15;
+            z-index: -1;
+            border-radius: 5px;
         }
         .card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-        .card h3 { margin-top: 0; color: var(--secondary-color); border: none; font-size: 1.3em; } /* Ajuste de fonte */
+        .card h3 { margin-top: 0; color: var(--secondary-color); border: none; font-size: 1.3em; }
         .product-card { border-left: 5px solid var(--primary-color); }
         .supplier-card { border-left: 5px solid var(--secondary-color); }
         .info-card { border-left: 5px solid var(--secondary-color); }
-        .product-spec { white-space: pre-wrap; line-height: 1.6; font-size: 0.95em; } /* Ajuste de fonte */
+        .product-spec { white-space: pre-wrap; line-height: 1.6; font-size: 0.95em; }
 
         .price { font-size: 1.2em; font-weight: 700; color: #27ae60; }
         .cost-price { font-size: 1.1em; font-weight: 700; color: var(--danger-color); background-color: #fdd; padding: 5px; border-radius: 4px; display: inline-block; margin-top: 10px; }
@@ -486,17 +528,17 @@
         .action-buttons-container { margin-top: 15px; display: flex; flex-wrap: wrap; gap: 10px; }
         .action-buttons-container button, .action-buttons-container a.action-button {
             color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-weight: 500; transition: background-color 0.3s;
-            font-size: 0.9em; /* Ajuste de fonte */
-            text-decoration: none; /* Para os links */
+            font-size: 0.9em;
+            text-decoration: none;
             display: inline-flex;
             align-items: center;
             justify-content: center;
         }
         .gemini-button { background-color: var(--secondary-color); }
         .whatsapp-button { background-color: var(--whatsapp-color); }
-        .instagram-button { background-color: var(--instagram-color); } /* Estilo para botão Instagram */
-        .youtube-button { background-color: var(--youtube-color); } /* Estilo para botão YouTube */
-        .google-maps-button { background-color: #4285F4; } /* Estilo para botão Google Maps */
+        .instagram-button { background-color: var(--instagram-color); }
+        .youtube-button { background-color: var(--youtube-color); }
+        .google-maps-button { background-color: #4285F4; }
 
         .help-button { background-color: var(--help-color); }
         .action-buttons-container button:hover, .action-buttons-container a.action-button:hover { opacity: 0.9; }
@@ -518,32 +560,32 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            position: relative; /* Para posicionar o texto opaco */
+            position: relative;
         }
         .discount-option input[type="number"] {
-            width: 80px; /* Ajuste a largura conforme necessário */
+            width: 80px;
             padding: 8px;
             border-radius: 4px;
             border: 1px solid #ccc;
-            background-color: transparent; /* Permite ver o fundo com a marca d'água */
-            position: relative; /* Para estar acima do pseudo-elemento */
-            z-index: 1; /* Garante que o input esteja por cima */
+            background-color: transparent;
+            position: relative;
+            z-index: 1;
         }
         .discount-option label {
-            margin-bottom: 0; /* Remover margem inferior do label */
+            margin-bottom: 0;
         }
         /* Texto opaco de "max. 15%" */
         .discount-option::after {
             content: "max. 15%";
             position: absolute;
-            left: 105px; /* Ajuste para alinhar com o input */
-            color: #ccc; /* Cor do texto opaco */
+            left: 105px;
+            color: #ccc;
             font-size: 0.8em;
-            opacity: 0.8; /* Opacidade do texto */
-            pointer-events: none; /* Não interfere com o input */
-            white-space: nowrap; /* Evita quebra de linha */
-            transform: translateY(2px); /* Pequeno ajuste vertical */
-            z-index: 0; /* Fica abaixo do input */
+            opacity: 0.8;
+            pointer-events: none;
+            white-space: nowrap;
+            transform: translateY(2px);
+            z-index: 0;
         }
 
 
@@ -571,24 +613,24 @@
         /* --- BOTÃO FLUTUANTE DE CHAT AI --- */
         #ai-chat-button {
             position: fixed;
-            bottom: 90px; /* Ajuste para não colidir com o "Scroll to Top" */
+            bottom: 90px;
             right: 30px;
             z-index: 99;
             border: none;
             outline: none;
-            background-color: var(--secondary-color); /* Verde Galvão Drones */
+            background-color: var(--secondary-color);
             color: white;
             cursor: pointer;
             padding: 15px 18px;
             border-radius: 50%;
             font-size: 24px;
-            display: none; /* Inicia escondido */
+            display: none;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             transition: background-color 0.3s, transform 0.3s;
         }
 
         #ai-chat-button:hover {
-            background-color: #0A4538; /* Um tone mais escuro do verde */
+            background-color: #0A4538;
             transform: translateY(-3px);
         }
 
@@ -599,6 +641,7 @@
         /* Estilos específicos para o modal de chat AI, se necessário */
         #ai-chat-modal .modal-content {
             max-width: 700px;
+            text-align: left;
         }
 
         #ai-chat-modal-body {
@@ -622,11 +665,11 @@
         }
 
         #ai-response-area {
-            white-space: pre-wrap; /* Mantém quebras de linha e espaços */
-            max-height: 300px; /* Limita a altura da resposta */
-            overflow-y: auto; /* Adiciona scroll se a resposta for longa */
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
             border: 1px solid #ddd;
-            padding: 10px; /* Adicionado padding para melhor leitura */
+            padding: 10px;
         }
 
         /* NOVO: Estilos para o modal de senha do fornecedor */
@@ -674,61 +717,68 @@
             main .content-section > * {
                 margin-left: auto;
                 margin-right: auto;
-                max-width: 100%; /* Garante que elementos não ultrapassem a tela */
-                padding: 0 10px; /* Padding interno para evitar que o conteúdo cole nas bordas */
+                max-width: 100%;
+                padding: 0 10px;
                 box-sizing: border-box;
             }
 
             /* Cartões de produtos/fornecedores/info */
             .card {
-                padding: 15px; /* Reduz padding em telas menores */
-                margin-bottom: 10px; /* Espaçamento menor entre cards */
+                padding: 15px;
+                margin-bottom: 10px;
             }
 
             .card h3 {
-                font-size: 1.1em; /* Ajusta tamanho do título do card */
+                font-size: 1.1em;
             }
 
             .product-spec, .price, .cost-price, .supplier-info {
-                font-size: 0.9em; /* Fontes um pouco menores para caber melhor */
+                font-size: 0.9em;
             }
 
             /* Botões de ação dentro dos cards */
             .action-buttons-container {
-                flex-direction: column; /* Empilha os botões verticalmente */
-                gap: 8px; /* Reduz o espaçamento entre eles */
+                flex-direction: column;
+                gap: 8px;
             }
             .action-buttons-container button, .action-buttons-container a.action-button {
-                width: 100%; /* Ocupa a largura total do container */
-                padding: 10px; /* Ajusta o padding dos botões */
+                width: 100%;
+                padding: 10px;
                 font-size: 0.9em;
             }
 
             /* Calculadora dentro dos cards */
             .calculator-container .input-group {
-                margin-bottom: 10px; /* Reduz espaçamento entre grupos de input */
+                margin-bottom: 10px;
             }
             .payment-method-selector label {
                 margin-right: 10px;
                 font-size: 0.9em;
             }
             .discount-option {
-                flex-direction: column; /* Empilha label e input */
-                align-items: flex-start; /* Alinha ao início */
+                flex-direction: column;
+                align-items: flex-start;
                 gap: 5px;
             }
             .discount-option input[type="number"] {
-                width: 100px; /* Mantém uma largura razoável */
+                width: 100px;
                 padding: 5px;
             }
             .discount-option::after {
-                left: 0; /* Alinha o texto opaco */
+                content: "max. 15%";
+                position: absolute;
+                left: 0;
                 top: auto;
-                bottom: -15px; /* Posiciona abaixo do input */
+                bottom: -15px;
                 transform: none;
+                font-size: 0.7em;
+                pointer-events: none;
+                white-space: nowrap;
+                transform: translateY(2px);
+                z-index: 0;
             }
             .calculate-product-btn {
-                width: 100%; /* Botão de calcular ocupa toda a largura */
+                width: 100%;
                 padding: 10px;
             }
             .product-calculator-result, #general-calculator-result {
@@ -741,7 +791,7 @@
 
             /* Campos de pesquisa */
             .search-bar input {
-                padding: 10px 10px 10px 35px; /* Ajusta padding para ícone de busca */
+                padding: 10px 10px 10px 35px;
                 font-size: 0.95em;
             }
             .search-bar::before {
@@ -751,8 +801,8 @@
 
             /* Gestão de Usuários Temporários */
             .temp-user-item {
-                flex-direction: column; /* Empilha informações e ações */
-                align-items: flex-start; /* Alinha ao início */
+                flex-direction: column;
+                align-items: flex-start;
                 padding: 10px;
             }
             .user-info p {
@@ -761,12 +811,12 @@
             .user-actions {
                 width: 100%;
                 display: flex;
-                justify-content: flex-start; /* Alinha botões ao início */
+                justify-content: flex-start;
                 margin-top: 10px;
             }
             .user-actions button {
-                margin-left: 0; /* Remove margem lateral */
-                margin-right: 10px; /* Adiciona espaçamento entre botões */
+                margin-left: 0;
+                margin-right: 10px;
                 padding: 8px 10px;
                 font-size: 0.9em;
             }
@@ -776,17 +826,17 @@
                 font-size: 0.95em;
             }
             .contact-buttons-container {
-                flex-direction: column; /* Empilha os botões de contato */
+                flex-direction: column;
                 gap: 8px;
             }
             .contact-buttons-container a.action-button {
-                width: 100%; /* Ocupa a largura total */
+                width: 100%;
             }
 
             /* Modal da IA */
             #ai-chat-modal .modal-content {
-                width: 90%; /* Aumenta a largura do modal no mobile */
-                margin: 20px auto; /* Mais espaço nas bordas */
+                width: 90%;
+                margin: 20px auto;
             }
             #ai-question-input {
                 font-size: 0.95em;
@@ -846,7 +896,7 @@
                     <button class="nav-button" data-section="info-section" id="info-empresa-nav-button" style="order: 6;">Info Empresa</button>
                 </nav>
                 <main id="main-content">
-                    <section id="products-section" class="content-section">
+                    <section id="products-section" class="content-section active">
                         <h2>Consulta de Produtos</h2>
                         <div class="search-bar"><input type="text" id="product-search" placeholder="Pesquisar por nome ou especificação..."></div>
                         <div id="product-list"></div>
@@ -875,16 +925,18 @@
                            </div>
                            <button id="general-calculate-button" class="action-button" style="width: auto; padding: 10px 20px;">Calcular</button>
                            <div id="general-calculator-result">O resultado da simulação aparecerá aqui.</div>
-                        </div>
+                         </div>
                     </section>
                     <section id="suppliers-section" class="content-section"><h2>Fornecedores (Acesso Confidencial)</h2><div id="supplier-list"></div></section>
                     
-                    <section id="settings-section" class="content-section active">
+                    <section id="settings-section" class="content-section">
                         <h2>Configurações do Sistema</h2>
-                        <p>Selecione uma opção de configuração no menu lateral.</p>
-                        </section>
+                        <p>Selecione uma opção de configuração no menu lateral, ou clique nos atalhos abaixo:</p>
+                        <div id="settings-options-grid"></div>
+                    </section>
 
                     <section id="manage-users-section" class="content-section">
+                        <button class="back-to-settings-button" onclick="window.switchTab('settings-section')">← Voltar para Configurações</button>
                         <h2>Gerir Usuários Temporários</h2>
                         <div class="card">
                             <h3>Criar Usuário Temporário</h3>
@@ -903,6 +955,7 @@
                     </section>
 
                     <section id="create-product-section" class="content-section">
+                        <button class="back-to-settings-button" onclick="window.switchTab('settings-section')">← Voltar para Configurações</button>
                         <h2>Criar Novo Produto</h2>
                         <div class="card">
                             <form id="create-product-form">
@@ -918,13 +971,16 @@
                     </section>
 
                     <section id="edit-product-section" class="content-section">
+                        <button class="back-to-settings-button" onclick="window.switchTab('settings-section')">← Voltar para Configurações</button>
                         <h2>Alterar Produto Existente</h2>
                         <div class="card">
                             <div class="input-group">
-                                <label for="edit-product-search-id">Buscar por ID do Produto</label>
-                                <input type="number" id="edit-product-search-id" placeholder="Digite o ID do produto">
+                                <label for="edit-product-search-input">Buscar Produto (ID ou Nome)</label>
+                                <input type="text" id="edit-product-search-input" placeholder="Digite o ID ou nome do produto">
                                 <button id="search-product-to-edit" class="action-button" style="width: auto; margin-top: 10px;">Buscar</button>
                             </div>
+                            <div id="edit-product-search-results" style="margin-top: 15px;"></div>
+                            
                             <div id="edit-product-display" style="margin-top: 20px;">
                                 <p>Use a busca acima para carregar os dados do produto.</p>
                             </div>
@@ -1030,24 +1086,33 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- BANCO DE DADOS SIMULADO ---
+    // Usamos o ano atual para senhas de alguns usuários para simular atualização anual
     const currentYear = new Date().getFullYear(); 
 
+    // O objeto USERS foi restaurado e padronizado conforme as regras:
+    // - Mikhaell: senha fixa 'mk0639', sem firstLogin (false)
+    // - Maikhon, Ryan: role 'admin', senha padronizada, sem firstLogin (false)
+    // - Fineias, Rafael: role 'seller', senha padronizada, sem firstLogin (false)
+    // - Eduardo: role 'seller', senha padronizada, com firstLogin (true) para forçar troca
+    // - Usuários 'ven': role 'seller', senha padronizada, com firstLogin (true) para forçar troca
+    // - Usuários temporários: role 'seller', tipo 'temporary', senha definida na criação, sem firstLogin (false)
     const USERS = {
         'mikhaell': { password: 'mk0639', role: 'admin', type: 'permanent', firstLogin: false }, 
-        'Maikhon':  { password: 'maik', role: 'admin', type: 'permanent', firstLogin: false },
-        'Ryan':     { password: 'ryan', role: 'admin', type: 'permanent', firstLogin: false },
-        'Fineias':  { password: 'fin', role: 'seller', type: 'permanent', firstLogin: false },
-        'Rafael':   { password: 'raf', role: 'seller', type: 'permanent', firstLogin: false },
-        'Eduardo':  { password: 'edu' + currentYear, role: 'seller', type: 'permanent', firstLogin: true }, // NOVO USUÁRIO COM firstLogin: true
+        'Maikhon':  { password: `mai${currentYear}`, role: 'admin', type: 'permanent', firstLogin: false },
+        'Ryan':     { password: `rya${currentYear}`, role: 'admin', type: 'permanent', firstLogin: false },
+        'Fineias':  { password: `fin${currentYear}`, role: 'seller', type: 'permanent', firstLogin: false }, 
+        'Rafael':   { password: `raf${currentYear}`, role: 'seller', type: 'permanent', firstLogin: false }, 
+        'Eduardo':  { password: `edu${currentYear}`, role: 'seller', type: 'permanent', firstLogin: true }, 
         
-        'mikhaellven': { password: 'mik' + currentYear, role: 'seller', type: 'permanent', firstLogin: true }, // Exemplo de usuário de venda que terá que trocar
-        'maikhonven':  { password: 'mai' + currentYear, role: 'seller', type: 'permanent', firstLogin: true },
-        'ryanven':     { password: 'rya' + currentYear, role: 'seller', type: 'permanent', firstLogin: true },
+        'mikhaellven': { password: `mik${currentYear}`, role: 'seller', type: 'permanent', firstLogin: true }, 
+        'maikhonven':  { password: `mai${currentYear}`, role: 'seller', type: 'permanent', firstLogin: true },
+        'ryanven':     { password: `rya${currentYear}`, role: 'seller', type: 'permanent', firstLogin: true },
     };
-    // SENHA CONFIDENCIAL AGORA DEFINIDA AQUI E NÃO NO HTML
+    // SENHA CONFIDENCIAL PARA ACESSO A FORNECEDORES
     const CONFIDENTIAL_CODE = '@0639'; 
 
-    // ATENÇÃO: PRODUCTS reestruturado para o novo modelo de 'sources'
+    // PRODUCTS reestruturado para o modelo de 'sources'
+    // Cada produto agora tem um array 'sources' para múltiplos fornecedores e custos
     let PRODUCTS = [ 
         { id: 1, name: 'DJI Neo Standard', spec: '🛸 DJI Neo Standard ou Combo fly more\n🎥 Grava em 4K/30fps\n⏱️ Até 18 minutos de voo\n📡 Alcance de até 6 km\n⚖️ Peso de apenas 135 g\n🎮 Controle via app, com controle ou controle motion ( três versões)', salePrice: 1900, 
             sources: [{ supplierName: 'Arroba Celulares', costPrice: 1340 }] },
@@ -1106,7 +1171,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 99, name: 'Estabilizador DJI Osmo Mobile 6', spec: '🎮 DJI Osmo Mobile 6 (Cinza Escuro ou Platinum)\n🔋 6h de uso, com ActiveTrack 5.0\n📱 Compacto e retrátil\n🧲 Design magnético para montagem rápida', salePrice: 1390.00, 
             sources: [{ supplierName: 'Arroba Celulares', costPrice: 930.10 }] },
         { id: 95, name: 'Estabilizador DJI Osmo Mobile SE', spec: '🎮 DJI Osmo Mobile SE\n📱 Versão acessível e eficiente\n🎯 Boa estabilidade para vídeos casuais\n🧳 Ideal para iniciantes', salePrice: 990.00, 
-            sources: [{ supplierName: 'Arroba Celulares', costPrice: 663.49 }] },
+            sources: [{ supplierName: 'Arroroba Celulares', costPrice: 663.49 }] },
         { id: 33, name: 'Estabilizador DJI RS 3 Pro Combo', spec: '🎮 DJI RS 3 Pro Combo\n🎥 Suporte para câmeras profissionais até 4,5 kg\n🧠 LIDAR focagem + ActiveTrack Pro\n🔋 Até 12h de uso com bateria BG30', salePrice: 7990, 
             sources: [{ supplierName: 'GoHobby Distribuidora de VANT LTDA', costPrice: 5790.00 }] },
         { id: 35, name: 'Estabilizador DJI RS 4 Pro Combo', spec: '🎮 DJI RS 4 Pro Combo\n🎥 Suporte avançado para rigs pesados\n📡 Conectividade profissional\n🔋 Bateria BG70 de alta duração', salePrice: 12790, 
@@ -1243,7 +1308,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('password');
     const loginError = document.getElementById('login-error');
     const welcomeMessage = document.getElementById('welcome-message');
-    const changePasswordLink = document.getElementById('change-password-link'); // NOVO
+    const changePasswordLink = document.getElementById('change-password-link'); 
     const visitorModeButton = document.getElementById('visitor-mode-button'); 
 
     const navButtons = document.querySelectorAll('.nav-button');
@@ -1260,6 +1325,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const createProductNavButton = document.getElementById('create-product-nav-button');
     const editProductNavButton = document.getElementById('edit-product-nav-button');
     const settingsSubNav = document.getElementById('settings-sub-nav'); 
+
+    // Elementos da grade de opções de configuração
+    const settingsOptionsGrid = document.getElementById('settings-options-grid');
 
 
     const productList = document.getElementById('product-list');
@@ -1283,8 +1351,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const createProductFeedback = document.getElementById('create-product-feedback');
 
     // Elementos da seção Alterar Produto
-    const editProductSearchIdInput = document.getElementById('edit-product-search-id');
+    const editProductSearchInput = document.getElementById('edit-product-search-input'); 
     const searchProductToEditButton = document.getElementById('search-product-to-edit');
+    const editProductSearchResults = document.getElementById('edit-product-search-results'); 
     const editProductDisplay = document.getElementById('edit-product-display');
     const editProductForm = document.getElementById('edit-product-form');
     const editProductIdInput = document.getElementById('edit-product-id');
@@ -1323,14 +1392,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const aiResponseArea = document.getElementById('ai-response-area');
     const aiLoader = document.getElementById('ai-loader');
 
-    // NOVO: Elementos do modal de senha do fornecedor
+    // Elementos do modal de senha do fornecedor
     const supplierPasswordModal = document.getElementById('supplier-password-modal');
     const supplierAccessPasswordInput = document.getElementById('supplier-access-password');
     const submitSupplierPasswordButton = document.getElementById('submit-supplier-password');
     const supplierPasswordError = document.getElementById('supplier-password-error');
     const supplierPasswordCloseButton = document.getElementById('supplier-password-close-button');
 
-    // NOVO: Elementos do modal de alteração de senha
+    // Elementos do modal de alteração de senha
     const changePasswordModal = document.getElementById('change-password-modal');
     const changePasswordModalTitle = document.getElementById('change-password-modal-title');
     const changePasswordMessage = document.getElementById('change-password-message');
@@ -1361,7 +1430,8 @@ document.addEventListener('DOMContentLoaded', () => {
             mainModal.style.display = 'none'; 
         }
 
-        const apiKey = "YOUR_GEMINI_API_KEY"; // <<<<< Substitua pela sua chave Gemini REAL
+        // Use a Gemini API Key válida aqui. Se a chave for inválida ou não funcionar, as chamadas à IA falharão.
+        const apiKey = "YOUR_GEMINI_API_KEY"; // SUBSTITUA PELA SUA CHAVE GEMINI REAL!
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`; 
         
         let fullPrompt = prompt;
@@ -1379,8 +1449,8 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
             if (!response.ok) {
-                 const errorData = await response.json();
-                 throw new Error(errorData.error.message || `Erro na API: ${response.statusText}`);
+                   const errorData = await response.json();
+                   throw new Error(errorData.error.message || `Erro na API: ${response.statusText}`);
             }
             const result = await response.json();
             if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts) {
@@ -1411,36 +1481,44 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = passwordInput.value;
         const user = USERS[username];
 
+        // Resetar mensagem de erro antes de tentar o login
+        loginError.textContent = ''; 
+        loginError.style.display = 'none'; 
+
         if (user && user.password === password) {
+            // Se o usuário é temporário e expirou, mostra erro específico
             if (user.type === 'temporary' && Date.now() > user.expiresAt) {
                 loginError.textContent = 'Este usuário temporário expirou.';
                 loginError.style.display = 'block';
-                return;
+                return; // Impede o login
             }
-            currentUser = { ...user, username: username }; // Armazena o username do usuário logado
+            
+            currentUser = { ...user, username: username }; 
+            // Senha correta, esconde o erro de login
+            loginError.style.display = 'none'; 
 
-            // NOVO: Verifica se é o primeiro login e se NÃO é um usuário temporário
+            // Verifica se é o primeiro login e se NÃO é um usuário temporário
             if (currentUser.firstLogin && currentUser.type !== 'temporary') {
                 loginScreen.style.display = 'none';
-                appScreen.style.display = 'block'; // Mostra a tela principal
+                appScreen.style.display = 'block'; 
                 showChangePasswordModal(true); // true = obrigatório
             } else {
                 loginScreen.style.display = 'none';
                 appScreen.style.display = 'block';
-                loginError.style.display = 'none';
-                setupAppForUser();
+                setupAppForUser(); // Configura a interface após login bem-sucedido
             }
         } else {
-            loginError.textContent = 'Usuário ou senha inválidos.';
+            // Credenciais incorretas
+            loginError.textContent = 'Usuário ou senha incorretos.';
             loginError.style.display = 'block';
         }
     }
 
     function handleVisitorMode() {
-        currentUser = { username: 'Visitante', role: 'visitor', type: 'permanent', firstLogin: false }; // Modo visitante
+        currentUser = { username: 'Visitante', role: 'visitor', type: 'permanent', isVisitor: true, firstLogin: false }; // Modo visitante
         loginScreen.style.display = 'none';
         appScreen.style.display = 'block';
-        loginError.style.display = 'none';
+        loginError.style.display = 'none'; // Limpa qualquer erro de login anterior
         setupAppForUser();
     }
 
@@ -1451,47 +1529,74 @@ document.addEventListener('DOMContentLoaded', () => {
         loginScreen.style.display = 'block';
         usernameInput.value = '';
         passwordInput.value = '';
-        // Limpa a classe de visitante do cabeçalho ao sair
         headerElement.classList.remove('visitor-header');
-        // Remove a classe do modo visitante do body
         bodyElement.classList.remove('visitor-mode-bg'); 
-        // Esconde o botão da IA ao sair
         aiChatButton.style.display = 'none'; 
-        aiChatModal.style.display = 'none'; // Garante que o modal da IA também feche
-        changePasswordLink.style.display = 'none'; // Esconde o link de alterar senha
-        // Fecha a nav mobile se estiver aberta
+        aiChatModal.style.display = 'none'; 
+        changePasswordLink.style.display = 'none'; 
+        // Esconde o botão de logout ao sair
+        logoutButton.style.display = 'none'; 
         closeMobileNav();
     }
 
     function setupAppForUser() {
         const isVisitor = currentUser.isVisitor;
         const isAdmin = currentUser.role === 'admin';
-        const isSeller = currentUser.role === 'seller';
+        const isMikhaell = currentUser.username === 'mikhaell';
         const isTempUser = currentUser.type === 'temporary';
         
-        // Resetar visibilidade e ordem da navegação
+        // Limpa a visibilidade de todos os botões de navegação e do submenu
         navButtons.forEach(button => button.classList.add('hidden'));
-        settingsSubNav.style.display = 'none'; // Esconde o sub-menu de Configurações por padrão
+        settingsSubNav.style.display = 'none'; 
+        settingsOptionsGrid.innerHTML = ''; // Limpa as opções da grade ao reconfigurar
 
-        if (isVisitor) {
-            welcomeMessage.textContent = 'Modo Visitante';
-            headerElement.classList.add('visitor-header'); 
+        // Mensagem de boas-vindas
+        welcomeMessage.textContent = `Bem-vindo(a), ${currentUser.username}!`;
+        
+        // Exibe o botão de logout para todos os usuários logados (não visitantes)
+        if (!isVisitor) {
             logoutButton.style.display = 'block'; 
-            bodyElement.classList.add('visitor-mode-bg'); 
+        } else {
+            logoutButton.style.display = 'none'; 
+        }
 
+        changePasswordLink.style.display = 'none'; // Esconde por padrão, só mostra se for usuário normal
+
+        // Lógica de visibilidade para visitante
+        if (isVisitor) {
+            headerElement.classList.add('visitor-header'); // Esconde 'Bem-vindo' no header
+            bodyElement.classList.add('visitor-mode-bg'); 
+            
+            // Botões de navegação para visitante: Apenas Drones e Info Empresa
             dronesNavButton.classList.remove('hidden'); 
             infoEmpresaNavButton.classList.remove('hidden'); 
             dronesNavButton.style.order = 1; 
             infoEmpresaNavButton.style.order = 2; 
 
-            changePasswordLink.style.display = 'none'; // Esconde para visitantes
-            switchTab('drones-visitor-section');
-        } else { // Logado (Admin ou Seller)
-            welcomeMessage.textContent = `Bem-vindo(a), ${currentUser.username}!`;
-            headerElement.classList.remove('visitor-header'); 
-            logoutButton.style.display = 'block'; 
-            bodyElement.classList.remove('visitor-mode-bg'); 
+            // Esconde todas as outras opções que não são para visitante
+            productsNavButton.classList.add('hidden'); 
+            calculatorNavButton.classList.add('hidden'); 
+            suppliersNavButton.classList.add('hidden'); 
+            settingsNavButton.classList.add('hidden'); 
+            manageUsersNavButton.classList.add('hidden'); 
+            createProductNavButton.classList.add('hidden'); 
+            editProductNavButton.classList.add('hidden'); 
 
+            switchTab('drones-visitor-section'); // Inicia em "Drones" para visitantes
+        } 
+        // Lógica de visibilidade para usuários logados (Admin ou Seller)
+        else { 
+            headerElement.classList.remove('visitor-header'); // Remove classes de visitante
+            bodyElement.classList.remove('visitor-mode-bg'); 
+            
+            // Link "Alterar Senha" visível para usuários permanentes (não temporários)
+            if (isTempUser) { // Se for temporário, oculta o link de alterar senha
+                changePasswordLink.style.display = 'none';
+            } else { // Se não for temporário, mostra o link
+                changePasswordLink.style.display = 'inline';
+            }
+
+            // Botões de navegação base para todos os logados
             productsNavButton.classList.remove('hidden');
             calculatorNavButton.classList.remove('hidden');
             dronesNavButton.classList.remove('hidden');
@@ -1501,30 +1606,19 @@ document.addEventListener('DOMContentLoaded', () => {
             calculatorNavButton.style.order = 2;
             dronesNavButton.style.order = 3;
             infoEmpresaNavButton.style.order = 4;
-
-            // NOVO: Exibe o link de alterar senha para usuários logados (não visitantes e não temporários)
-            if (currentUser.type !== 'temporary') {
-                 changePasswordLink.style.display = 'inline';
-            } else {
-                 changePasswordLink.style.display = 'none';
-            }
-           
-
-            // NOVO: Acesso a seções de Admin (Gerir Usuários, Criar/Alterar Produto)
+            
             if (isAdmin) {
-                // Acesso a Fornecedores (para admins)
                 suppliersNavButton.classList.remove('hidden');
-                suppliersNavButton.style.order = 3; // Mantém a ordem
+                suppliersNavButton.style.order = 3; 
 
-                // Seções de Configurações para Admin
-                settingsNavButton.classList.remove('hidden'); // Botão pai de Configurações
-                settingsNavButton.style.order = 4; // Ordem do botão pai
+                settingsNavButton.classList.remove('hidden'); 
+                settingsNavButton.style.order = 4; 
 
-                // NOVO: Visibilidade das sub-opções de configurações (apenas para 'mikhaell' em Gerir Usuários)
-                if (currentUser.username === 'mikhaell') {
+                // Visibilidade das sub-opções na NAV para Mikhaell (Gerir Usuários)
+                if (isMikhaell) {
                     manageUsersNavButton.classList.remove('hidden');
                     manageUsersNavButton.style.order = 5;
-                } else { // Outros admins não veem gerir usuários
+                } else {
                     manageUsersNavButton.classList.add('hidden');
                 }
                 
@@ -1536,14 +1630,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 dronesNavButton.style.order = 8;
                 infoEmpresaNavButton.style.order = 9;
-            } else { // Se for seller, garante que estas opções estejam escondidas
-                suppliersNavButton.classList.add('hidden'); // Sellers não veem Fornecedores
-                settingsNavButton.classList.add('hidden'); // Sellers não veem Configurações
+
+                // Renderiza os cards de atalho na seção de configurações (main content)
+                renderSettingsOptionsGrid(); 
+
+            } else { // Se for seller (ou temporário), esconde as opções restritas
+                suppliersNavButton.classList.add('hidden'); 
+                settingsNavButton.classList.add('hidden'); 
                 manageUsersNavButton.classList.add('hidden');
                 createProductNavButton.classList.add('hidden');
                 editProductNavButton.classList.add('hidden');
+                settingsOptionsGrid.innerHTML = ''; // Garante que a grade de opções esteja vazia
 
-                 // Ajusta a ordem para sellers
                 productsNavButton.style.order = 1;
                 calculatorNavButton.style.order = 2;
                 dronesNavButton.style.order = 3;
@@ -1553,21 +1651,13 @@ document.addEventListener('DOMContentLoaded', () => {
             switchTab('products-section'); // Inicia na seção de produtos para logados
         }
 
-        // Exibe/Oculta o botão de Chat da IA (visível para todos os logados, incluindo visitantes)
         aiChatButton.style.display = 'block';
         
-        // --- CNPJ Display (FIX) ---
         const cnpjDisplayLine = document.getElementById('cnpj-display-line');
         if (cnpjDisplayLine) {
-            if (isVisitor) {
-                cnpjDisplayLine.style.display = 'none';
-            } else {
-                cnpjDisplayLine.style.display = 'block';
-            }
+            cnpjDisplayLine.style.display = isVisitor ? 'none' : 'block';
         }
-        // --- FIM CNPJ Display (FIX) ---
 
-        // Configura o botão do menu hamburger/fechar no header
         if (window.innerWidth <= 768) {
             navToggleButton.style.display = 'block'; 
             navToggleButton.textContent = '☰'; 
@@ -1576,7 +1666,6 @@ document.addEventListener('DOMContentLoaded', () => {
             navToggleButton.style.display = 'none';
         }
         
-        // Se for usuário temporário, mostra aviso
         if (isTempUser) {
             showTemporaryUserWarning();
         }
@@ -1594,7 +1683,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const productsToShow = PRODUCTS.filter(p => 
             p.name.toLowerCase().includes(lowerCaseSearchTerm) || 
             p.spec.toLowerCase().includes(lowerCaseSearchTerm) ||
-            // NOVO: Busca por fornecedor nos produtos
             (p.sources && p.sources.some(source => source.supplierName.toLowerCase().includes(lowerCaseSearchTerm)))
         );
 
@@ -1739,60 +1827,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function switchTab(newSectionId) {
         const isVisitor = currentUser.isVisitor;
-        const isSeller = currentUser.role === 'seller';
         const isAdmin = currentUser.role === 'admin';
         const isMikhaell = currentUser.username === 'mikhaell';
-        const isTempUser = currentUser.type === 'temporary';
 
-        // Lógica de acesso principal e visibilidade das seções
         let canAccess = false;
 
-        if (newSectionId === 'products-section' || newSectionId === 'calculator-section' || newSectionId === 'drones-visitor-section' || newSectionId === 'info-section') {
-            if (isVisitor && (newSectionId === 'drones-visitor-section' || newSectionId === 'info-section')) {
-                canAccess = true;
-            } else if (!isVisitor && (newSectionId === 'products-section' || newSectionId === 'calculator-section' || newSectionId === 'drones-visitor-section' || newSectionId === 'info-section')) {
-                canAccess = true;
-            }
+        // Lógica de acesso: O que cada tipo de usuário PODE ver
+        if (newSectionId === 'products-section' || newSectionId === 'calculator-section') {
+            canAccess = !isVisitor; // Todos logados podem ver produtos e calculadora
+        } else if (newSectionId === 'drones-visitor-section' || newSectionId === 'info-section') {
+            canAccess = true; // Todos podem ver drones e info da empresa (incluindo visitantes)
         } else if (newSectionId === 'suppliers-section') {
             if (isAdmin) {
-                // Se o acesso a fornecedores já estava pendente (abriu o modal de senha), não reabre
                 if (pendingSupplierSectionAccess) {
-                    canAccess = true; // Permite a navegação após senha correta
+                    canAccess = true; 
                 } else {
-                    // Se não estava pendente, abre o modal de senha e retorna
                     supplierPasswordModal.style.display = 'block';
                     supplierAccessPasswordInput.value = '';
                     supplierPasswordError.style.display = 'none';
                     return; 
                 }
-            } else {
-                alert('Esta seção não está disponível para o seu perfil.');
-                return;
             }
         } else if (newSectionId === 'settings-section' || newSectionId === 'create-product-section' || newSectionId === 'edit-product-section') {
-            if (isAdmin) { // Admins podem acessar essas seções
-                canAccess = true;
-            } else {
-                alert('Esta seção não está disponível para o seu perfil.');
-                return;
-            }
+            canAccess = isAdmin; // Apenas admins podem ver estas seções
         } else if (newSectionId === 'manage-users-section') {
-            if (isMikhaell) { // Apenas Mikhaell pode acessar Gerir Usuários
-                canAccess = true;
-            } else {
-                alert('Esta seção está restrita ao administrador principal.');
-                return;
-            }
+            canAccess = isMikhaell; // Apenas Mikhaell pode gerenciar usuários
         }
 
         if (!canAccess) {
-            // Se chegou aqui e não pode acessar, retorna e mantém a aba ativa atual
-            document.querySelector(`[data-section="${activeSectionId}"]`).classList.add('active');
+            let fallbackSection = 'products-section';
+            if (isVisitor) fallbackSection = 'drones-visitor-section';
+
+            contentSections.forEach(s => s.classList.remove('active')); 
+            document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(fallbackSection).classList.add('active');
+            let fallbackButton = document.querySelector(`[data-section="${fallbackSection}"]`);
+            if (fallbackButton) fallbackButton.classList.add('active');
+
+            settingsSubNav.style.display = 'none'; // Sempre esconde o submenu se não puder acessar
+
+            alert('Você não tem permissão para acessar esta seção.');
+            activeSectionId = fallbackSection; 
             return;
         }
 
-
-        // Continuação da troca de aba
+        // Continuação da troca de aba (se o acesso for permitido)
         contentSections.forEach(s => s.classList.remove('active')); 
         document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
         
@@ -1806,23 +1886,59 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // NOVO: Lógica para mostrar/esconder o sub-menu de Configurações
-        if (newSectionId.includes('settings') && isAdmin) { // Agora todos os admins veem o sub-menu
+        // Lógica para mostrar/esconder o sub-menu de Configurações
+        if (newSectionId.includes('settings') && isAdmin) { 
             settingsSubNav.style.display = 'block';
         } else {
             settingsSubNav.style.display = 'none'; 
         }
 
-        activeSectionId = newSectionId;
+        activeSectionId = newSectionId; 
 
         // Funções de renderização específicas da seção
         if (newSectionId === 'manage-users-section') renderTempUserList();
         if (newSectionId === 'products-section') renderProducts();
         if (newSectionId === 'drones-visitor-section') renderDroneVisitorList();
+        if (newSectionId === 'settings-section' && isAdmin) {
+            renderSettingsOptionsGrid(); 
+        }
+        if (newSectionId === 'suppliers-section') {
+              showSuppliers(); 
+        }
 
 
         if (window.innerWidth <= 768) {
             closeMobileNav();
+        }
+    }
+
+    // NOVO: Função para renderizar os cards de opções na tela de configurações
+    function renderSettingsOptionsGrid() {
+        settingsOptionsGrid.innerHTML = ''; // Limpa qualquer conteúdo anterior
+
+        const isMikhaell = currentUser.username === 'mikhaell';
+        const isAdmin = currentUser.role === 'admin';
+
+        if (isMikhaell) {
+            const manageUsersCard = document.createElement('div');
+            manageUsersCard.className = 'card';
+            manageUsersCard.innerHTML = `<h3>Gerir Usuários</h3><p>Crie e gerencie acessos temporários.</p>`;
+            manageUsersCard.addEventListener('click', () => window.switchTab('manage-users-section')); 
+            settingsOptionsGrid.appendChild(manageUsersCard);
+        }
+        
+        if (isAdmin) {
+            const createProductCard = document.createElement('div');
+            createProductCard.className = 'card';
+            createProductCard.innerHTML = `<h3>Criar Produto</h3><p>Adicione novos produtos ao sistema.</p>`;
+            createProductCard.addEventListener('click', () => window.switchTab('create-product-section')); 
+            settingsOptionsGrid.appendChild(createProductCard);
+
+            const editProductCard = document.createElement('div');
+            editProductCard.className = 'card';
+            editProductCard.innerHTML = `<h3>Alterar Produto</h3><p>Edite dados de produtos existentes.</p>`;
+            editProductCard.addEventListener('click', () => window.switchTab('edit-product-section')); 
+            settingsOptionsGrid.appendChild(editProductCard);
         }
     }
 
@@ -1837,7 +1953,6 @@ document.addEventListener('DOMContentLoaded', () => {
             tempUserFeedback.textContent = 'Erro: Nome de usuário já existe.'; tempUserFeedback.style.color = 'red'; return;
         }
 
-        // NOVO: Usuários temporários NÃO terão firstLogin: true para não serem forçados a trocar senha
         USERS[username] = { password, role: 'seller', type: 'temporary', expiresAt: Date.now() + durationHours * 60 * 60 * 1000, firstLogin: false };
 
         tempUserFeedback.textContent = `Usuário "${username}" criado com sucesso!`; tempUserFeedback.style.color = 'green';
@@ -1847,7 +1962,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function renderTempUserList() {
         tempUserListContainer.innerHTML = '';
-        const tempUsers = Object.entries(USERS).filter(([_, user]) => user.type === 'temporary');
+        const tempUsers = Object.entries(USERS).filter(([_, user]) => user.type === 'temporary'); 
 
         if(tempUsers.length === 0) {
             tempUserListContainer.innerHTML = '<p>Nenhum usuário temporário criado.</p>';
@@ -1903,7 +2018,7 @@ document.addEventListener('DOMContentLoaded', () => {
             delete USERS[username];
             renderTempUserList();
             if (currentUser && currentUser.username === username) {
-                handleLogout(); // Se o usuário logado for o que está sendo excluído, desloga
+                handleLogout(); 
                 alert('Sua sessão foi encerrada, pois o usuário temporário foi excluído.');
             }
         }
@@ -1975,30 +2090,89 @@ document.addEventListener('DOMContentLoaded', () => {
         renderProducts(); 
     }
 
+    // Função para pesquisar e exibir produtos para edição
     function handleSearchProductToEdit() {
-        const productId = parseInt(editProductSearchIdInput.value);
-        if (isNaN(productId)) {
-            editProductDisplay.innerHTML = '<p style="color:red;">Por favor, digite um ID de produto válido.</p>';
-            editProductForm.classList.add('hidden');
+        const searchTerm = editProductSearchInput.value.trim().toLowerCase();
+        editProductSearchResults.innerHTML = ''; // Limpa resultados anteriores
+        editProductForm.classList.add('hidden'); // Esconde o formulário de edição
+        editProductDisplay.innerHTML = '<p>Use a busca acima para carregar os dados do produto.</p>'; // Reseta a mensagem de display
+        editProductFeedback.textContent = ''; // Limpa feedback
+
+        if (!searchTerm) {
+            editProductSearchResults.innerHTML = '<p style="color:orange;">Por favor, digite um ID ou nome para pesquisar.</p>';
             return;
         }
 
-        const product = PRODUCTS.find(p => p.id === productId);
+        let foundProducts = [];
 
+        // Tenta buscar por ID exato primeiro
+        const parsedId = parseInt(searchTerm);
+        if (!isNaN(parsedId)) {
+            const productById = PRODUCTS.find(p => p.id === parsedId);
+            if (productById) {
+                foundProducts.push(productById);
+            }
+        } 
+        
+        // Se não encontrou por ID exato, ou se o termo não era um ID, busca por nome (parcial)
+        if (foundProducts.length === 0) {
+            foundProducts = PRODUCTS.filter(p => p.name.toLowerCase().includes(searchTerm));
+        }
+
+        if (foundProducts.length > 0) {
+            // Criar um fragmento de documento para melhor performance ao adicionar muitos elementos
+            const fragment = document.createDocumentFragment();
+            const ul = document.createElement('ul');
+            ul.style.listStyle = 'none';
+            ul.style.padding = '0';
+
+            foundProducts.forEach(product => {
+                const listItem = document.createElement('li');
+                listItem.style.padding = '8px';
+                listItem.style.borderBottom = '1px solid #eee';
+                listItem.style.cursor = 'pointer';
+                listItem.style.backgroundColor = 'white'; 
+                listItem.style.transition = 'background-color 0.2s';
+                
+                listItem.innerHTML = `<strong>ID: ${product.id}</strong> - ${product.name}`; 
+
+                listItem.addEventListener('mouseover', () => listItem.style.backgroundColor = '#ecf0f1');
+                listItem.addEventListener('mouseout', () => listItem.style.backgroundColor = 'white');
+                
+                listItem.addEventListener('click', () => {
+                    loadProductForEdit(product.id);
+                    // Não limpa searchResults.innerHTML imediatamente aqui.
+                    // Isso será tratado dentro de loadProductForEdit ou pela lógica de tab.
+                });
+                ul.appendChild(listItem);
+            });
+            fragment.appendChild(ul);
+            editProductSearchResults.appendChild(fragment); // Adiciona tudo de uma vez
+            // Opcional: Adicionar um parágrafo "Selecione um produto..."
+            const selectPrompt = document.createElement('p');
+            selectPrompt.textContent = 'Selecione um produto para alterar:';
+            editProductSearchResults.prepend(selectPrompt); // Adiciona no início
+        } else {
+            editProductSearchResults.innerHTML = '<p style="color:orange;">Nenhum produto encontrado com o termo fornecido.</p>';
+        }
+    }
+
+    // Carrega os dados do produto selecionado no formulário de edição
+    function loadProductForEdit(productId) {
+        const product = PRODUCTS.find(p => p.id === productId);
         if (product) {
-            editProductDisplay.innerHTML = `<p>Produto encontrado: <strong>${product.name}</strong> (ID: ${product.id})</p>`;
-            editProductForm.classList.remove('hidden');
+            editProductDisplay.innerHTML = `<p>Editando: <strong>${product.name}</strong> (ID: ${product.id})</p>`;
+            editProductForm.classList.remove('hidden'); // Corrigido: Torna o formulário visível
             editProductFeedback.textContent = ''; 
+            editProductSearchResults.innerHTML = ''; // Limpa os resultados da busca após seleção
 
             editProductIdInput.value = product.id;
             editProductNameInput.value = product.name;
             editProductSpecTextarea.value = product.spec;
             editProductSalePriceInput.value = product.salePrice;
+            // Para edição simplificada, preenche com o primeiro fornecedor ou vazio
             editProductCostPriceInput.value = product.sources[0] ? product.sources[0].costPrice : '';
             editProductSupplierInput.value = product.sources[0] ? product.sources[0].supplierName : '';
-        } else {
-            editProductDisplay.innerHTML = '<p style="color:orange;">Produto não encontrado com o ID fornecido.</p>';
-            editProductForm.classList.add('hidden');
         }
     }
 
@@ -2016,7 +2190,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const name = editProductNameInput.value.trim();
         const spec = editProductSpecTextarea.value.trim();
         const salePrice = parseFloat(editProductSalePriceInput.value);
-        const costPrice = parseFloat(editProductCostPriceInput.value);
+        const costPrice = parseFloat(editProductCostPriceInput.value); 
         const supplier = editProductSupplierInput.value.trim();
 
         if (!name || !spec || isNaN(salePrice) || salePrice <= 0) {
@@ -2025,23 +2199,29 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Update existing product details
+        PRODUCTS[productIndex].name = name;
+        PRODUCTS[productIndex].spec = spec;
+        PRODUCTS[productIndex].salePrice = salePrice;
+
+        // Update or create the first source
         if (PRODUCTS[productIndex].sources && PRODUCTS[productIndex].sources.length > 0) {
             PRODUCTS[productIndex].sources[0].supplierName = supplier || 'Não especificado';
             PRODUCTS[productIndex].sources[0].costPrice = isNaN(costPrice) ? 0 : costPrice;
         } else {
+            // If no sources exist, create one
             PRODUCTS[productIndex].sources = [{ 
                 supplierName: supplier || 'Não especificado', 
                 costPrice: isNaN(costPrice) ? 0 : costPrice 
             }];
         }
 
-        PRODUCTS[productIndex].name = name;
-        PRODUCTS[productIndex].spec = spec;
-        PRODUCTS[productIndex].salePrice = salePrice;
-
         editProductFeedback.textContent = `Produto "${name}" (ID: ${productId}) atualizado com sucesso!`;
         editProductFeedback.style.color = 'green';
-        renderProducts(); 
+        renderProducts(); // Re-render the products list to show updated data
+        editProductForm.classList.add('hidden'); // Hide the form after successful update
+        editProductDisplay.innerHTML = '<p>Use a busca acima para carregar os dados do produto.</p>'; // Reset display message
+        editProductSearchInput.value = ''; // Clear search input
     }
 
 
@@ -2068,9 +2248,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('ask-gemini-button').addEventListener('click', () => {
             const customerQuestion = document.getElementById('customer-question').value;
              if (customerQuestion && customerQuestion.trim() !== '') {
-                 const title = "Sugestão de Resposta para Cliente";
-                 const prompt = `R2D2: Responda de forma direta e clara (máximo 3 frases) à seguinte dúvida do cliente, considerando estas especificações do produto: "${product.spec}". Dúvida do cliente: "${customerQuestion}"`;
-                 callGeminiAPI(prompt, title);
+                const title = "Sugestão de Resposta para Cliente";
+                const prompt = `R2D2: Responda de forma direta e clara (máximo 3 frases) à seguinte dúvida do cliente, considerando estas especificações do produto: "${product.spec}". Dúvida do cliente: "${customerQuestion}"`;
+                callGeminiAPI(prompt, title);
              }
         });
     }
@@ -2097,16 +2277,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função para navegar para o fornecedor na seção de Fornecedores
     function navigateToSupplierSection(supplierName) {
-        // Redireciona para a seção de fornecedores sem pedir senha novamente
-        // Isso assume que o acesso já foi concedido ou é permitido.
-        contentSections.forEach(s => s.classList.remove('active'));
-        document.getElementById('suppliers-section').classList.add('active');
-        document.querySelectorAll('.nav-button').forEach(b => b.classList.remove('active'));
-        suppliersNavButton.classList.add('active'); // Ativa o botão Fornecedores na navegação
-        activeSectionId = 'suppliers-section';
+        window.switchTab('suppliers-section'); // Usando window.switchTab
 
         setTimeout(() => {
-            // Tenta encontrar o card do fornecedor com base no nome
             const targetSupplierCard = document.querySelector(`#supplier-list .supplier-card h3 strong[data-supplier-name="${supplierName}"]`);
             if (targetSupplierCard) {
                 targetSupplierCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -2133,11 +2306,10 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             supplierList.appendChild(supplierCard);
         });
-        // Após mostrar os fornecedores, fecha o modal de senha
         supplierPasswordModal.style.display = 'none'; 
     }
 
-    // NOVO: Função para exibir o modal de alteração de senha
+    // Função para exibir o modal de alteração de senha
     function showChangePasswordModal(isMandatory = false) {
         changePasswordModal.style.display = 'block';
         newPasswordInput.value = '';
@@ -2148,15 +2320,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isMandatory) {
             changePasswordModalTitle.textContent = 'Defina Sua Senha';
             changePasswordMessage.textContent = 'Por favor, defina uma nova senha para sua conta. É obrigatório no primeiro acesso.';
-            changePasswordCloseButton.style.display = 'none'; // Esconde o botão de fechar se for obrigatório
+            changePasswordCloseButton.style.display = 'none'; 
         } else {
             changePasswordModalTitle.textContent = 'Alterar Senha';
             changePasswordMessage.textContent = 'Digite sua nova senha abaixo.';
-            changePasswordCloseButton.style.display = 'block'; // Mostra o botão de fechar para alteração voluntária
+            changePasswordCloseButton.style.display = 'block'; 
         }
     }
 
-    // NOVO: Função para lidar com a submissão do formulário de alteração de senha
+    // Função para lidar com a submissão do formulário de alteração de senha
     function handleChangePassword() {
         const newPass = newPasswordInput.value;
         const confirmPass = confirmNewPasswordInput.value;
@@ -2174,18 +2346,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Atualiza a senha no objeto USERS
         USERS[currentUser.username].password = newPass;
-        USERS[currentUser.username].firstLogin = false; // Define firstLogin como false
+        USERS[currentUser.username].firstLogin = false; 
 
         changePasswordSuccess.textContent = 'Senha alterada com sucesso!';
         changePasswordSuccess.style.display = 'block';
 
-        // Após sucesso, pode fechar o modal ou dar um tempo e fechar
         setTimeout(() => {
             changePasswordModal.style.display = 'none';
-            // Se a senha foi alterada porque era obrigatório no primeiro login, agora que pode prosseguir
-            // Chama setupAppForUser() para re-configurar a UI e esconder o aviso de troca de senha
             setupAppForUser(); 
         }, 1500);
     }
@@ -2195,14 +2363,22 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleScroll() { mainContent.scrollTop > 200 ? scrollToTopButton.style.display = "block" : scrollToTopButton.style.display = "none"; }
     function scrollTop() { mainContent.scrollTo({ top: 0, behavior: 'smooth' }); }
 
+    // CORRIGIDO: Expondo switchTab globalmente para que `onclick` no HTML possa chamá-la.
+    window.switchTab = switchTab; 
+    // Corrigido: Expondo navigateToSupplierSection globalmente também, caso seja usada em onclick
+    window.navigateToSupplierSection = navigateToSupplierSection;
+
     // --- EVENT LISTENERS ---
     loginButton.addEventListener('click', handleLogin);
     visitorModeButton.addEventListener('click', handleVisitorMode); 
     passwordInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleLogin(); });
     logoutButton.addEventListener('click', handleLogout);
     
-    // NOVO: Listener para o link de alterar senha no header
-    changePasswordLink.addEventListener('click', () => showChangePasswordModal(false)); // false = não obrigatório
+    changePasswordLink.addEventListener('click', () => {
+        if (currentUser && currentUser.type !== 'temporary') {
+            showChangePasswordModal(false); 
+        }
+    });
 
     mainContent.addEventListener('click', (e) => {
         const target = e.target;
@@ -2213,7 +2389,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault(); 
             const supplierName = target.dataset.supplierName;
             if (currentUser && currentUser.role === 'admin') { 
-                navigateToSupplierSection(supplierName);
+                window.navigateToSupplierSection(supplierName); 
             }
             return; 
         }
@@ -2292,13 +2468,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Lógica para o botão pai de Configurações
             if (button.id === 'settings-nav-button') {
-                if (currentUser && currentUser.role === 'admin') { // Apenas admins podem expandir
-                    const isSubNavVisible = settingsSubNav.style.display === 'block';
-                    settingsSubNav.style.display = isSubNavVisible ? 'none' : 'block';
-                    settingsNavButton.classList.toggle('active', !isSubNavVisible); 
-                    
-                    if (!isSubNavVisible) {
-                        switchTab('settings-section'); 
+                if (currentUser && currentUser.role === 'admin') { 
+                    if (activeSectionId.includes('settings')) {
+                        const isSubNavVisible = settingsSubNav.style.display === 'block';
+                        settingsSubNav.style.display = isSubNavVisible ? 'none' : 'block';
+                        settingsNavButton.classList.toggle('active', !isSubNavVisible);
+                    } else { 
+                        settingsSubNav.style.display = 'block';
+                        settingsNavButton.classList.add('active');
+                        window.switchTab('settings-section'); 
                     }
                 } else {
                     alert('Esta seção está restrita ao perfil de administrador.');
@@ -2306,34 +2484,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 return; 
             }
             
-            // Para todos os outros botões (incluindo os sub-botões de Configurações)
-            switchTab(sectionId);
+            window.switchTab(sectionId); 
         });
     });
     
     closeModalButton.addEventListener('click', closeModal);
     window.addEventListener('click', (event) => { 
         if (event.target == mainModal) { closeModal(); } 
-        // NOVO: Fechar modal de senha do fornecedor se clicar fora
         if (event.target == supplierPasswordModal) {
             supplierPasswordModal.style.display = 'none';
             pendingSupplierSectionAccess = false; 
-            // Opcional: Se o usuário fechar o modal, redireciona para uma seção "segura"
-            switchTab('products-section'); 
+            window.switchTab('products-section'); 
         }
-        // NOVO: Fechar modal de alteração de senha se clicar fora e não for obrigatório
-        // Verifica se o botão de fechar do modal de alteração está visível. Se sim, não é um fechamento obrigatório.
-        if (event.target == changePasswordModal && changePasswordCloseButton.style.display !== 'none' && !changePasswordModal.contains(event.target)) {
+        if (event.target === changePasswordModal && changePasswordCloseButton.style.display !== 'none' && !changePasswordModal.contains(event.target) && !newPasswordInput.contains(event.target) && !confirmNewPasswordInput.contains(event.target) && !submitChangePasswordButton.contains(event.target)) {
             changePasswordModal.style.display = 'none';
         }
     });
+
+    // Listener para o botão de busca na Alteração de Produto
+    searchProductToEditButton.addEventListener('click', handleSearchProductToEdit);
+
     productSearchInput.addEventListener('input', (e) => renderProducts(e.target.value));
     droneVisitorSearchInput.addEventListener('input', (e) => renderDroneVisitorList(e.target.value)); 
     
     // Listeners para Formulários de Configurações
-    createTempUserForm.addEventListener('submit', createTemporaryUser);
+    createTempUserForm.addEventListener('submit', createTemporaryUser); // Corrigido: Garante que este é o handler certo
     createProductForm.addEventListener('submit', handleCreateProduct);
-    searchProductToEditButton.addEventListener('click', handleSearchProductToEdit);
     editProductForm.addEventListener('submit', handleEditProduct);
 
 
@@ -2390,14 +2566,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // NOVO: Listeners para o modal de senha do fornecedor
+    // Listeners para o modal de senha do fornecedor
     submitSupplierPasswordButton.addEventListener('click', () => {
         const enteredPassword = supplierAccessPasswordInput.value.trim();
         if (enteredPassword === CONFIDENTIAL_CODE) {
             supplierPasswordModal.style.display = 'none';
-            switchTab('suppliers-section'); 
-            pendingSupplierSectionAccess = false; 
+            pendingSupplierSectionAccess = true; 
+            window.switchTab('suppliers-section'); 
         } else {
+            supplierPasswordError.textContent = 'Senha incorreta.'; // Mensagem de erro específica
             supplierPasswordError.style.display = 'block';
             supplierAccessPasswordInput.value = ''; 
         }
@@ -2412,17 +2589,16 @@ document.addEventListener('DOMContentLoaded', () => {
     supplierPasswordCloseButton.addEventListener('click', () => {
         supplierPasswordModal.style.display = 'none';
         pendingSupplierSectionAccess = false; 
-        switchTab('products-section'); // Volta para uma seção padrão
+        window.switchTab('products-section'); 
     });
 
-    // NOVO: Listeners para o modal de alteração de senha
+    // Listeners para o modal de alteração de senha
     submitChangePasswordButton.addEventListener('click', handleChangePassword);
     newPasswordInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleChangePassword(); });
     confirmNewPasswordInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleChangePassword(); });
     
     changePasswordCloseButton.addEventListener('click', () => {
-        // Se o modal de senha obrigatório está aberto, não permite fechar pelo "X"
-        if (changePasswordModal.style.display === 'block' && changePasswordCloseButton.style.display === 'none') {
+        if (currentUser && currentUser.firstLogin && changePasswordModal.style.display === 'block') {
             alert('A alteração de senha é obrigatória para o primeiro acesso. Por favor, defina sua nova senha.');
         } else {
             changePasswordModal.style.display = 'none';
