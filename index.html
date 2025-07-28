@@ -238,8 +238,8 @@
                     }
 
                     const headers = role === 'admin' ? ['Nº', 'Cliente', 'Telefone', 'Equipamento', 'Serviço', 'Ações'] : ['Nº', 'Cliente', 'Equipamento', 'Serviço', 'Ações'];
-                    const tableRows = osDisponiveis.map(os => `
-                        <tr class="hover:bg-gray-50">
+                    const tableRows = osDisponiveis.map(os => 
+                        `<tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 text-sm font-medium text-gray-900">${os.id}</td>
                             <td class="px-6 py-4 text-sm text-gray-700">${os.cliente}</td>
                             ${role === 'admin' ? `<td class="px-6 py-4 text-sm text-gray-700">${os.telefone}</td>` : ''}
@@ -263,16 +263,16 @@
                         const statusInfo = statusMap[os.status] || { text: os.status, color: 'bg-gray-200' };
                         const adminInfo = isAdmin ? `<div class="text-xs text-gray-500 mt-2 pt-2 border-t">Técnico: <span class="font-semibold">${os.acceptedBy}</span></div>` : '';
                         const buttonText = os.status === 'aguardando-precificacao' && isAdmin ? 'Precificar Orçamento' : 'Iniciar Orçamento';
-                        const eyeIcon = showEyeIcon ? `
-                            <div class="tooltip">
+                        const eyeIcon = showEyeIcon ? 
+                            `<div class="tooltip">
                                 <i data-lucide="eye" class="w-5 h-5 text-gray-400"></i>
                                 <span class="tooltiptext">
                                     <b>Status:</b> ${statusInfo.text}<br>
                                     <b>Itens:</b> ${os.orcamento.items.length > 0 ? os.orcamento.items.map(i => `${i.qty}x ${i.name}`).join(', ') : 'Nenhum'}
                                 </span>
                             </div>` : '';
-                        return `
-                            <div class="bg-white rounded-lg shadow-md p-4 flex flex-col justify-between">
+                        return 
+                            `<div class="bg-white rounded-lg shadow-md p-4 flex flex-col justify-between">
                                 <div>
                                     <div class="flex justify-between items-start">
                                         <h3 class="font-bold text-gray-800">OS #${os.id} - ${os.cliente}</h3>
@@ -451,11 +451,11 @@
                     
                     const listContainer = document.getElementById('notification-dropdown');
                     if (listContainer) {
-                        listContainer.innerHTML = `
-                            <div class="p-4 font-bold border-b">Notificações</div>
+                        listContainer.innerHTML = 
+                            `<div class="p-4 font-bold border-b">Notificações</div>
                             <div id="notification-list" class="max-h-96 overflow-y-auto">
-                                ${unread.length > 0 ? unread.map(n => `
-                                    <a href="#" data-os-id="${n.osId}" data-notif-id="${n.id}" class="notification-item block p-4 hover:bg-gray-50 border-b text-sm">
+                                ${unread.length > 0 ? unread.map(n => 
+                                    `<a href="#" data-os-id="${n.osId}" data-notif-id="${n.id}" class="notification-item block p-4 hover:bg-gray-50 border-b text-sm">
                                         ${n.message}
                                     </a>`).join('') : '<p class="p-4 text-sm text-gray-500">Nenhuma nova notificação.</p>'
                                 }
